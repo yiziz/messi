@@ -359,7 +359,7 @@
                                         .cursor("pointer")
                                         //.fillStyle("#696969")
                                         .strokeStyle(function(d,l) getLinkColor(d,l))
-                                        .event("click", function (d, l) getRelationProperties(d.nodeName, l.index));
+                                        .event("click", function (d, l) { getRelationProperties(d.nodeName, l.index); setEditorNode(l.index, "link"); });
                             
                             linky.add(pv.Dot)
                                 .data(function(l) { if(l.target == l.source) return [{x:0,y:0}];
@@ -386,7 +386,7 @@
                                 .lineWidth(1)
                                 //.title(function(d) d.nodeName)
                                 .cursor("pointer")
-                                .event("click", function (d) getNodeProperties(this.index, d.nodeName, d))
+                                .event("click", function (d) { getNodeProperties(this.index, d.nodeName, d); setEditorNode(this.index, "node"); })
                                 .event("mousedown", pv.Behavior.drag())
                                 .event("drag", force)
                                 .anchor("center").add(pv.Label)
