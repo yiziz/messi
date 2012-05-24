@@ -140,7 +140,6 @@ function getLinkColor(d,l){
 
 /*************** Fetch node properties **************/
 function getNodeProperties(index, nodeName, d){
-	//alert(index);
 	if(connectivity && d.selected != "top_hierarchy" && d.selected != "middle_hierarchy") return;
 	if(!_shiftKey){
 		resetNodes();
@@ -152,11 +151,14 @@ function getNodeProperties(index, nodeName, d){
 	}
 	distributome.nodes[index].selected = "red";
 	var html = new Array();
+	
+	// FILLS DISTRIBUTOME PROPERTIES PANEL
 	html.push("<b><u>Distribution Properties</u></b> <div style='height:7px'></div>");
 	var parserOutput = XMLParser(getObjectReferenceNumber('node'), 1, index, true, DistributomeXML_Objects);
 	html.push(parserOutput[0]);
 	var referenceName= parserOutput[1];
 	document.getElementById('distributome.propertiesPannel').innerHTML = html.join('');	
+	// GETS DISTRIBUTOME REFERENCES
 	if(referenceName !=null)
 		getReferences(referenceNodes[referenceName]);
 	else getReferences(false);
@@ -165,6 +167,7 @@ function getNodeProperties(index, nodeName, d){
 	var firstChar = nodeName.substring(0,1).toUpperCase();
 	nodeName = nodeName.substring(1); //Is it camel case or only first letter Upper Case?
 	
+	// GENERATES LINKS FOR DISTRIBUTION ACTIONS
 	document.getElementById('distributome.calculator').href = './calc/'+firstChar+nodeName+'Calculator.html';
 	document.getElementById('distributome.experiment').href = './exp/'+firstChar+nodeName+'Experiment.html';
 	document.getElementById('distributome.simulation').href = './sim/'+firstChar+nodeName+'Simulation.html';
@@ -334,7 +337,7 @@ function textSearch(){
 /*************** Fetch References from the XML **************/
 function getReferences(index){
 	var html = new Array();
-	html.push("<b><u>Distribution Referencies</u></b> <div style='height:7px'></div>");
+	html.push("<b><u>Distribution References</u></b> <div style='height:7px'></div>");
 	if(index){
 		html.push(XMLParser(getObjectReferenceNumber('reference'), 9, index, false, DistributomeXML_Objects)[0]);
 	}
@@ -353,6 +356,7 @@ function getRelationProperties(nodeName, linkIndex){
 	html.push(parserOutput[0]);
 	var referenceName = parserOutput[1];
 	document.getElementById('distributome.relationPannel').innerHTML = html.join('');
+	alert(document.getElementById('distributome.relationPannel').innerHTML);
 	if(referenceName!=null)
 		getReferences(referenceNodes[referenceName]);
 	else getReferences(false);
@@ -421,6 +425,7 @@ function updateNodeColor(ontologyArray, level){
 		xmlDoc = xmlhttp.responseXML;
 		try{
 			DistributomeXML_Objects=xmlDoc.documentElement.childNodes;
+			
 		}catch(error){
 			DistributomeXML_Objects=xmlDoc.childNodes;
 		}

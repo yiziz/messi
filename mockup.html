@@ -5,17 +5,44 @@
   	<title>Distributome.org</title>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   	
-	<link type="text/css" href="mockup.css" rel="stylesheet" />
-	<script type="text/javascript" src="scripts/jquery.js"></script>
+	<link type="text/css" href="mockup.css" rel="stylesheet" ></script>
+	
+	
+	
+	<script type="text/javascript" src="./scripts/jquery.js"></script>
+  	<script type="text/javascript" src="scripts/protovis-r3.2.js"></script>
+  
+
+	<script type="text/javascript" src="scripts/xml2json.js"></script>
+  	<script type="text/javascript" src="scripts/common.js"></script>
+	<script type="text/javascript" src="scripts/editor.js"></script>
+	<script type="text/javascript" src="scripts/splitter.js"></script>
+	<script type="text/javascript" src="scripts/XMLWriter.js"></script>
 	<script type="text/javascript" src="scripts/distributome.js"></script>
+
+
+	
 	<!--[if !IE7]>
 		<style type="text/css">
 			#wrap{ display:table; height: 100%}
 		</style>
 	<![endif]-->
   	<script type = "text/javascript">
-  		//    Dropdown Menu   //
+  		
   		$(document).ready(function(){
+  		
+  		    
+  		    // NAVIGATOR //
+  		    var contentW = $('.content').width() - $('.sidebar').width() - 20;
+  		    var contentH = $('.content').height() - $('.footer').height() + 5;
+  		    $('#LeftPanel').css('width', contentW);
+  		    $('#LeftPanel').css('height', contentH);
+            // SIDEBAR //
+            $('.sidebar').css('max-height', contentH);
+            // FOOTER //
+            $('.footer').css('width', $(window).width());
+            
+  		    //    Dropdown Menu   //
   			$("ul.subnav").parent().append("<span></span>");
   			$(".mainmenu li").hover(function(){
   				$(this).find("ul.subnav").slideDown('fast').show();
@@ -41,7 +68,8 @@
 	        	    $(this).toggleClass('active');
 	        });
 	        
-	        $("#popout").click(function() {
+	        // Maximize Navigator //
+	        /*$("#popout").click(function() {
 	        	$('.sidebar').toggleClass('hidden');
 	        	$('.header').toggleClass('hidden');
 	        	$('#navigator').toggleClass('expanded');
@@ -52,87 +80,131 @@
 	        		$("#popout").html('<img src="images/btn_popout.png"/>');
 	        	}
 	        	
-	        });
+	        });*/
+	        
   		});
   		
+  		// BODY FUNCTION //
+  		function isKeyPressed(event){
+			if (event.shiftKey==1) {
+			  _shiftKey = true;
+			}else{
+			  _shiftKey = false;
+			}
+		}
 
-  		
+  		// SITE TRACKER // 
+        var sc_project=5714596; 
+        var sc_invisible=1; 
+        var sc_partition=71; 
+        var sc_click_stat=1; 
+        var sc_security="038e9ac4"; 
   		
   	</script>
+  	
+  	<!-- LATEX / TYPESETTING -->
+  	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  	
+  		<script> 
+
+  		MathJax.Hub.Config({
+  			TeX: {
+    			Macros: {
+      				sgn: '{\\text{sgn}}' ,
+      				// \newcommand{\sgn}{\text{sgn}} ,  
+      				sech: '{\\text{sech}}' ,
+      				erf: '{\\text{erf}}' ,
+      				bs: ['{\\boldsymbol #1}',1]
+    			}
+  			}
+		}); 
+
+  	</script>
+  	
+  	<script type="text/x-mathjax-config">
+
+  		MathJax.Hub.Config({
+    		extensions: ["tex2jax.js"],
+    		jax: ["input/TeX","output/HTML-CSS"],
+    		tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  		});
+
+  	</script>
+  	
+  	<!-- NAVIGATOR FUNCTIONS -->
+  	<script type="text/javascript+protovis">
+        function resetNavigator(){
+            resetView();
+            resetNodesEdges();
+            vis.render();
+        }
+        
+        function resetNodesEdges(){
+            resetNodes();
+            resetEdges();
+        }
+        
+        function resetNodes(){
+            var classes = pv.nodes(distributome.nodes);		
+            classes.slice(1).forEach(function(d) {
+                var i = 5;
+                d.nodeValue.selected = false;
+                d.nodeValue = d.nodeValue.value;
+                if (isNaN(d.x)) d.x = w / 2 + 40 * Math.random() - 20;
+                if (isNaN(d.y)) d.y = h / 2 + 40 * Math.random() - 20;
+            });
+        }
+        
+        function resetEdges(){
+            var classes = pv.nodes(distributome.edges);		
+            classes.slice(1).forEach(function(d) {
+                d.nodeValue.selected = false;
+            });
+        }
+            
+        function getSelectedNodes(){
+            var classes = pv.nodes(distributome.nodes);	
+            var selectedNodes = new Array();
+            classes.slice(1).forEach(function(d) {
+                if(d.nodeValue.selected == 'red'){
+                    selectedNodes.push(getDistributionName(d.nodeValue.nodeName));
+                }
+            });
+            return selectedNodes;
+        }
+        
+        function graphPause(){
+            force.stop();
+        }
+        
+        function graphRestart(){
+            force.start();
+        }
+    
+        function resizeDistributome(){
+            force.nodes(distributome.nodes);
+    
+            force.reset();
+            var leftPanelWidth = document.getElementById('LeftPanel').style.width;
+            var leftPanelHeight = document.getElementById('LeftPanel').style.height;
+            var w =	leftPanelWidth.substring(0,leftPanelWidth.indexOf('px')),
+                h = leftPanelHeight.substring(0,leftPanelHeight.indexOf('px'));
+            vis.width(w);
+            vis.height(h);
+            vis.render();
+            graphPause();
+    
+        }
+    
+    </script>
+            <!--  /center -->
 </head>
-<body>
-	<div id="wrap">
-		<div class="header">
-			<ul class = "mainmenu">
-				<li class = "home"><a href="index.html">Distributome</a></li>
-				<li><a href="#"> DB Search </a>
-					<ul class="subnav">
-						<li></li>
-						<li></li>
-					</ul>
-				</li>
-				<li><a href="#">About</a>
-					<ul class="subnav">
-						<li><a href="#"> Distributome Project</a></li>
-						<li><a href="#"> Document Wiki</a></li>
-						<li><a href="#"> Documentation</a></li>
-					</ul>
-				</li>
-				<li><a href="#">Tech Docs</a>
-					<ul class="subnav">
-						<li></li>
-						<li></li>
-					</ul>
-				</li>
-				<li><a href="#">Navigator</a>
-					<ul class="subnav">
-						<li></li>
-						<li></li>
-					</ul>
-				</li>
-				<li><a href="#">Legacy Resources</a>
-					<ul class="subnav">
-						<li></li>
-						<li></li>
-					</ul>
-				</li>
-				<li><a href="#">Blog</a>
-				</li>
-			</ul>
-		</div>
-		<div class = "content">
-			<div id="navigator">
-				<button id = "popout"><img src="images/btn_popout.png" /></button>
-				<h1> THIS LAND IS YOUR LAND THIS LAND IS MY LAND FROM CALIFORNIA TO THE NEW YORK ISLANDS  </h1>
-			</div>
-			<div id="navsidebar" class="sidebar">
-				<div class = "accordion">
-					<h3>Editor</h3>
-					<div>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
-					</div>
-					<h3>Editor</h3>
-					<div>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
-					</div>
-					<h3>Editor</h3>
-					<div>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
-					</div>
-					<h3>Distribution Properties</h3>
-					<div>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
-					</div>
-					<h3>Inter-Distribution Relations</h3>
-					<div> lalala </div>
-				</div>
-			</div>
-		</div>
-	</div>
+<body onmousedown="isKeyPressed(event)">
+
 	<div class="footer">
 		<ul id="toolbar">
 			<li>
-			<input id="search" name="search" type="text" placeholder="Find distributions or relations"/>
+			<input id="distributome.text" name="search" type="text" onKeydown="Javascript: if (event.keyCode==13) textSearch();" placeholder="Find distributions or relations"/>
 			</li>
 			<li>
 			<div class="styled">
@@ -203,6 +275,256 @@
 			</li>
 		</ul>
 	</div>
+	<div id="wrap">
+		<div class="header">
+			<ul class = "mainmenu">
+				<li class = "home"><a href="index.html">Distributome</a></li>
+				<li><a href="#"> DB Search </a>
+					<ul class="subnav">
+						<li></li>
+						<li></li>
+					</ul>
+				</li>
+				<li><a href="#">About</a>
+					<ul class="subnav">
+						<li><a href="#"> Distributome Project</a></li>
+						<li><a href="#"> Document Wiki</a></li>
+						<li><a href="#"> Documentation</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Tech Docs</a>
+					<ul class="subnav">
+						<li></li>
+						<li></li>
+					</ul>
+				</li>
+				<li><a href="#">Navigator</a>
+					<ul class="subnav">
+						<li></li>
+						<li></li>
+					</ul>
+				</li>
+				<li><a href="#">Legacy Resources</a>
+					<ul class="subnav">
+						<li></li>
+						<li></li>
+					</ul>
+				</li>
+				<li><a href="#">Blog</a>
+				</li>
+			</ul>
+		</div>
+		<div class = "content">
+			<div id="LeftPanel" style="width:500px; height:500px" >
+				<!-- <button id = "popout"><img src="images/btn_popout.png" /></button> -->
+				
+                <script type="text/javascript+protovis">
+                
+                            /**	To Do: Make the height and width of the Graph panel 
+                                auto-adjust to the "LeftPanel" panel size that the graph is embedded in!  
+                            ***/
+                        try{
+                            var leftPanelWidth = document.getElementById('LeftPanel').style.width;
+                            var leftPanelHeight = document.getElementById('LeftPanel').style.height;
+                            var w =	leftPanelWidth.substring(0,leftPanelWidth.indexOf('px')),
+                                h = leftPanelHeight.substring(0,leftPanelHeight.indexOf('px')),
+                                colors = pv.Colors.category10();
+                                    
+                            var vis = new pv.Panel()
+                                .width(w)
+                                .height(h)
+                                .fillStyle("white") //.fillStyle("rgb(240,240,240)")
+                                //.event("mousedown", pv.Behavior.pan().bound(true))
+                                //.event("mousewheel", pv.Behavior.zoom().bound(true));
+                                .event("mousedown", pv.Behavior.pan())
+                                .event("mousewheel", pv.Behavior.zoom());				
+                
+                                /*** To Do: Need to trigger a Split-Frame Resizing when the mouse-scroll
+                                     zoom action is triggered. See the split-pane resizing functionality
+                                     below ($("#MainSplitPaneObject").trigger("resize");). Something like:
+                                     .event("mousewheel", graphZoomResizeFrame());
+                                     Currently, the graph-zoom expands the frame, but leaves the split-pane
+                                     size unchanged!
+                                ****/
+                
+                            force = vis.add(pv.Layout.Force)
+                                .nodes(distributome.nodes)
+                                .links(distributome.edges)
+                                .springConstant(0.05)
+                                .chargeConstant(-80)
+                                .springLength(200)
+                                .bound(true); 
+                        
+                            var linky = force.link.add(pv.Line)
+                                        .cursor("pointer")
+                                        //.fillStyle("#696969")
+                                        .strokeStyle(function(d,l) getLinkColor(d,l))
+                                        .event("click", function (d, l) getRelationProperties(d.nodeName, l.index));
+                            
+                            linky.add(pv.Dot)
+                                .data(function(l) { if(l.target == l.source) return [{x:0,y:0}];
+                                nodecalc = Math.sqrt((l.targetNode.linkDegree*15)/Math.PI)*2; 
+                                return [{ 
+                                    x: l.targetNode.x - nodecalc * Math.cos(Math.atan2(l.targetNode.y - l.sourceNode.y, l.targetNode.x - l.sourceNode.x)), 
+                                    y: l.targetNode.y - nodecalc * Math.sin(Math.atan2(l.targetNode.y - l.sourceNode.y, l.targetNode.x - l.sourceNode.x)) 
+                                }];
+                                }) 
+                                
+                                .angle(function (n,l) Math.atan2(l.targetNode.y - l.sourceNode.y, l.targetNode.x - l.sourceNode.x) - Math.PI/2) 
+                                .shape("triangle") 
+                                .strokeStyle(function(d,l) getArrowColor(d,l))
+                                .fillStyle(function(d,l) getArrowColor(d,l))
+                                .size( function(d,l) getArrowSize(d,l))
+                                .visible(true);
+                                
+                    var dnodes = force.node.add(pv.Dot)
+                                .bottom(0)
+                                .size(function(d) { return d.selected?(d.linkDegree + 15) * Math.pow(this.scale, -1.5):(d.linkDegree + 4) * Math.pow(this.scale, -1.5)})
+                                .fillStyle(function(d) getColor(d))
+                                //.fillStyle(pv.hsl(225, 0.5, 0.5, 0.5))
+                                .strokeStyle(function() this.fillStyle().darker())
+                                .lineWidth(1)
+                                //.title(function(d) d.nodeName)
+                                .cursor("pointer")
+                                .event("click", function (d) getNodeProperties(this.index, d.nodeName, d))
+                                .event("mousedown", pv.Behavior.drag())
+                                .event("drag", force)
+                                .anchor("center").add(pv.Label)
+                                .text(function(d) getText(d) )
+                                .font(function(d) d.selected?'bold 10pt sans-serif':'normal 7pt sans-serif');
+                            
+                            /*dnodes.add(pv.Color)
+                                .color('#ddd')
+                                .opacity(1);*/
+                
+                            vis.render();
+                        }catch(e){
+                        }
+                        
+                        //setDropDownSelectedValue('distributome.connectedNodesAction', 1);
+                        //connectedNodesFetch();
+                
+                    </script>
+            
+            </div>
+	
+			<div id="navsidebar" class="sidebar">
+				<div class = "accordion">
+					<h3>Editor</h3>
+                        <div id="editor" >
+		<div id="editorTitle" > asdf
+		</div>
+		<div id="contentHolder" >
+			<div id="editorContent" >
+				<button id="createDis" >Create a new distribution</button>
+				<button id="createRel" >Create a new Relation</button>
+				<div id="editorNote" >
+					<p>
+						Click on an existing distribution or relation in the navigator to edit it.
+					</p>
+				</div>
+			</div>
+			<div id="addAttrDiv" >
+				<div id="addAttrTitle" >
+					Choose an attribute
+				</div>
+				<div id="disAttr" >
+					<div class="attrChoice" >
+						Name
+					</div>
+					<div class="attrChoice" >
+						Type
+					</div>
+					<div class="attrChoice" >
+						Model
+					</div>
+					<div class="attrChoice" >
+						Support
+					</div>
+					<div class="attrChoice" >
+						Pdf
+					</div>
+					<div class="attrChoice" >
+						Mode
+					</div>
+					<div class="attrChoice" >
+						Cdf
+					</div>
+					<div class="attrChoice" >
+						Qf
+					</div>
+					<div class="attrChoice" >
+						Mean
+					</div>
+					<div class="attrChoice" >
+						Variance
+					</div>
+					<div class="attrChoice" >
+						Skew
+					</div>
+					<div class="attrChoice" >
+						Kurt
+					</div>
+					<div class="attrChoice" >
+						Median
+					</div>
+					<div class="attrChoice" >
+						Q1
+					</div>
+					<div class="attrChoice" >
+						Q3
+					</div>
+					<div class="attrChoice" >
+						History
+					</div>
+					<div class="attrChoice" >
+						Id
+					</div>
+				</div>
+				<div id="relAttr" >
+					<div class="attrChoice" >
+						To
+					</div>
+					<div class="attrChoice" >
+						From
+					</div>
+					<div class="attrChoice" >
+						Statement
+					</div>
+					<div class="attrChoice" >
+						Type
+					</div>
+					<div class="attrChoice" >
+						Id
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="editorFooter">
+		</div>
+	</div>
+					<h3>Distribution Properties</h3>
+                        <div id="distributome.propertiesPannel"> <!-- Get the Inter-Distribution Relation Properties from Distributome.xml -->
+			            </div>
+					<h3>Distribution Actions</h3>
+	    				<div>
+                            <ul> 
+                                <li><a href="./calc/NormalCalculator.html" target="_blank" title="Interactive Distribution Calculator" id="distributome.calculator">Calculator</a></li>
+                                <li><a href="./exp/PoissonExperiment.html" target="_blank" title="Run Virtual Distribution Experiment" id="distributome.experiment">Experiment</a></li>
+                                <li><a href="./sim/NormalSimulation.html" target="_blank" title="Distribution Sampling and Simulation" id="distributome.simulation">Simulation</a></li>
+                                <li><a href="./Distributome.xml.html" target="_blank" title="Render the entire Distributome Database as a web-page">Distributome DB HTML View</a></li>
+                            </ul>
+                        </div>
+					<h3>Inter-Distribution Relations</h3>
+					<div id="distributome.relationPannel">
+					</div>
+					<h3>Distribution References</h3>
+					<div id="distributome.referencePanel"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 </body>
 </html>
