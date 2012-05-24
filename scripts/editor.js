@@ -41,11 +41,13 @@ function showDialog(dialog, zIndex, topDiff){
 		document.getElementById(dialog).style.zIndex=5;
 	}
 	document.getElementById(dialog).style.visibility = "visible";
+	distributomeEditor.on = true;
 }
 
 /******* Hide the Dialog Div *******/
 function hideDialog(dialog){
 	document.getElementById(dialog).style.visibility = "hidden";
+	distributomeEditor.on = false;
 }
 
 function editXML(){
@@ -60,6 +62,7 @@ function reflectResourceType(){
 		document.getElementById('distributome.relationXml').style.display = 'none'; 
 		setDropDownSelectedValue('distributome.distributionXmlTable.dropDown0', 'name');
 		setDropDownSelectedValue('distributome.distributionXmlTable.dropDown1', 'pdf');
+		
 	}else if(type ==2){
 		document.getElementById('distributome.relationXml').style.display = ''; 
 		document.getElementById('distributome.distributionXml').style.display = 'none';
@@ -306,3 +309,453 @@ function fetchArray(xmlDoc){
 		nodeDropDown = nodesDropDown();
 	
 }
+
+// Newly added stuff to editor
+
+var editor;
+var editorCopy;
+var editorContent;
+var editorFooter;
+var editorTitle;
+var addAttrDiv;
+
+// Set existing object on distributomeEditor
+function setEditorNode (index, type) {
+	var xmlObject;
+	// if true
+	if (editor.css("display") != "none") {
+		xmlObject = XMLObject(index, type);
+		if (typeof xmlObject != 'undefined' && xmlObject != null) {
+			editor.data("existing", xmlObject);
+			editor.data("type", type);
+			if (type == "node") {
+				editor.data("existingName", xmlObject.getElementsByTagName("name")[0].childNodes[0].nodeValue);
+			}
+			//editorContent.text(XMLToString(xmlObject));
+			//alert(XMLToString(xmlObject));
+			xmlToEditor(xmlObject);
+		}
+	}
+}
+
+// gotten from joncom.be
+function XMLToString(oXML) {
+  if (window.ActiveXObject) {
+    return oXML.xml;
+  } else {
+    return (new XMLSerializer()).serializeToString(oXML);
+  }
+}
+
+function newDistribution(){
+	editor.data("changeState")("Editing new Distribution");
+	editor.data("action", "newDistribution");
+	editor.data("editing", true);
+	editor.data("type", "distribution");
+	editor.data("nodeFooter").css("display", "block");
+	appendNewAttr("name");
+	appendNewAttr("pdf");
+}
+
+function newRelation(){
+	editor.data("changeState")("Editing new Relation");
+	editor.data("action", "newRelation");
+	editor.data("editing", true);
+	editor.data("type", "relation");
+	editor.data("nodeFooter").css("display", "block");
+	appendNewAttr("from");
+	appendNewAttr("to");
+	appendNewAttr("statement");
+}
+
+// place xml object into editor
+function xmlToEditor(xmlObject) {
+	if (!editor.data("editing")) {
+		
+		var xC = xmlObject.childNodes;
+		var xType = xmlObject.tagName;
+		var xId = xmlObject.attributes.getNamedItem("id");
+		if (xId != null) {
+			xId = xId.value;
+			
+			editor.data("id", xId);
+		} else {
+			editor.data("id", xId);
+			xId = "";
+		}
+		var xUpper;
+		if (xId.length == 0) {
+			xUpper = "";
+		} else if (xId.length == 1) {
+			xUpper = xId.toUpperCase();
+		} else {
+			xUpper = xId[0].toUpperCase() + xId.substr(1);
+		}
+		editor.data("changeState")("Editing " + xUpper + " " + 
+				xType[0].toUpperCase() + xType.substr(1));
+		var tempX = document.createElement("id");
+		tempX.innerHTML = xId;
+		editorContent.append(editorAttrDiv(tempX));
+		for (var i=0; i<xC.length; i++) {
+			if (xC[i].tagName != null) {
+				var attrDiv = editorAttrDiv(xC[i]);
+				editorContent.append(attrDiv);
+			}
+			//editorContent.append($('<div >' + XMLToString(xC[i]) + '</div>'));
+		}
+		editor.data("editing", true);
+		editor.data("action", "existing");
+		editor.data("existing", xmlObject);
+		
+		editor.data("type", xType);
+		editor.data("nodeFooter").css("display", "block");
+	}
+}
+
+function editorSave() {
+
+	var XML = new XMLWriter(true);
+	XML.BeginNode("distributome");
+	XML.Attrib("version","2.0");
+	var xId = "";
+	if (editor.data("type") == "distribution") {
+		XML.BeginNode("distributions",1);
+		XML.BeginNode("distribution",2);
+		var attrNodes = new XMLWriter();
+		var dName = null;
+		var dPdf = null;
+		editorContent.children().each(function(){
+			//alert($(this).data("name"));
+			var name = $(this).data("name").toLowerCase();
+			var value = $.trim($(this).data("value"));
+			var newV = $(this).data("new");
+			if (name != "id") {
+				if (name == "name") {
+					if (xId == "") {
+						xId = value;
+					}
+					if (value.indexOf("distribution") < 0) {
+						value = $.trim(value);
+						value += " distribution";
+					}
+					dName = value;
+				} else if (name == "pdf") {
+					dPdf = value;
+				}
+				attrNodes.BeginNode(name,3);
+				attrNodes.WriteString(value);
+				attrNodes.EndNode();
+			} else {
+				xId = value;
+			}
+		});
+		if (dName == null || dPdf == null) {
+			alert('A distribution needs at least a name and pdf attributes');
+			return;
+		}
+		XML.Attrib("id", xId);
+		XML.WriteString('\n'+attrNodes.ToString());
+		XML.EndNode();
+		XML.EndNode();
+	} else if(editor.data("type") == "relation") {
+		XML.BeginNode("relations",1);
+		XML.BeginNode("relation",2);
+		var attrNodes = new XMLWriter();
+		var to = null;
+		var from = null;
+		var statement = null;
+		editorContent.children().each(function(){
+			//alert($(this).data("name"));
+			var name = $(this).data("name").toLowerCase();
+			var value = $.trim($(this).data("value"));
+			var newV = $(this).data("new");
+			if (name != "id") {
+				attrNodes.BeginNode(name,3);
+				attrNodes.WriteString(value);
+				attrNodes.EndNode();
+				if (name == "to") {
+					to = value;
+				} else if (name == "from") {
+					from = value;
+				} else if (name == "statement") {
+					statement = value;
+				}
+			} else {
+				xId = value;
+			}
+		});
+		if (xId == "") {
+			xId = from + '/' + to;
+		}
+		if (to == null || from == null || statement == null) {
+			alert('A relation needs at least a to, from, and statement attributes');
+			return;
+		}
+		XML.Attrib("id", xId);
+		XML.WriteString('\n'+attrNodes.ToString());
+		XML.EndNode();
+		XML.EndNode();
+	}
+	
+
+	XML.EndNode();
+	
+	var distributomeXML = XML.ToString();
+	var win = window.open("", "Save_XML", "");
+    if (!win){
+		return;
+	}
+    var doc = win.document;
+    doc.write("<html><head><title>Save XML by copying<\br></title></head><body><div><textarea rows=\"50\" cols=\"100\">"+distributomeXML+"</textarea></div></body></html>");
+    doc.close();
+	alert("To proceed further, Save this XML displayed and email it for review and publishing to info@sistributome.org");
+}
+
+// get new attribute for editor
+function editorNewAttrDiv(name) {
+	var xTemp = new XMLWriter();
+	xTemp.BeginNode(name);
+	xTemp.WriteString('Click me to edit');
+	xTemp.EndNode();
+	var $xml = $.parseXML(xTemp.ToString());
+	var newDiv = editorAttrDiv($xml);
+	newDiv("new", true);
+	return newDiv;
+}
+
+
+// get attribute name div
+function editorAttrName(name) {
+	var temp = $('<div class="attrName" ></div>');
+	temp.text(name);
+	return temp.clone().wrap('<div/>').parent().html()
+	//return '<div class="attrName" >' + name + '</div>';
+}
+
+// get attribute value div
+function editorAttrValue(value) {
+	var temp1 = $('<div class="attrValue" ></div>');
+	var temp2 = $('<input class="attrInput" style="display:none" type="text" />');
+	temp1.text(value);
+	temp2.attr("value", temp1.text());
+	return temp1.clone().wrap('<div/>').parent().html() + temp2.clone().wrap('<div/>').parent().html();
+	//return '<div class="attrValue" >' + value + '</div>' + '<input class="attrInput" style="display:none" type="text" value="' + value + '" />';
+	//return '<div class="attrValue" >' + value + '</div>' + '<textarea class="attrInput" style="display:none" >' + value + '</textarea>';
+}
+
+// get attribute div
+function editorAttrDiv(node) {
+	var nodeName = node.tagName.toLowerCase();
+	var nodeValue = $(node).text(); 
+	var attrDiv;
+	
+	attrDiv = $('<div class="attrDiv" >' + editorAttrName(nodeName) + editorAttrValue(nodeValue) + editorAttrButtons() + '</div>');
+	//document.write(attrDiv.html());
+	attrDiv.data("name", nodeName);
+	attrDiv.data("value", nodeValue);
+	attrDiv.data("new", false);
+	attrDiv.data("editing", false);
+	var attrValue = $(attrDiv.find(".attrValue")[0]);
+	var attrInput = $(attrDiv.find(".attrInput")[0]);
+	var attrDivBut1 = $(attrDiv.find(".attrBut1")[0]);
+	var attrDivBut2 = $(attrDiv.find(".attrBut2")[0]);
+	var attrEditB = $(attrDiv.find(".attrEditB")[0]);
+	var attrRemoveB = $(attrDiv.find(".attrRemoveB")[0]);
+	var attrDoneB = $(attrDiv.find(".attrDoneB")[0]);
+	var attrCancelB = $(attrDiv.find(".attrCancelB")[0]);
+	attrDiv.data("attrValue", attrValue);
+	attrDiv.data("attrInput", attrInput);
+	attrDiv.data("attrDivBut1", attrDivBut1);
+	attrDiv.data("attrDivBut2", attrDivBut2);
+	attrDiv.data("attrEditB", attrEditB);
+	attrDiv.data("attrRemoveB", attrRemoveB);
+	attrDiv.data("attrDoneB", attrDoneB);
+	attrDiv.data("attrCancelB", attrCancelB);
+	attrDiv.data("changeState", function(state) {
+		state = state.toLowerCase();
+		if (state == "edit") {
+			attrDiv.data("editing", true);
+			attrDivBut1.css("display", "none");
+			attrDivBut2.css("display", "block");
+			attrValue.css("display", "none");
+			attrInput.css("display", "block");
+		} else if (state == "done" || state == "cancel") {
+			attrDiv.data("editing", false);
+			attrDivBut1.css("display", "none");
+			attrDivBut2.css("display", "none");
+			attrValue.css("display", "block");
+			attrInput.css("display", "none");
+		}
+	});
+	attrEditB.click(function(){
+		attrDiv.data("changeState")("edit");
+	});
+	attrDoneB.click(function(){
+		attrValue.text(attrInput.val());
+		attrDiv.data("new", false);
+		attrDiv.data("value", attrValue.text());
+		attrDiv.data("changeState")("done");
+	});
+	attrCancelB.click(function(){
+		attrInput.val(attrValue.text());
+		attrDiv.data("changeState")("cancel");
+	});
+	attrRemoveB.click(function(){
+		attrDiv.remove();
+	});
+	attrValue.click(function(){
+		attrEditB.click();
+	});
+	attrDiv.hover(function() {
+		if (!$(this).data("editing")) {
+			$(this).data("attrDivBut1").css("display", "block");
+		}
+	}, function() {
+		if (!$(this).data("editing")) {
+			$(this).data("attrDivBut1").css("display", "none");
+		}
+	});
+	if (nodeName == null) {
+		return null;
+	}
+	return attrDiv;
+}
+
+// get attribute buttons div
+function editorAttrButtons() {
+	var but1 = '<div class="attrBut1" ><button class="attrEditB" >Edit</button><button class="attrRemoveB">Remove</button></div>';
+	var but2 = '<div class="attrBut2" ><button class="attrDoneB" >Done</button><button class="attrCancelB">Cancel</button></div>';
+	return but1 + but2;
+}
+
+function editorFooterButtons() {
+	return '<div id="nodeFooter" ><button id="fAddAttr">Add Attribute</button><button id="fReset" >Reset</button><button id="fClear" >Cancel</button><button id="fSave">Save</button></div>';
+}
+
+function editorFooterAddAttrButtons() {
+	return '<div ><button id="fCancel">Cancel</button></div>';
+}
+
+function editorReset() {
+	editorContent.empty();
+	editor.data("editing", false);
+	if (editor.data("action") == "existing") {
+		xmlToEditor(editor.data("existing"));
+	} else if (editor.data("action") == "newDistribution") {
+		newDistribution();
+	} else if (editor.data("action") == "newRelation") {
+		newRelation();
+	}
+}
+
+function editingFooter() {
+	var nodeFooter = $(editorFooterButtons());
+	var nodeAddAttrB = $(nodeFooter.find("#fAddAttr")[0]);
+	var nodeClearB = $(nodeFooter.find("#fClear")[0]);
+	var nodeResetB = $(nodeFooter.find("#fReset")[0]);
+	var nodeSaveB = $(nodeFooter.find("#fSave")[0]);
+	editor.data("nodeAddAttrB", nodeAddAttrB);
+	editor.data("nodeClearB", nodeClearB);
+	editor.data("nodeResetB", nodeResetB);
+	editor.data("nodeSaveB", nodeSaveB);
+	
+	nodeClearB.click(editorClear);
+	nodeResetB.click(editorReset);
+	nodeAddAttrB.click(editorAddAttrDiv);
+	nodeSaveB.click(editorSave);
+	
+	clearFooter();
+	editorFooter.append(nodeFooter);
+	editor.data("nodeFooter", nodeFooter);
+}
+
+function clearFooter() {
+	editorFooter.empty();
+}
+
+function editorAddAttrDiv(){
+	if (!addAttrDiv.data("visible")) {
+		$("#addAttrDiv").css("display", "block");
+		if (editor.data("type") == "relation") {
+			$("#relAttr").css("display", "block");
+		} else if (editor.data("type") == "distribution") {
+			$("#disAttr").css("display", "block");
+		}
+		clearFooter();
+		var f = $(editorFooterAddAttrButtons());
+		editorFooter.append(f);
+		var fCancel = $(editorFooter.find("#fCancel")[0]);
+		fCancel.click(function(){
+			editorAddAttrDiv();
+		});
+		
+		addAttrDiv.data("visible", true);
+	} else {
+		$("#addAttrDiv").css("display", "none");
+		$("#relAttr").css("display", "none");
+		$("#disAttr").css("display", "none");
+		clearFooter();
+		editingFooter();
+		editor.data("nodeFooter").css("display", "block");
+		addAttrDiv.data("visible", false);
+	}
+	
+}
+
+function appendNewAttr(name) {
+	var tempX = document.createElement(name);
+	tempX.innerHTML = "Click here to edit new attribute";
+	var tempN = editorAttrDiv(tempX);
+	tempN.data("new", true);
+	editorContent.append(tempN);
+}
+
+function editorClear() {
+	editor.html(editorCopy.html());
+	
+	addAttrDiv = $("#addAttrDiv");
+	addAttrDiv.data("visible", false);
+	
+	$(".attrChoice").click(function(){
+		var text = $.trim($(this).text()).toLowerCase();
+		appendNewAttr(text);
+		editorAddAttrDiv();
+	});
+	
+	editorContent = $(editor.find("#editorContent")[0]);
+	editorFooter = $(editor.find("#editorFooter")[0]);
+	editorTitle = $(editor.find("#editorTitle")[0]);
+	editor.data("changeState", function(title) {
+		if (typeof title == "string") {
+			editorTitle.text(title);
+		}
+		editorContent.empty();
+	});
+
+	editingFooter();
+	
+	editor.data("action", null);
+	editor.data("editing", false);
+	editor.data("existing", null);
+	editor.data("type", null);
+	editor.data("id", null);
+	
+	$("#createDis").click(function(){
+		newDistribution();
+	});
+	
+	$("#createRel").click(function(){
+		newRelation();
+	});
+	
+}
+
+// init editor
+$(document).ready(function(){
+	editor = $("#editor");
+	editorCopy = $(editor.clone(false));
+	editorClear();
+	
+	
+
+});

@@ -140,6 +140,7 @@ function getLinkColor(d,l){
 
 /*************** Fetch node properties **************/
 function getNodeProperties(index, nodeName, d){
+	//alert(index);
 	if(connectivity && d.selected != "top_hierarchy" && d.selected != "middle_hierarchy") return;
 	if(!_shiftKey){
 		resetNodes();

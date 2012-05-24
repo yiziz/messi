@@ -193,6 +193,45 @@ function getObjectReferenceNumber(object){
 	}
 }
 
+
+/*************** Merge XML doc B onto XML doc A *************/
+//function XMLMerge(A, B) {
+//var C;
+//return C;
+//}
+
+/*************** Get XML node of object **************/
+function XMLObject(index, type){
+	var i;
+	var nodeNameIndex;
+	if (type == "node") {
+		i = getObjectReferenceNumber('node');
+		nodeNameIndex  = 1;
+	} else if (type == "link") {
+		i = getObjectReferenceNumber('relation');
+		nodeNameIndex  = 7;
+	}
+	var reference = true;
+	var XML_Objects = DistributomeXML_Objects;
+	var xmlObject;
+	
+	// get object by index
+	var Level1Prop=xmlDoc.getElementsByTagName(XML_Objects[i].nodeName)[0].childNodes;
+	//var currLevel1Prop=xmlDoc.getElementsByTagName(XML_Objects[i].nodeName)[0].firstChild;
+	
+	//var Level2Prop=xmlDoc.getElementsByTagName(Level1Prop[nodeNameIndex].nodeName)[index].childNodes;
+	//var currLevel2Prop=xmlDoc.getElementsByTagName(Level1Prop[nodeNameIndex].nodeName)[index].firstChild;
+	xmlObject = xmlDoc.getElementsByTagName(Level1Prop[nodeNameIndex].nodeName)[index];
+	
+	// alert xmlObject as string
+	// alert(new XMLSerializer().serializeToString(xmlObject));
+	
+	// alert xmlObject name
+	// alert(xmlObject.getElementsByTagName("name")[0].childNodes[0].nodeValue);
+	
+	return xmlObject;
+}
+
 /*************** Parse XML to fetch information per node in the XML **************/
 function XMLParser(i, nodeNameIndex, index, reference, XML_Objects){
 	var html = new Array();
@@ -201,9 +240,10 @@ function XMLParser(i, nodeNameIndex, index, reference, XML_Objects){
 		
 		var Level1Prop=xmlDoc.getElementsByTagName(XML_Objects[i].nodeName)[0].childNodes;
 		var currLevel1Prop=xmlDoc.getElementsByTagName(XML_Objects[i].nodeName)[0].firstChild;
-
+		
 		var Level2Prop=xmlDoc.getElementsByTagName(Level1Prop[nodeNameIndex].nodeName)[index].childNodes;
 		var currLevel2Prop=xmlDoc.getElementsByTagName(Level1Prop[nodeNameIndex].nodeName)[index].firstChild;
+
 		
 		var k_corr=0;
 		var nameText = ''; var nameFlag = true; var typeFlag = false; var typeText = '';

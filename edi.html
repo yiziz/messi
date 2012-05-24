@@ -35,7 +35,7 @@
 
   	<link rel="shortcut icon" href="../images/favicon.ico">
 
-	
+	<script type="text/javascript" src="./scripts/jquery.js"></script>
 
   	<script type="text/javascript" src="scripts/protovis-r3.2.js"></script>
 
@@ -47,7 +47,7 @@
 
 	<script type="text/javascript" src="scripts/editor.js"></script>
 
-	<script type="text/javascript" src="./scripts/jquery.js"></script>
+	
 
 	<script type="text/javascript" src="./scripts/splitter.js"></script>
 
@@ -136,6 +136,211 @@
 
 
 <body onmousedown="isKeyPressed(event)">
+
+
+<!-- Test New Editor css -->
+<style type="text/css" >
+
+div.attrBut1 {
+	display:none;
+	width:100%;
+	text-align:right;
+}
+
+div.attrBut2 {
+	display:none;
+	width:100%;
+	text-alignt:right;
+}
+div.attrChoice {
+	display:inline-table;
+	width:100%;
+	text-align:center;
+}
+div.attrDiv {
+	width:100%;
+	display:inline-table;
+	margin-bottom:5px;
+}
+
+
+div.attrName {
+	display:block;
+	text-align:left;
+	font-weight:bold;
+	clear:both;
+}
+div.attrValue {
+	display:block;
+	text-align:right;
+	clear:both;
+}
+
+
+div#addAttrDiv {
+	overflow:auto;
+	position:absolute;
+	background-color:white;
+	display:none;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:100;
+}
+div#contentHolder {
+	position:relative;
+	width:100%;
+	height:80%;
+}
+div#disAttr {
+	overflow:auto;
+	position:absolute;
+	background-color:white;
+	display:none;
+	cursor:hand;
+	cursor:pointer;
+	z-index:100;
+	width:100%;
+}
+div#editorBanner {
+	height:10%;
+	width:100%;
+}
+div#editorBody {
+	height:90%;
+	width:100%;
+}
+div#editorContent {
+	position:relative;
+	height:100%;
+	width:100%;
+	overflow:auto;
+}
+div#editorFooter {
+	height:15%;
+}
+div#editorTitle {
+	height:10%;
+}
+div#nodeFooter {
+	display:none;
+}
+div#relAttr {
+	overflow:auto;
+	position:absolute;
+	background-color:white;
+	display:none;
+	cursor:hand;
+	cursor:pointer;
+	z-index:100;
+	width:100%;
+}
+
+input.attrInput {
+	width:100%;
+}
+</style>
+
+<!-- new editor -->
+<div id="editor" style="width:300px;height:400px;display:block;border-color:black;border-style:solid;" >
+	<div id="editorBanner" >
+		Editor (place title and switch button here)
+	</div>
+	<div id="editorBody" >
+		<div id="editorTitle" >
+		</div>
+		<div id="contentHolder" >
+			<div id="editorContent" >
+				<button id="createDis" >Create a new distribution</button>
+				<button id="createRel" >Create a new Relation</button>
+				<div id="editorNote" >
+					<p>
+						Click on an existing distribution or relation in the navigator to edit it.
+					</p>
+				</div>
+			</div>
+			<div id="addAttrDiv" >
+				<div id="addAttrTitle" >
+					Choose an attribute
+				</div>
+				<div id="disAttr" >
+					<div class="attrChoice" >
+						Name
+					</div>
+					<div class="attrChoice" >
+						Type
+					</div>
+					<div class="attrChoice" >
+						Model
+					</div>
+					<div class="attrChoice" >
+						Support
+					</div>
+					<div class="attrChoice" >
+						Pdf
+					</div>
+					<div class="attrChoice" >
+						Mode
+					</div>
+					<div class="attrChoice" >
+						Cdf
+					</div>
+					<div class="attrChoice" >
+						Qf
+					</div>
+					<div class="attrChoice" >
+						Mean
+					</div>
+					<div class="attrChoice" >
+						Variance
+					</div>
+					<div class="attrChoice" >
+						Skew
+					</div>
+					<div class="attrChoice" >
+						Kurt
+					</div>
+					<div class="attrChoice" >
+						Median
+					</div>
+					<div class="attrChoice" >
+						Q1
+					</div>
+					<div class="attrChoice" >
+						Q3
+					</div>
+					<div class="attrChoice" >
+						History
+					</div>
+					<div class="attrChoice" >
+						Id
+					</div>
+				</div>
+				<div id="relAttr" >
+					<div class="attrChoice" >
+						To
+					</div>
+					<div class="attrChoice" >
+						From
+					</div>
+					<div class="attrChoice" >
+						Statement
+					</div>
+					<div class="attrChoice" >
+						Type
+					</div>
+					<div class="attrChoice" >
+						Id
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="editorFooter" >
+		</div>
+	</div>
+</div>
+
 
 
 <!-- Editor Begin -->
@@ -489,7 +694,7 @@ $().ready(function() {
 						.cursor("pointer")
 						//.fillStyle("#696969")
 						.strokeStyle(function(d,l) getLinkColor(d,l))
-						.event("click", function (d, l) getRelationProperties(d.nodeName, l.index));
+						.event("click", function (d, l) { getRelationProperties(d.nodeName, l.index); setEditorNode(l.index, "link"); });
 			
 			linky.add(pv.Dot)
 				.data(function(l) { if(l.target == l.source) return [{x:0,y:0}];
@@ -516,7 +721,7 @@ $().ready(function() {
 				.lineWidth(1)
 				//.title(function(d) d.nodeName)
 				.cursor("pointer")
-				.event("click", function (d) getNodeProperties(this.index, d.nodeName, d))
+				.event("click", function (d) { getNodeProperties(this.index, d.nodeName, d); setEditorNode(this.index, "node"); })
 				.event("mousedown", pv.Behavior.drag())
 				.event("drag", force)
 				.anchor("center").add(pv.Label)
