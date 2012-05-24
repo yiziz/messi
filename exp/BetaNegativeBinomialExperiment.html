@@ -1,0 +1,141 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>www.Distributome.org: Name</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="verify-v1"
+content="S6zclu9UcbbjR6mX8ELA6R4G0lCJKUAtaTLeQmxvg8A=">
+<meta name="description"
+content="Probability and Statistics Distributions Resource - Distributome">
+<meta name="keywords"
+content="Probability Statistics Distributions Resource Distributome Webapps">
+<meta name="author" content="http://www.Distributome.org">
+<link rel="stylesheet" type="text/css"
+href="../../images/Distributome_style.css">
+<link rel="shortcut icon" href="../../images/favicon.ico">
+<style type="text/css">
+body {
+margin: 0;
+}
+</style>
+<script type="text/javascript" src="devices.js"></script>
+<script type="text/javascript" src="distributions.js"></script>
+<script type="text/javascript" src="BetaNegativeBinomialExperiment.js"></script>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body class="ancillary" onload="initialize()">
+<div id="wrapper-menu-top">
+<div id="menu-top">
+<ul>
+<li><a href="http://www.Distributome.org" title="Distributome Home"><span>Home</span></a></li>
+<li><span> Tools</span><span> »</span></li>
+<li><a href="../../about.html" title="About"><span>About</span></a></li>
+<li><a href="../DistributomeNavigator.html"
+title="Interactive Distributome Navigator"><span>Navigator</span></a></li>
+<li><a href="../DistributomeEditor.html"
+title="Interactive Distributome Meta-Data Editor"><span>Editor</span></a></li>
+<li><a href="./index.html" title="Other Calculators"><span>Calculators</span></a></li>
+</ul>
+</div>
+<!--menu-top--></div>
+<!--wrapper-menu-top-->
+<div id="wrapper-header">
+<div id="header">
+<div id="wrapper-header2">
+<div id="wrapper-header3">
+<h1>
+<center>Beta-Negative Binomial Experiment</center>
+</h1>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align: justify;" id="content">
+<div style="text-align: justify;" id="content">
+
+<div class="applet">
+<fieldset class="toolbar">
+	<button type="button" id="stepButton" tabindex="1" title="Step" onclick="stepExperiment();">
+		<img src="step.png" alt="Step" />
+	</button>
+	<button type="button" id="runButton" tabindex="2" title="Run" onclick="runExperiment()">
+		<img id="runImage" src="run.png" alt="Run" />
+	</button>
+	<button type="button" id="stopButton" tabindex="3" title="Stop" onclick="stopExperiment();">
+		<img id="stopImage" src="stop.png" alt="Stop" />
+	</button>
+	<button type="button" id="resetButton" tabindex="4" title="Reset" onclick="resetExperiment();">
+		<img src="reset.png" alt="Reset" />
+	</button>
+	<select id="stopSelect" tabindex="5" title="Stop frequency" onchange="stopFreq = value;">
+		<option value="10">Stop: 10</option>
+		<option value="100">Stop: 100</option>
+		<option value="1000">Stop: 1000</option>
+		<option value="10000">Stop: 10000</option>
+		<option value="0">Stop: never</option>
+	</select>
+</fieldset>
+
+<fieldset class="toolbar">
+	<span class="tool">
+		<label id="kLabel" for="kInput"></label>
+		<input id="kInput" type="range" class="parameter" tabindex="7" onchange="resetExperiment();" />
+	</span>
+	<span class="tool">
+		<label id="aLabel" for="aInput"></label>
+		<input id="aInput" type="range" class="parameter" tabindex="8" onchange="resetExperiment();" />
+	</span>
+	<span class="tool">
+		<label id="bLabel" for="bInput"></label>
+		<input id="bInput" type="range" class="parameter" tabindex="9" onchange="resetExperiment();" />
+	</span>
+</fieldset>
+
+<table class="applet">
+	<tr>
+		<td colspan="2" class="device"><canvas id="timeline" width="600" height="40" class="timeline">Timeline</canvas></td>
+	</tr>
+	<tr>
+		<td class="device"><canvas id="dist0Canvas" width="300" height="180" class="graph">Distribution graph</canvas></td>
+		<td class="device"><canvas id="dist1Canvas" width="300" height="180" class="graph">Distribution graph</canvas></td>
+	</tr>
+	<tr>
+		<td class="device"><textarea id="recordTable" readonly="true" wrap="off" class="table" rows="7"></textarea></td>
+		<td class="device"><textarea id="distTable" readonly="true" wrap="off" class="table" rows="7"></textarea></td>
+	</tr>
+</table>
+</div>
+
+<h4 class="ancillary">Description</h4>
+
+<p>In this experiment, a random probability \( P \) has a beta distribution with left parameter \( a \) and right parameter \( b \). Then, Bernoulli trials with success probabiity  \( P \) are performed.  Random variable \( V \) is the trial number of the \( k \)th success, and has the beta-negative binomial distribution with parameters \( k \), \( a \), and \( b \). The top graph shows the sequence of Bernoulli trials in a timeline, with each success as a red dot and each failure as a green dot.  The first distribution graph shows the probability density function and empirical probability density function of \( P \). The second distribution graph shows the probability density function and empirical probability density function of \( V \). The first table records the outome \( (P, V) \) of the experiment. The second table records the same information in text form as the graph above it. The parameters \( k \), \( a \), and \( b \) can be varied with input controls.</p>
+
+<div id="wrapper-footer">
+<div id="footer"> Visitor number <img
+src="http://counter.digits.com/?counter=%7B567347b6-ad03-67d4-1993-0fc7aa8563de%7D&amp;template=simple"
+align="middle" border="0" height="20" hspace="4" vspace="2" width="60">
+<script type="text/javascript"> var d=new Date();
+document.write(" | 2008-"+d.getFullYear()+" | ");
+</script>
+<a href="http://www.Distributome.org">www.Distributome.org</a>
+</div>
+</div>
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=5714596;
+var sc_invisible=1;
+var sc_partition=71;
+var sc_click_stat=1;
+var sc_security="038e9ac4";
+</script>
+<script type="text/javascript"
+src="http://www.statcounter.com/counter/counter.js">
+</script><!-- End of StatCounter Code --><!-- GoogleAnalytics -->
+<script src="http://www.google-analytics.com/urchin.js"
+type="text/javascript">
+</script>
+<script type="text/javascript"> _uacct = "UA-676559-1"; urchinTracker();
+</script>
+<!-- End of GoogleAnalytics Code --></div>
+</body>
+</html>

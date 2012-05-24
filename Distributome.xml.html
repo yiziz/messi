@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+<!-- script type="text/javascript" src="./MathJax.js?config=default"></script -->
+  <title>www.Distributome.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="description"
+ content="Probability and Statistics Distributions Resource - Distributome">
+  <meta name="keywords"
+ content="Distributome Probability Distributions StatisticsResource Web apps">
+  <meta name="author" content="Ivo Dinov - http://www.Distributome.org">
+  <link rel="stylesheet" type="text/css"
+ href="../images/Distributome_style.css">
+  <link rel="shortcut icon" href="../images/favicon.ico">
+  <script type="text/javascript"
+ 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+  
+  <style>
+	h1 {text-align:center}
+	h2 {
+  		font-weight: bold;
+  		background-color: #DDDDDD;
+  		padding: .2em .5em;
+  		margin-top: 1.5em;
+  		border-top: 3px solid #666666;
+  		border-bottom: 2px solid #999999;
+  }
+  </style>
+  
+  <script> 
+  	MathJax.Hub.Config({
+  		TeX: {
+    		Macros: {
+      			sgn: '{\\text{sgn}}' ,
+      			// \newcommand{\sgn}{\text{sgn}} ,  
+      			sech: '{\\text{sech}}' ,
+      			erf: '{\\text{erf}}' ,
+      			bs: ['{\\boldsymbol #1}',1],
+      			R: '{\\boldsymbol{R}}'
+    		}
+  		}
+	}); 
+  </script>
+</head>
+<body>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+  </script>
+
+<div id="wrapper-menu-top">
+<div id="menu-top">
+	<ul>
+  		<li><a href="http://www.Distributome.org" title="Distributome Home"><span>Home</span></a></li>
+  		<li><span> Tools »</span></li>
+  		<li><a href="./DistributomeDBSearch.xml.html" title="Keyword Search the Distributome Meta-data"><span>DB Search</span></a></li>
+ 		<li><a href="./DistributomeNavigator.html" title="Distributome Interactive Explorer"><span>Navigator</span></a></li>
+  		<li><a href="http://www.distributome.org/about.html" title="About"><span>About</span></a></li>
+  		<li><a href="../docs.html" title="Distributome Technical Documentation"><span>Tech Docs</span></a></li>
+  		<li><a href="http://www.SOCR.ucla.edu" title="Statistics Online Computational Resource (SOCR)"><span>SOCR</span></a></li>
+  		<li><a href="http://www.math.uah.edu/stat/" title="UAH Virtual Laboratories in Probability and Statistics"><span>VLPS</span></a></li>
+  		<li><a href="http://mbi.osu.edu/" title="OSU Mathematical Biosciences Institute"><span>OSU Bioscience</span></a></li> 		
+  		<li><a href="../legacy.html" title="Legacy Distributome Java Resources"><span>Legacy Resources</span></a></li>
+   		<li><a href="../blog" title="Distributome Blog"><span>Blog</span></a></li>
+	</ul>
+</div>
+<!--menu-top--></div>
+<!--wrapper-menu-top-->
+<div id="wrapper-header">
+<div id="header">
+<div id="wrapper-header2">
+<div id="wrapper-header3">
+<h1>
+<center>Distributome - Database Meta-Data</center>
+</h1>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align: justify;" id="content">
+<h1>
+<center>Distributome: JavaScript Parsing of Distributome.XML DB as HTML
+using MathJax</center>
+</h1>
+<script type="text/javascript">
+
+xmlhttp=new XMLHttpRequest();
+xmlhttp.open("GET","Distributome.xml",false);
+xmlhttp.send();
+xmlDoc=xmlhttp.responseXML;
+
+DistributomeXML_Objects=xmlDoc.documentElement.childNodes;
+//var DistributomeXML_Objects=xmlDoc.getElementsByTagName("distributions");
+//document.write("Distributome Level=1 Tags: "+DistributomeXML_Objects.length+"<br />");
+
+var i_corr=0;
+
+for (i=0;i<DistributomeXML_Objects.length;i++) {
+	var j_corr=0;
+ 	//document.write("Starting: i="+i+"<br />");
+  	if (DistributomeXML_Objects[i].nodeType==1) {
+  		//Process only level=1 element nodes (type 1) 
+  		document.write(DistributomeXML_Objects[i].nodeName+" : "
+  		  		+DistributomeXML_Objects[i].childNodes[0].nodeValue);
+		document.write("<br />");
+
+		//document.write("---:i="+i+" i_corr="+i_corr);
+		Level1Prop=xmlDoc.getElementsByTagName(DistributomeXML_Objects[i].nodeName)[0].childNodes;
+			// Level1Prop = vector of "distributions"
+		currLevel1Prop=xmlDoc.getElementsByTagName(DistributomeXML_Objects[i].nodeName)[0].firstChild;
+			// currLevel1Prop = "first distribution" object (arc-sine distribution)
+		//document.write("---:i="+i+" i_corr="+i_corr+" Distributome Level=2 Tags: "+Level1Prop.length+"<br />");
+
+		if (i<5) {	// for "distributions" and "relations" objects ****/
+			if (i==1) document.write("<br />DISTRIBUTIONS ... <br />");
+			else if (i==3) document.write("<br />RELATIONS ... <br />");
+		
+			for (j=0;j<Level1Prop.length;j++) {
+				var k_corr=0;					
+				if (currLevel1Prop.nodeType==1) {
+	  			 //Process only level=2 element nodes (type 1)
+	  				document.write("------" + currLevel1Prop.nodeName+": "+
+	  		  				currLevel1Prop.childNodes[0].nodeValue);
+		  				// currLevel1Prop.childNodes[0].nodeValue == "distribution"
+					document.write("<br />");
+	 
+					Level2Prop=xmlDoc.getElementsByTagName(Level1Prop[j].nodeName)[j-j_corr].childNodes;
+						//Level2Prop = vector of property-objects for "distribution" parent
+					currLevel2Prop=xmlDoc.getElementsByTagName(Level1Prop[j].nodeName)[j-j_corr].firstChild;
+						// currLevel2Prop = "first" property object "name" for the first "distribution"
+					//document.write("------"+"j="+j+" j_corr="+j_corr+" ----Distributome Level=3 Tags: "+
+							//Level2Prop.length+"<br />");
+					 
+					for (k=0;k<Level2Prop.length;k++) {
+					  	try {
+							if (currLevel2Prop.nodeType==1)
+	  						{ //Process only level=3 element nodes (type 1)
+	  							document.write("---------"+ currLevel2Prop.nodeName+": "+
+	  		  						currLevel2Prop.childNodes[0].nodeValue);
+	  								//currLevel2Prop.childNodes[k-k_corr].nodeValue);
+	  								//xmlDoc.getElementsByTagName(Level2Prop[k].nodeName)[k-k_corr].nodeValue);
+								document.write("<br />");
+	  						} else k_corr++;
+								currLevel2Prop=currLevel2Prop.nextSibling;
+					  	} catch (err) {
+							document.write("Empty tag: " + 
+									currLevel2Prop.nodeName + "<br />");
+					  	}
+					}
+	  			} else j_corr++;
+				currLevel1Prop=currLevel1Prop.nextSibling;
+			}
+		} // End for "distributions" and "relations" objects
+		else if (i==5) {	// for "references" objects - separated because each reference is of 
+							// different type - e.g., books, reports, articles, etc.
+			document.write("<br />REFERENCES ...<br />");
+			for (j=0;j<Level1Prop.length;j++) {
+				var k_corr=0;
+				//document.write("Starting: j="+j+"<br />");
+				if (currLevel1Prop.nodeType==1) {
+	  			 //Process only level=2 element nodes (type 1)
+	  				document.write("------" + currLevel1Prop.nodeName+": "+
+	  		  				currLevel1Prop.childNodes[0].nodeValue);
+		  				// currLevel1Prop.childNodes[0].nodeValue == "distribution"
+					document.write("<br />");
+	 
+					Level2Prop=xmlDoc.getElementsByTagName(Level1Prop[j].nodeName)[j-j_corr].childNodes;
+						//Level2Prop = vector of property-objects for "distribution" parent
+					currLevel2Prop=xmlDoc.getElementsByTagName(Level1Prop[j].nodeName)[j-j_corr].firstChild;
+						// currLevel2Prop = "first" property object "name" for the first "distribution"
+					//document.write("------"+"j="+j+" j_corr="+j_corr+" ----Distributome Level=3 Tags: "+
+							//Level2Prop.length+"<br />");
+					 
+					for (k=0;k<Level2Prop.length;k++) {
+						try {
+							if (currLevel2Prop.nodeType==1)
+	  						{ //Process only level=3 element nodes (type 1)
+	  							document.write("---------"+ currLevel2Prop.nodeName+": "+
+	  		  						currLevel2Prop.childNodes[0].nodeValue);
+	  								//currLevel2Prop.childNodes[k-k_corr].nodeValue);
+	  								//xmlDoc.getElementsByTagName(Level2Prop[k].nodeName)[k-k_corr].nodeValue);
+								document.write("<br />");
+	  						} else k_corr++;
+							currLevel2Prop=currLevel2Prop.nextSibling;
+						} catch (err) {
+							document.write("Empty tag: " + 
+									currLevel2Prop.nodeName + "<br />");
+						}
+					}
+	  			} else j_corr++;
+				currLevel1Prop=currLevel1Prop.nextSibling;
+			}
+		} // End for "references" objects
+		/*******/
+		document.write("<br />");
+  	} else i_corr++;
+}
+
+</script>
+<div id="wrapper-footer">
+<div id="footer">
+	Visitor number <img src="http://counter.digits.com/?counter=%7B567347b6-ad03-67d4-1993-0fc7aa8563de%7D&amp;template=simple" align="middle" border="0" height="20" hspace="4" vspace="2" width="60"> 
+	<script type="text/javascript"> var d=new Date(); 
+		document.write(" | 2008-"+d.getFullYear()+" | ");
+	</script>
+	<a href="http://www.Distributome.org">www.Distributome.org</a>
+</div>
+</div>
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=5714596; 
+var sc_invisible=1; 
+var sc_partition=71; 
+var sc_click_stat=1; 
+var sc_security="038e9ac4"; 
+</script>
+<script type="text/javascript"
+ src="http://www.statcounter.com/counter/counter.js"></script><!-- End of StatCounter Code --><!-- GoogleAnalytics -->
+<script src="http://www.google-analytics.com/urchin.js"
+ type="text/javascript"> </script>
+<script type="text/javascript"> _uacct = "UA-676559-1"; urchinTracker();
+  </script><!-- End of GoogleAnalytics Code --></div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+<!-- script type="text/javascript" src="./MathJax.js?config=default"></script -->
+  <title>Distributome XML Database Search Engine</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="description"
+ content="Probability and Statistics Distributions Resource - Distributome">
+  <meta name="keywords"
+ content="Distributome Probability Distributions Statistics Resource Web apps">
+  <meta name="author" content="Ivo Dinov - http://www.Distributome.org">
+
+  <link rel="stylesheet" type="text/css"
+ href="../images/Distributome_style.css">
+  <link rel="shortcut icon" href="../images/favicon.ico">
+  <script type="text/javascript"
+ 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+  <script type="text/javascript" src="scripts/common.js"></script>
+  <script type="text/javascript" src="scripts/distributomeDBSearch.js"></script>
+  <script type="text/javascript" src="scripts/slider.js"></script>
+  
+  <style>
+	h1 {text-align:center}
+	h2 {
+  		font-weight: bold;
+  		background-color: #DDDDDD;
+  		padding: .2em .5em;
+  		margin-top: 1.5em;
+  		border-top: 3px solid #666666;
+  		border-bottom: 2px solid #999999;
+  }
+  #slider {width:95%;}
+	.header {width:95%; height:15px; border:2px solid #9ac1c9; padding:8px; 
+		font-weight:bold; margin-top:5px; cursor:pointer; 
+		background:url(images/searchHeader.gif)}
+	.header:hover {background:url(images/searchHeaderOver.gif)}
+	.content {overflow:none}
+	.text {width:94%; border:2px solid #9ac1c9; border-top:none; padding:15px; overflow:auto}
+  </style>
+  
+  <script> 
+  	MathJax.Hub.Config({
+  		TeX: {
+    		Macros: {
+      			sgn: '{\\text{sgn}}' ,
+      			// \newcommand{\sgn}{\text{sgn}} ,  
+      			sech: '{\\text{sech}}' ,
+      			erf: '{\\text{erf}}' ,
+      			bs: ['{\\boldsymbol #1}',1],
+      			R: '{\\boldsymbol{R}}'
+    		}
+  		}
+	}); 
+  </script>
+
+     <meta http-equiv="REFRESH" content="0;url=http://www.distributome.org/js/DistributomeDBSearch.xml.php">
+
+</head>
+<body>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+  </script>
+
+<div id="wrapper-menu-top">
+<div id="menu-top">
+	<ul>
+  		<li><a href="http://www.Distributome.org" title="Distributome Home"><span>Home</span></a></li>
+  		<li><span> Tools »</span></li>
+  		<li><a href="./Distributome.xml.html" title="HTML View of the Compelte Distributome Meta-data"><span>Complete DB View</span></a></li>
+ 		<li><a href="./DistributomeNavigator.html" title="Distributome Interactive Explorer"><span>Navigator</span></a></li>
+  		<li><a href="http://www.distributome.org/about.html" title="About"><span>About</span></a></li>
+  		<li><a href="../docs.html" title="Distributome Technical Documentation"><span>Tech Docs</span></a></li>
+  		<li><a href="http://www.SOCR.ucla.edu" title="Statistics Online Computational Resource (SOCR)"><span>SOCR</span></a></li>
+  		<li><a href="http://www.math.uah.edu/stat/" title="UAH Virtual Laboratories in Probability and Statistics"><span>VLPS</span></a></li>
+  		<li><a href="http://mbi.osu.edu/" title="OSU Mathematical Biosciences Institute"><span>OSU Bioscience</span></a></li> 		
+  		<li><a href="../legacy.html" title="Legacy Distributome Java Resources"><span>Legacy Resources</span></a></li>
+   		<li><a href="../blog" title="Distributome Blog"><span>Blog</span></a></li>
+	</ul>
+</div>
+<!--menu-top--></div>
+<!--wrapper-menu-top-->
+<div id="wrapper-header">
+
+<div id="header">
+<div id="wrapper-header2">
+<div id="wrapper-header3">
+<h1>
+<center>Distributome - XML Database Meta-Data Search Engine</center>
+</h1>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align: justify;" id="content">
+
+<center>
+  	<table class="toolbar" style="width=90%">
+	<tr>
+  		<!-- Search Area -->
+  			<td class="tool">
+  				<label id="search" for="search"></label>
+				<input id="distributome.xmltext" name="s" size="50" 
+					type="search" onKeydown="Javascript: if (event.keyCode==13) 
+						displayXmlText(false);" 
+						placeholder="Keyword Search for distributions or relations ..." />
+			</td>
+	</tr></table>
+
+
+
+<div id="slider" style="display:none">
+  <div class="header" id="one-header">Distribution Properties</div>
+  <div class="content" id="one-content">
+    <div class="text" id="distributome.search.distributions" align="left">
+    </div>
+  </div>
+  <div class="header" id="two-header">Inter-Distribution Relations</div>
+  <div class="content" id="two-content">
+    <div class="text" id="distributome.search.relations" align="left">
+    </div>
+  </div>
+  <div class="header" id="three-header">References</div>
+  <div class="content" id="three-content">
+    <div class="text" id="distributome.search.references" align="left">
+    </div>
+  </div>
+</div>
+
+</center>
+
+<!-- script type="text/javascript"> displayXmlText(false);
+</script-->
+
+<div id="wrapper-footer">
+<div id="footer">
+	Visitor number <img src="http://counter.digits.com/?counter=%7B567347b6-ad03-67d4-1993-0fc7aa8563de%7D&amp;template=simple" align="middle" border="0" height="20" hspace="4" vspace="2" width="60"> 
+	<script type="text/javascript"> var d=new Date(); 
+		document.write(" | 2008-"+d.getFullYear()+" | ");
+	</script>
+	<a href="http://www.Distributome.org">www.Distributome.org</a>
+</div>
+</div>
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=5714596; 
+var sc_invisible=1; 
+var sc_partition=71; 
+var sc_click_stat=1; 
+var sc_security="038e9ac4"; 
+</script>
+<script type="text/javascript"
+ src="http://www.statcounter.com/counter/counter.js"></script><!-- End of StatCounter Code --><!-- GoogleAnalytics -->
+<script src="http://www.google-analytics.com/urchin.js"
+ type="text/javascript"> </script>
+<script type="text/javascript"> _uacct = "UA-676559-1"; urchinTracker();
+  </script><!-- End of GoogleAnalytics Code --></div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="distributome">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="distributions">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="distribution">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="name" type="xsd:string" />
+                    <xsd:element name="type" type="xsd:string" />
+                    <xsd:element name="model" type="xsd:string" />
+                    <xsd:element name="support" type="xsd:string" />
+                    <xsd:element name="pdf" type="xsd:string" />
+                    <xsd:element name="mode" type="xsd:string" />
+                    <xsd:element name="cdf" type="xsd:string" />
+                    <xsd:element name="qf" type="xsd:string" />
+                    <xsd:element name="mean" type="xsd:string" />
+                    <xsd:element name="variance" type="xsd:string" />
+                    <xsd:element name="skew" type="xsd:string" />
+                    <xsd:element name="kurt" type="xsd:string" />
+                    <xsd:element name="median" type="xsd:string" />
+                    <xsd:element name="q1" type="xsd:string" />
+                    <xsd:element name="q3" type="xsd:string" />
+                    <xsd:element name="history" type="xsd:string" />
+                  </xsd:sequence>
+                  <xsd:attribute name="id" type="xsd:string" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="relations">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="relation">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="from" type="xsd:string" />
+                    <xsd:element name="to" type="xsd:string" />
+                    <xsd:element name="statement" type="xsd:string" />
+                    <xsd:element name="type" type="xsd:string" />
+                  </xsd:sequence>
+                  <xsd:attribute name="id" type="xsd:string" />
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="version" type="xsd:decimal" /> 
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

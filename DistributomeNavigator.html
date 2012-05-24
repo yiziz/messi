@@ -1,0 +1,513 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- 	This Distributome Project HTML5 source file contains "To Do" segments clearly identifying
+		portions of the code that need to be modified to complete the functionality of the
+		Distributome Navigator: http://distributome.org/js/DistributomeNavigator.html 
+-->
+
+<head>
+  	<title>Distributome.org</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<meta name="description" content="Probability and Statistics Distributions Resource - Distributome">
+  	<meta name="keywords" content="Probability Statistics Distributions Resource Distributome Web Application">
+  	<meta name="author" content="Ivo Dinov - http://www.Distributome.org">
+  
+  	<link rel="stylesheet" type="text/css" href="images/Distributome_style.css">
+  	<link rel="shortcut icon" href="images/favicon.ico">
+	
+  	<script type="text/javascript" src="scripts/protovis-r3.2.js"></script>
+  	<script type="text/javascript" src="scripts/common.js"></script>
+  	<script type="text/javascript" src="scripts/distributome.js"></script>
+	<script type="text/javascript" src="./scripts/jquery.js"></script>
+	<script type="text/javascript" src="./scripts/splitter.js"></script>
+
+	<!-- MathJax LaTeX/TeX Typesetting scripts -->
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+	
+	<script> 
+  		MathJax.Hub.Config({
+  			TeX: {
+    			Macros: {
+      				sgn: '{\\text{sgn}}' ,
+      				// \newcommand{\sgn}{\text{sgn}} ,  
+      				sech: '{\\text{sech}}' ,
+      				erf: '{\\text{erf}}' ,
+      				bs: ['{\\boldsymbol #1}',1]
+    			}
+  			}
+		}); 
+  	</script>
+  	<script type="text/x-mathjax-config">
+  		MathJax.Hub.Config({
+    		extensions: ["tex2jax.js"],
+    		jax: ["input/TeX","output/HTML-CSS"],
+    		tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  		});
+  	</script>
+	<!-- End of MathJax LaTeX/TeX Typesetting scripts -->
+	
+  	<style type="text/css" media="all">
+		html, body {
+			margin: 0;			/* Remove body margin/padding */
+			padding: 0;
+			//erflow: hidden;	/* Remove scroll bars on browser window */
+		}
+		/* #header { //padding: 1em; 
+			height: 8%;
+			width: 100%;
+		}*/
+		#MainSplitPaneObject {
+			border: 3px solid #CCCCCC;
+			//padding: 2;
+			anchorToWindow: true;	/* This allows the MainSplitPaneObject to auto-resize and adopt to resizing the browser frame */
+			min-width: 500px;		/* Splitter can't be too thin ... */
+			min-height: 300px;		/* ... or too flat */
+			//height: 80%;
+		}
+		#MainSplitPaneObject .Pane {
+			overflow: auto;
+			background: #FFFFFF; //#def;
+		}
+
+		/* Splitbar styles; these are the default class names */
+		.vsplitbar {
+			width: 12px;
+			background: #CCCCCC url(./scripts/img/vgrabber.gif) no-repeat center;
+		}
+		.vsplitbar:hover, .vsplitbar.active {
+			background: #CCCCCC url(./scripts/img/vgrabber.gif) no-repeat center;
+			opacity: 0.5;	// how opaque the line-color should be
+			filter: alpha(opacity=50); /* IE */
+		}
+		.hsplitbar {
+			height: 12px;
+			background: #CCCCCC url(./scripts/img/hgrabber.gif) no-repeat center;
+		}
+		.hsplitbar.active, .hsplitbar:hover {
+			background: #CCCCCC url(./scripts/img/hgrabber.gif) no-repeat center;
+			opacity: 0.5;
+			filter: alpha(opacity=50); /* IE */
+		}
+	</style>
+	<script type="text/javascript">
+		function isKeyPressed(event){
+			if (event.shiftKey==1) {
+			  _shiftKey = true;
+			}else{
+			  _shiftKey = false;
+			}
+		}
+	</script>
+	
+</head>
+
+
+<body onmousedown="isKeyPressed(event)">
+
+
+<div id="wrapper-menu-top">
+<div id="menu-top">
+	<ul>
+  		<li><a href="http://www.Distributome.org" title="Distributome Home"><span>Home</span></a></li>
+  		<li><span> Tools</span><span> »</span></li>
+  		<li><a href="./DistributomeDBSearch.xml.html" title="Keyword Search the Distributome Meta-data"><span>DB Search</span></a></li>
+  		<li><a href="http://www.distributome.org/about.html" title="About"><span>About</span></a></li>
+  		<li><a href="../docs.html" title="Distributome Technical Documentation"><span>Tech Docs</span></a></li>
+  		<li><a href="./DistributomeEditor.html" title="Distributome Resource Editor"><span>Editor</span></a></li>
+		<li><a href="../legacy.html" title="Legacy Distributome Java Resources"><span>Legacy Resources</span></a></li>
+   		<li><a href="../blog" title="Distributome Blog"><span>Blog</span></a></li>
+	</ul>
+</div>
+
+<!--menu-top--></div>
+
+<!--wrapper-menu-top-->
+<div id="wrapper-header">
+	<div id="header">
+	<div id="wrapper-header2">
+	<div id="wrapper-header3">
+		<h1> <center>Distributome Navigator - An Interactive Probability Distributions Explorer</center>
+	</h1>
+	</div>
+	</div>
+	</div>
+</div>
+
+<div style="text-align: justify;" id="content">
+
+<center>
+  	<!-- Controls Panel -->
+  	<!-- To Do: Provide and enable the Control-Panel functionalities included in the list below.
+  		FOr all of these functions, we need to have parsed the Distributome.xml DB, see above,
+  		and have constructed the ProtoVOs Graph from this XML hierarchy, see the Distributome.xsd
+  		file: http://distributome.org/js/Distributome.xsd
+  	-->
+  	<table class="toolbar" style="width=90%">
+	<tr>
+  		<!-- Search Area -->
+  			<td class="tool">
+  				<!-- Search for a node (distributon) or edge (relation) by keyword(s).
+  					Highlight best matches
+  				 -->
+				<!--<input type="text" style="width:50px;height:20px"/>-->
+				<label id="search" for="search"></label>
+				<input id="distributome.text" name="s" size="34" type="search" onKeydown="Javascript: if (event.keyCode==13) textSearch();" placeholder="Find distributions or relations" />
+			</td>
+
+  		<!--Neighbors Selector --> 
+  			<td class="tool">
+  				<!-- Having a Distribution (node) selected by the user, highlight node neighbors,
+  					parents, children, or both - parents and children (of a chosen distribution)
+  				 -->
+  				<form action="NeughborAction">
+					<select name="Neighbors" id="distributome.neighborAction" onchange="neighborsFetch();">
+						<option value="neighbors">Neighbors</option>
+						<option value="parent">Show Parent</option>
+						<option value="children">Show Children</option>
+						<option value="parentchildren">Parents and Children</option>
+					</select>
+				</form>
+			</td>
+
+  		<!-- Node-Type Selector -->
+ 			<td class="tool">
+ 				<form action="NodeTypeAction">
+ 					<!-- Get the type of a node (distribution) and highlight all nodes of this type.
+  				 	-->
+					<select name="NodeType" id="distributome.nodeTypeAction" onchange="nodeTypeInfoFetch();">
+						<option value="distributionType">Distribution Type</option>
+						<option value="convolution">Convolution</option>
+						<option value="memoryless">Memoryless</option>
+						<option value="inverse">Inverse</option>
+						<option value="linearCombination">Linear Combination</option>
+						<option value="maximum">Maximum</option>
+						<option value="minimum">Minimum</option>
+						<option value="discrete">Discrete</option>
+						<option value="continuous">Continuous</option>
+					</select>
+				</form>
+			</td>
+
+		<!-- Edge-Type Selector -->
+			<td class="tool">
+				<form action="EdgeTypeAction" >
+					<!-- Get the type of an edge (relation) and highlight all edges of this type.
+ 						Note that all edges are directional!
+  				 	-->
+					<select name="EdgeType" id="distributome.edgeTypeAction" onchange="edgeTypeInfoFetch();">
+						<option value="relationType">Relation Type</option>
+						<option value="special case">Special Case</option>
+						<option value="transform">Transform</option>
+						<option value="limiting">Limiting</option>
+						<option value="transformation">Transformation</option>
+						<option value="bayesian">Bayesian</option>
+					</select>
+				</form>
+			</td>
+			<td class="tool">
+				<form action="ConnectedNodesAction" >
+					<select name="ConnectedNodes" id="distributome.connectedNodesAction" onchange="resetView();connectedNodesFetch();">
+						<option value="connectivity">Display Ontology</option>
+						<option value="mostConnected">Top Level</option>
+						<option value="connected">Middle Level</option>
+						<option value="sparselyConnected">All</option>
+					</select>
+				</form>
+			</td>
+			<!-- Reset Navigator -->
+			<td class="tool">
+				<!-- Reset the Distributome Graph Navigator (reset zoom, location (pan),
+					give new random coordinates of all nodes and start Protovis relaxation
+					process: http://vis.stanford.edu/protovis/jsdoc/symbols/pv.Layout.Network.html
+  				 -->
+				<button type="button" id="resetButton" tabindex="4" 
+					title="Reset View" onclick="resetPage();">Reset
+				</button>
+			</td>
+			<td class="tool">
+						<button type="button" id="resetButton" tabindex="4" 
+							title="Restart View" onclick="graphRestart();">Restart
+						</button>
+					</td>
+					<td class="tool">
+						<button type="button" id="resetButton" tabindex="4" 
+							title="Pause View" onclick="graphPause();">Pause
+						</button>
+					</td>
+		</tr>
+	</table>
+</center>
+
+<!-- #MainSplitPaneObject -->
+<div id="MainSplitPaneObject">
+
+  	<!-- Main Distributome JS Graphical Navigator -->
+  	<div id="LeftPanel"> 
+		<!-- center -->
+		<script type="text/javascript+protovis">
+			/**	To Do: Make the height and width of the Graph panel 
+				auto-adjust to the "LeftPanel" panel size that the graph is embedded in!  
+			***/
+		try{
+			/*var w = document.body.clientWidth-200,
+  				h = document.body.clientHeight-200,
+  				colors = pv.Colors.category10();
+				*/
+			var leftPanelWidth = document.getElementById('LeftPanel').style.width;
+			var leftPanelHeight = document.getElementById('LeftPanel').style.height;
+			var w =	leftPanelWidth.substring(0,leftPanelWidth.indexOf('px')),
+				h = leftPanelHeight.substring(0,leftPanelHeight.indexOf('px')),
+				colors = pv.Colors.category10();
+			
+			var vis = new pv.Panel()
+    			.width(w)
+    			.height(h)
+   				.fillStyle("white") //.fillStyle("rgb(240,240,240)")
+    			//.event("mousedown", pv.Behavior.pan().bound(true))
+				//.event("mousewheel", pv.Behavior.zoom().bound(true));
+				.event("mousedown", pv.Behavior.pan())
+    			.event("mousewheel", pv.Behavior.zoom());
+				
+				/*** To Do: Need to trigger a Split-Frame Resizing when the mouse-scroll
+					 zoom action is triggered. See the split-pane resizing functionality
+					 below ($("#MainSplitPaneObject").trigger("resize");). Something like:
+					 .event("mousewheel", graphZoomResizeFrame());
+				 	 Currently, the graph-zoom expands the frame, but leaves the split-pane
+					 size unchanged!
+				****/
+
+			force = vis.add(pv.Layout.Force)
+    			.nodes(distributome.nodes)
+    			.links(distributome.edges)
+				.springConstant(0.05)
+				.chargeConstant(-80)
+				.springLength(200)
+				.bound(true); 
+		
+			var linky = force.link.add(pv.Line)
+						.cursor("pointer")
+						//.fillStyle("#696969")
+						.strokeStyle(function(d,l) getLinkColor(d,l))
+						.event("click", function (d, l) getRelationProperties(d.nodeName, l.index));
+			
+			linky.add(pv.Dot)
+				.data(function(l) { if(l.target == l.source) return [{x:0,y:0}];
+				nodecalc = Math.sqrt((l.targetNode.linkDegree*15)/Math.PI)*2; 
+				return [{ 
+					x: l.targetNode.x - nodecalc * Math.cos(Math.atan2(l.targetNode.y - l.sourceNode.y, l.targetNode.x - l.sourceNode.x)), 
+					y: l.targetNode.y - nodecalc * Math.sin(Math.atan2(l.targetNode.y - l.sourceNode.y, l.targetNode.x - l.sourceNode.x)) 
+				}];
+				}) 
+				.angle(function (n,l) Math.atan2(l.targetNode.y - l.sourceNode.y, l.targetNode.x - l.sourceNode.x) - Math.PI/2) 
+				.shape("triangle") 
+				.strokeStyle(function(d,l) getArrowColor(d,l))
+				.fillStyle(function(d,l) getArrowColor(d,l))
+				.size( function(d,l) getArrowSize(d,l))
+				.visible(true);
+
+
+	var dnodes = force.node.add(pv.Dot)
+				.bottom(0)
+				.size(function(d) { return d.selected?(d.linkDegree + 15) * Math.pow(this.scale, -1.5):(d.linkDegree + 4) * Math.pow(this.scale, -1.5)})
+				.fillStyle(function(d) getColor(d))
+				//.fillStyle(pv.hsl(225, 0.5, 0.5, 0.5))
+				.strokeStyle(function() this.fillStyle().darker())
+				.lineWidth(1)
+				//.title(function(d) d.nodeName)
+				.cursor("pointer")
+				.event("click", function (d) getNodeProperties(this.index, d.nodeName, d))
+				.event("mousedown", pv.Behavior.drag())
+				.event("drag", force)
+				.anchor("center").add(pv.Label)
+				.text(function(d) getText(d) )
+				.font(function(d) d.selected?'bold 10pt sans-serif':'normal 7pt sans-serif');
+			
+			/*dnodes.add(pv.Color)
+				.color('#ddd')
+				.opacity(1);*/
+
+			vis.render();
+		}catch(e){
+		}
+		setDropDownSelectedValue('distributome.connectedNodesAction', 1);
+		connectedNodesFetch();
+		</script>
+		<!--  /center -->
+  	</div> 	<!-- Left Pane -->	
+
+    <div id="RightSide_Splitter1"> 
+ 
+	<div class="Top Pane" id="distributome.propertiesPannel" style="line-height:16px;">		
+		<b><u>Distribution Properties</u></b> <br />
+	</div>
+	
+	<div id="RightSide_Splitter2">
+		<div class="Middle Pane 1" style="line-height:20px">
+			<b><u>Distribution Actions</u></b>
+			<ul> 
+				<li><a href="./calc/NormalCalculator.html" target="_blank" title="Interactive Distribution Calculator" id="distributome.calculator">Calculator</a></li>
+				<li><a href="./exp/PoissonExperiment.html" target="_blank" title="Run Virtual Distribution Experiment" id="distributome.experiment">Experiment</a></li>
+				<li><a href="./sim/NormalSimulation.html" target="_blank" title="Distribution Sampling and Simulation" id="distributome.simulation">Simulation</a></li>
+				<li><a href="./Distributome.xml.html" target="_blank" title="Render the entire Distributome Database as a web-page">Distributome DB HTML View</a></li>
+			</ul>
+		</div>
+
+		<div id="RightSide_Splitter3">
+			<div class="Middle Pane 2" id="distributome.relationPannel" style="line-height:18px"> <!-- Get the Inter-Distribution Relation Properties from Distributome.xml -->
+				<b><u>Inter-Distribution Relations</u></b> <br />
+			</div>
+
+			<div class="Bottom Pane" id="distributome.referencePanel" style="line-height:18px"> <!-- Get the References from Distributome.xml -->
+				<b><u>Distribution Referencies</u></b> <br />
+			</div>
+		</div>
+	</div>
+  </div> 
+  
+</div> <!-- #MainSplitPaneObject -->
+
+
+</center>
+</div>
+
+<div id="wrapper-footer">
+	<div id="footer">
+		Visitor number <img src="http://counter.digits.com/?counter=%7B567347b6-ad03-67d4-1993-0fc7aa8563de%7D&amp;template=simple" align="middle" border="0" height="20" hspace="4" vspace="2" width="60"> 
+		<script type="text/javascript"> var d=new Date(); 
+			document.write(" | 2008-"+d.getFullYear()+" | ");
+		</script>
+		<a href="http://www.Distributome.org">www.Distributome.org</a>
+	</div>
+</div>
+
+<!-- Splitter JavaScript Functions -->
+<script type="text/javascript">
+$().ready(function() {
+
+	// Vertical splitter. Set min/max/starting sizes for the left pane.
+	$("#MainSplitPaneObject").splitter({
+		splitVertical: true,
+		outline: true,
+		//sizeLeft: 600, minLeft: 150, maxLeft: 1200,
+		sizeRight: 300, minLeft: 100, //maxRight: 1200,
+		anchorToWindow: true,
+		accessKey: "L"
+	});
+	//$("#MainSplitPaneObject").css("height", "400px").trigger("resize");
+	$("#MainSplitPaneObject").trigger("resize");
+
+	// Right-Side CompositePanel including 4-split nested panels
+	// Top horizontal splitter, nested in the right pane of the vertical splitter.
+	$("#RightSide_Splitter1").splitter({
+		splitHorizontal: true,
+		outline: true,
+		//sizeTo: window,
+		sizeTop: 200, minTop: 100, //maxTop: 400,
+		accessKey: "V"
+	});
+	$("#RightSide_Splitter1").trigger("resize");
+
+	// Middle horizontal splitter, nested in RightSide_Panel3 of first horizontal splitter
+	$("#RightSide_Splitter2").splitter({
+		splitHorizontal: true,
+		outline: true,
+		sizeTop: 150, minTop: 100,
+		accessKey: "J"
+	});
+	$("#RightSide_Splitter2").trigger("resize");
+
+	// Bottom horizontal splitter, nested in RightSide_Panel3 of first horizontal splitter
+	$("#RightSide_Splitter3").splitter({
+		splitHorizontal: true,
+		outline: true,
+		//resizeBottom: 200, minTop: 150,
+		sizeTop: 200, minTop: 100,
+		accessKey: "M"
+	});
+	$("#RightSide_Splitter3").trigger("resize");
+	});
+</script>
+
+<script type="text/javascript+protovis">
+	function resetNavigator(){
+		resetView();
+		resetNodesEdges();
+		vis.render();
+	}
+	
+	function resetNodesEdges(){
+		resetNodes();
+		resetEdges();
+	}
+	
+	function resetNodes(){
+		var classes = pv.nodes(distributome.nodes);		
+		classes.slice(1).forEach(function(d) {
+			var i = 5;
+			d.nodeValue.selected = false;
+			d.nodeValue = d.nodeValue.value;
+			if (isNaN(d.x)) d.x = w / 2 + 40 * Math.random() - 20;
+	    	if (isNaN(d.y)) d.y = h / 2 + 40 * Math.random() - 20;
+		});
+	}
+	
+	function resetEdges(){
+		var classes = pv.nodes(distributome.edges);		
+		classes.slice(1).forEach(function(d) {
+			d.nodeValue.selected = false;
+		});
+	}
+		
+	function getSelectedNodes(){
+		var classes = pv.nodes(distributome.nodes);	
+		var selectedNodes = new Array();
+		classes.slice(1).forEach(function(d) {
+			if(d.nodeValue.selected == 'red'){
+				selectedNodes.push(getDistributionName(d.nodeValue.nodeName));
+			}
+		});
+		return selectedNodes;
+	}
+	
+	function graphPause(){
+		force.stop();
+	}
+	
+	function graphRestart(){
+		force.start();
+	}
+	
+	function resizeDistributome(){
+		force.nodes(distributome.nodes);
+		force.reset();
+		var leftPanelWidth = document.getElementById('LeftPanel').style.width;
+		var leftPanelHeight = document.getElementById('LeftPanel').style.height;
+		var w =	leftPanelWidth.substring(0,leftPanelWidth.indexOf('px')),
+			h = leftPanelHeight.substring(0,leftPanelHeight.indexOf('px'));
+		vis.width(w);
+		vis.height(h);
+		vis.render();
+		graphPause();
+	}
+</script>
+
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+	var sc_project=5714596; 
+	var sc_invisible=1; 
+	var sc_partition=71; 
+	var sc_click_stat=1; 
+	var sc_security="038e9ac4"; 
+</script>
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter.js"></script>
+<!-- End of StatCounter Code -->
+
+<!-- GoogleAnalytics -->
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"> </script>
+<script type="text/javascript"> _uacct = "UA-676559-1"; urchinTracker(); </script>
+<!-- End of GoogleAnalytics Code -->
+</body>
+</html>

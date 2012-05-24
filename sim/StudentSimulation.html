@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>www.Distributome.org: Student's T Distribution Simulation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="verify-v1"
+content="S6zclu9UcbbjR6mX8ELA6R4G0lCJKUAtaTLeQmxvg8A=">
+<meta name="description"
+content="Probability and Statistics Distributions Resource - Distributome">
+<meta name="keywords"
+content="Probability Statistics Distributions Resource Distributome Webapps">
+<meta name="author" content="http://www.Distributome.org">
+<link rel="stylesheet" type="text/css"
+href="../../images/Distributome_style.css">
+<link rel="shortcut icon" href="../../images/favicon.ico">
+<style type="text/css">
+body {
+margin: 0;
+}
+</style>
+<script type="text/javascript" src="devices.js"></script>
+<script type="text/javascript" src="distributions.js"></script>
+<script type="text/javascript" src="StudentSimulation.js"></script>
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body class="ancillary" onload="initializeExperiment();">
+<div id="wrapper-menu-top">
+<div id="menu-top">
+<ul>
+<li><a href="http://www.Distributome.org" title="Distributome Home"><span>Home</span></a></li>
+<li><span> Tools</span><span> »</span></li>
+<li><a href="../../about.html" title="About"><span>About</span></a></li>
+<li><a href="../DistributomeNavigator.html"
+title="Interactive Distributome Navigator"><span>Navigator</span></a></li>
+<li><a href="../DistributomeEditor.html"
+title="Interactive Distributome Meta-Data Editor"><span>Editor</span></a></li>
+<li><a href="./index.html" title="Other Distribution Simulations"><span>Simulations</span></a></li>
+</ul>
+</div>
+<!--menu-top--></div>
+<!--wrapper-menu-top-->
+<div id="wrapper-header">
+<div id="header">
+<div id="wrapper-header2">
+<div id="wrapper-header3">
+<h1>
+<center>Student T Distribution Simulation</center>
+</h1>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align: justify;" id="content">
+
+<div class="applet">
+<fieldset class="toolbar">
+	<button type="button" id="stepButton" tabindex="1" title="Step" onclick="stepExperiment();">
+		<img src="step.png" alt="Step" title="Step" />
+	</button>
+	<button type="button" id="runButton" tabindex="2" title="Run" onclick="runExperiment()">
+		<img id="runImage" src="run.png" alt="Run" title="Run" />
+	</button>
+	<button type="button" id="stopButton" tabindex="3" title="Stop" onclick="stopExperiment();">
+		<img id="stopImage" src="stop.png" alt="Stop" title="Stop" />
+	</button>
+	<button type="button" id="resetButton" tabindex="4" title="Reset" onclick="resetExperiment();">
+		<img src="reset.png" alt="Reset" title="Reset" />
+	</button>
+	<select id="stopSelect" tabindex="5" title="Stop frequency" onchange="stopFreq = value;">
+		<option value="10">Stop: 10</option>
+		<option value="100">Stop: 100</option>
+		<option value="1000">Stop: 1000</option>
+		<option value="10000">Stop: 10000</option>
+		<option value="0">Stop: never</option>
+	</select>
+	<span class="tool">
+		<input type="checkbox" id="showCheck" tabindex="6" onchange="showDist(this.checked)" />
+		<label for="showCheck">Show Distribution</label>
+	</span>
+</fieldset>
+
+<fieldset class="toolbar">
+	<span class="tool">
+		<label id="nLabel" for="nInput"></label>
+		<input id="nInput" type="range" class="parameter" tabindex="7" onchange="resetExperiment();" />
+	</span>
+</fieldset>
+
+<table class="applet">
+	<tr>
+		<td class="device" colspan="2"><canvas id="distCanvas" title="Distribution graph" width="500" height="170">Distribution graph</canvas></td>
+	</tr>
+	<tr>
+		<td class="device"><textarea id="recordTable" readonly="true" wrap="off" class="table" title="X"></textarea></td>
+		<td class="device"><textarea id="distTable" readonly="true" wrap="off" class="table" title="Distribution table"></textarea></td>
+	</tr>
+</table>
+</div>
+
+<h4>Description</h4>
+
+<p>The experiment simulates a value of a random variable \(X\) with a student \(t\) distribution with \(n\) degrees of freeedom. The value is recorded on each update. The parameter \(n\) can be varied with the input control.</p>
+
+<div id="wrapper-footer">
+<div id="footer"> Visitor number <img
+src="http://counter.digits.com/?counter=%7B567347b6-ad03-67d4-1993-0fc7aa8563de%7D&amp;template=simple"
+align="middle" border="0" height="20" hspace="4" vspace="2" width="60">
+<script type="text/javascript"> var d=new Date();
+document.write(" | 2008-"+d.getFullYear()+" | ");
+</script>
+<a href="http://www.Distributome.org">www.Distributome.org</a>
+</div>
+</div>
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+var sc_project=5714596;
+var sc_invisible=1;
+var sc_partition=71;
+var sc_click_stat=1;
+var sc_security="038e9ac4";
+</script>
+<script type="text/javascript"
+src="http://www.statcounter.com/counter/counter.js">
+</script><!-- End of StatCounter Code --><!-- GoogleAnalytics -->
+<script src="http://www.google-analytics.com/urchin.js"
+type="text/javascript">
+</script>
+<script type="text/javascript"> _uacct = "UA-676559-1"; urchinTracker();
+</script>
+<!-- End of GoogleAnalytics Code -->
+</body>
+</html>
+

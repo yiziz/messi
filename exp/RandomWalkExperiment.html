@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  	<title>www.Distributome.org: Random Walk Experiment</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<meta name="verify-v1" content="S6zclu9UcbbjR6mX8ELA6R4G0lCJKUAtaTLeQmxvg8A=">
+  	<meta name="description"
+ 		content="Probability and Statistics Distributions Resource - Distributome">
+  	<meta name="keywords"
+ 		content="Probability Statistics Distributions Resource Distributome Webapps">
+  	<meta name="author" content="http://www.Distributome.org">
+  	<link rel="stylesheet" type="text/css" href="../../images/Distributome_style.css">
+  	<link rel="shortcut icon" href="../../images/favicon.ico">
+  
+  	<style type="text/css">
+		body {
+  			margin: 0;
+		}
+    </style>
+
+<script type="text/javascript" src="devices.js"></script>
+<script type="text/javascript" src="distributions.js"></script>
+<script type="text/javascript" src="RandomWalkExperiment.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body class="ancillary" onload="initializeExperiment();">
+<div id="wrapper-menu-top">
+<div id="menu-top">
+<ul>
+<li><a href="http://www.Distributome.org" title="Distributome Home"><span>Home</span></a></li>
+<li><span> Tools</span><span> »</span></li>
+<li><a href="../../about.html" title="About"><span>About</span></a></li>
+<li><a href="../DistributomeNavigator.html"
+title="Interactive Distributome Navigator"><span>Navigator</span></a></li>
+<li><a href="../DistributomeEditor.html"
+title="Interactive Distributome Meta-Data Editor"><span>Editor</span></a></li>
+<li><a href="./index.html" title="Other Experiments"><span>Experiments</span></a></li>
+</ul>
+</div>
+<!--menu-top--></div>
+<!--wrapper-menu-top-->
+<div id="wrapper-header">
+<div id="header">
+<div id="wrapper-header2">
+<div id="wrapper-header3">
+<h1>
+<center>Random Walk Experiment</center>
+</h1>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align: justify;" id="content">
+
+<div class="applet">
+<fieldset class="toolbar">
+	<button type="button" id="stepButton" tabindex="1" title="Step" onclick="stepExperiment();">
+		<img src="step.png" alt="Step" title="Step" />
+	</button>
+	<button type="button" id="runButton" tabindex="2" title="Run" onclick="runExperiment()">
+		<img id="runImage" src="run.png" alt="Run" title="Run" />
+	</button>
+	<button type="button" id="stopButton" tabindex="3" title="Stop" onclick="stopExperiment();">
+		<img id="stopImage" src="stop.png" alt="Stop" title="Stop" />
+	</button>
+	<button type="button" id="resetButton" tabindex="4" title="Reset" onclick="resetExperiment();">
+		<img src="reset.png" alt="Reset" title="Reset" />
+	</button>
+	<select id="stopSelect" tabindex="5" title="Stop frequency" onchange="stopFreq = value;">
+		<option value="10">Stop: 10</option>
+		<option value="100">Stop: 100</option>
+		<option value="1000">Stop: 1000</option>
+		<option value="10000">Stop: 10000</option>
+		<option value="0">Stop: never</option>
+	</select>
+	<span class="tool">
+		<input type="checkbox" id="showCheck" tabindex="6" onchange="showDist(this.checked)" />
+		<label for="showCheck">Show Distribution</label>
+	</span>
+</fieldset>
+
+<fieldset class="toolbar">
+	<span class="tool">
+		<label id="nLabel" for="nInput"></label>
+		<input type="range" id="nInput" class="parameter" tabindex="7" onchange="resetExperiment();"/>
+	</span>
+	<select id="rvSelect" tabindex="8" title="Select model" onchange="setDist();">
+		<option value="Y">Y: Last position</option>
+		<option value="M">M: Maximum position</option>
+		<option value="L">L: Last zero</option>
+	</select>
+</fieldset>
+
+<table class="applet">
+	<tr>
+		<td class="device"><canvas width="300" height="200" class="graph" id="walkCanvas" title="Walk Graph">Walk graph</canvas></td>
+		<td class="device"><canvas width="300" height="200" id="distCanvas" title="Distribution graph">Distribution graph</canvas></td>
+	</tr>
+	<tr>
+		<td class="device"><textarea readonly="true" wrap="off" class="table" id="recordTable" rows="7"></textarea></td>
+		<td class="device"><textarea readonly="true" wrap="off" class="table" id="distTable" rows="7"></textarea></td>
+	</tr>
+</table>
+</div>
+
+<h4 class="ancillary">Description</h4>
+
+<p>The experiment consists of tossing \(n\) fair coins. The position of the random walk after \(j\) tosses is the number of heads minus the number of tails. The random variables of interest are</p>
+
+<ul>
+	<li>The final position \(Y\)</li>
+	<li>The maximum position \(M\)</li>
+	<li>The time of the last zero \(L\)</li>
+</ul>
+
+<p>The random walk is shown in red in the left graph on each update. Red dots are shown at \((n, Y)\), \((0, M)\), and \((L, 0)\) The value of each of the three random variables is recorded in the data table on each update. Any of the three variables can be selected from the list box. The probability density function and moments of the selected variable are shown in blue in the distribution graph and are recorded in the distribution table. On each update, the empirical density function and moments are shown in red in the distribution graph and are recorded in the distribution table. The number of steps \(n\) can be varied with the input control.</p>
+
+<div id="wrapper-footer">
+<div id="footer">
+	Visitor number <img src="http://counter.digits.com/?counter=%7B567347b6-ad03-67d4-1993-0fc7aa8563de%7D&amp;template=simple" align="middle" border="0" height="20" hspace="4" vspace="2" width="60"> 
+	<script type="text/javascript"> var d=new Date(); 
+		document.write(" | 2008-"+d.getFullYear()+" | ");
+	</script>
+	<a href="http://www.Distributome.org">www.Distributome.org</a>
+</div>
+</div>
+
+<!-- Start of StatCounter Code -->
+	<script type="text/javascript">
+		var sc_project=5714596; 
+		var sc_invisible=1; 
+		var sc_partition=71; 
+		var sc_click_stat=1; 
+		var sc_security="038e9ac4"; 
+	</script>
+	<script type="text/javascript"
+ 		src="http://www.statcounter.com/counter/counter.js">
+	</script>
+ 	<!-- End of StatCounter Code -->
+ 	<!-- GoogleAnalytics -->
+	<script src="http://www.google-analytics.com/urchin.js"
+ 		type="text/javascript">
+	</script>
+	<script type="text/javascript"> _uacct = "UA-676559-1"; urchinTracker();
+  	</script>
+  	<!-- End of GoogleAnalytics Code -->
+</body>
+</html>
+

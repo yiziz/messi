@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-stylesheet href="../images/Distributome_style.css" type="text/css"?>
+
+<distributome_pref version="1.0" 
+	xmlns="http://www.distributome.org" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<!-- Comments
+	This is the Distributome.xml Preferences (.pref) file used for 
+	rendering of the Distributome graph by the DistributomeNavigator.html.
+	
+	See: http://www.distributome.org/js/DistributomeNavigator.html
+-->
+
+<distributome_ontology>
+<!-- Comments
+	version 1.0 of the Preferences file uses 3 level-hierarchy:
+		top_hierarchy, containing only about 12 commonly-used distributions;
+		middle_hierarchy, consisting of about 30 common distributions;
+		all_hierarchy, which is an implicit category containing ALL distributions.
+	
+	These hierarchies are used to simplify (or increase the complexity of) the
+	graph of distributions rendered by the Navigator. Typically top_hierarchy
+	view is appropriate for general audiences (e.g., undergraduate students),
+	whereas the lower-level hierarchies provide additional complexity appropriate 
+	for more advanced users (e.g., graduate or professional students).
+-->
+	<hierarchy_level id="top_hierarchy">
+		<name>Bernoulli</name>
+		<name>Binomial</name>
+		<name>Geometric</name>
+		<name>Hypergeometric</name>
+		<name>Poisson</name>
+		<name>Negative-Binomial</name>
+		<name>Continuous Uniform</name>
+		<name>Cauchy</name>
+		<name>Pareto</name>
+		<name>Students T</name>
+		<name>Standard Normal</name>
+		<name>Chi-square</name>
+		<name>F-distribution</name>
+		<name>Exponential</name>
+	</hierarchy_level>
+
+	<hierarchy_level id="middle_hierarchy">
+		<name>Benford</name>
+		<name>Multinomial</name>
+		<name>Laplace</name>
+		<name>Beta</name>
+		<name>Gamma</name>
+		<name>Log-Normal</name>
+		<name>Rice</name>
+		<name>Logistic</name>
+		<name>Rademacher</name>
+		<name>Arcsine</name>
+		<name>Beta-binomial</name>
+		<name>Log-Gamma</name>
+		<name>Erlang</name>
+		<name>Wald</name>
+		<name>Levy</name>
+	</hierarchy_level>
+
+</distributome_ontology>
+
+</distributome_pref>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+<title>Continuous Uniform Distribution Calculator</title>
+
+<link rel="stylesheet" href="ScreenStyles.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="PrintStyles.css" type="text/css" media="print" />
+
+<script type="text/javascript" src="devices.js"></script>
+<script type="text/javascript" src="distributions.js"></script>
+<script type="text/javascript" src="ContinuousUniformCalculator.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body class="ancillary" onload="initialize()">
+
+<div class="header">
+<h3 class="ancillary">Continuous Uniform Distribution Calculator</h3>
+</div>
+
+<div class="applet">
+<fieldset class="toolbar">
+	<span class="tool">
+		<label id="aLabel" for="aInput"></label>
+		<input id="aInput" type="range" class="parameter" tabindex="1" onchange="setDist();" />
+	</span>
+	<span class="tool">
+		<label id="wLabel" for="wInput"></label>
+		<input id="wInput" type="range" class="parameter" tabindex="1" onchange="setDist();" />
+	</span>
+	<select id="graphSelect" tabindex="2" title="Select view" onchange="distGraph.setGraphType(value);">
+		<option value="pdf">PDF</option>
+		<option value="cdf">CDF</option>
+	</select>
+</fieldset>
+
+<table class="applet">
+	<tr>
+		<td class="device"><canvas id="distCanvas" title="Distribution graph" width="500" height="170">Distribution graph</canvas></td>
+	</tr>
+</table>
+
+<fieldset class="toolbar">
+	<span class="tool">
+		<label id="xLabel" for="xInput"></label>
+		<input id="xInput" type="text" class="parameter" tabindex="3" onchange="setValue();" />
+	</span>
+	<span class="tool">
+		<label id="pLabel" for="pInput"></label>
+		<input id="pInput" type="text" class="parameter" tabindex="4" onchange="setProb()" />
+	</span>
+</fieldset>
+</div>
+
+<h4 class="ancillary">Description</h4>
+
+<p>For the (continuous) uniform distribution on the interval \( [a, a + w] \) this calculator gives the value of the cumulative distribution function \(p = F(x)\) for a given value of \(x\), or the value of the quantile function \(x = F^{-1}(p)\) for a given value of \(p\). The left endpoint \(a\) and width \( w \) of the interval can be varied with the input control, as can the variables \(x\) and \(p\).</p>
+
+</body>
+</html>

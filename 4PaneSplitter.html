@@ -1,0 +1,211 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>4-pane splitter</title>
+<script type="text/javascript" src="./scripts/jquery.js"></script>
+<script type="text/javascript" src="./scripts/splitter.js"></script>
+<!-- Splitter Pane Docs: http://methvin.com/splitter/index.html -->
+
+<!-- General page styles (not critical to the demos) -->
+
+<style type="text/css" media="all">
+html, body
+{
+	margin: 0;			/* Remove body margin/padding */
+	padding: 0;
+	//erflow: hidden;	/* Remove scroll bars on browser window */
+}
+#header { //padding: 1em; 
+	height: 8%;
+	width: 100%;
+}
+#MainSplitPaneObject {
+	border: 3px solid #CCCCCC;
+	//padding: 2;
+	min-width: 500px;	/* Splitter can't be too thin ... */
+	min-height: 300px;	/* ... or too flat */
+	//height: 80%;
+}
+#MainSplitPaneObject .Pane {
+	overflow: auto;
+	background: #FFFFFF; //#def;
+}
+
+/*
+ * Top element of the splitter. Use pixel units for the
+ * min-height and max-height; the splitter plugin parses them to
+ * determine the splitter movement limits. Set the height to
+ * the desired initial height of the element; the plugin changes
+ * the height of this element dynamically.
+ */
+#LeftTopPane {
+	background: #ffe;
+	overflow: auto;
+	/* Initial/min/max height for this pane */
+	height: 100px;
+	min-height: 50px;
+	max-height: 200px;
+	/* No margin or border allowed */
+}
+/*
+ * Bottom element of the splitter; the plugin changes the top
+ * position and height of this element dynamically.
+ */
+#LeftBottomPane {
+	background: #ffd;
+	overflow: auto;
+	/* No margin or border allowed */
+}
+
+#footer {
+	height: 8%;
+	width: 100%;
+}
+
+/* Splitbar styles; these are the default class names */
+
+.vsplitbar {
+	width: 12px;
+	background: #CCCCCC url(./scripts/img/vgrabber.gif) no-repeat center;
+}
+.vsplitbar:hover, .vsplitbar.active {
+	background: #CCCCCC url(./scripts/img/vgrabber.gif) no-repeat center;
+	opacity: 0.5;	// how opaque the line-color should be
+	filter: alpha(opacity=50); /* IE */
+}
+.hsplitbar {
+	height: 12px;
+	background: #CCCCCC url(./scripts/img/hgrabber.gif) no-repeat center;
+}
+.hsplitbar.active, .hsplitbar:hover {
+	background: #CCCCCC url(./scripts/img/hgrabber.gif) no-repeat center;
+	opacity: 0.5;
+	filter: alpha(opacity=50); /* IE */
+}
+</style>
+<script type="text/javascript">
+$().ready(function() {
+
+	// Vertical splitter. Set min/max/starting sizes for the left pane.
+	$("#MainSplitPaneObject").splitter({
+		splitVertical: true,
+		outline: true,
+		//sizeLeft: 600, minLeft: 150, maxLeft: 600,
+		sizeRight: 300, minLeft: 100, //maxRight: 1200,
+		//resizeToWidth: true,
+		//resizeToHeight: true,
+		anchorToWindow: true,
+		accessKey: "L"
+	});
+	$("#MainSplitPaneObject").trigger("resize");
+
+	// Left-Side Split-Panel horizontal splitter, nested in the left pane of the vertical splitter.
+	$("#LeftSide_HSplitter").splitter({
+		splitHorizontal: true,
+		outline: true,
+		//sizeTop: 200, minTop: 150, //maxTop: 400,
+		accessKey: "V"
+	});
+	$("#LeftSide_HSplitter").trigger("resize");
+		
+	// Right-Side CompositePanel including 4-split nested panels
+	// Top horizontal splitter, nested in the right pane of the vertical splitter.
+	$("#RightSide_Splitter1").splitter({
+		splitHorizontal: true,
+		outline: true,
+		//sizeTo: window,
+		sizeTop: 200, minTop: 150, //maxTop: 400,
+		accessKey: "V"
+	});
+	$("#RightSide_Splitter1").trigger("resize");
+
+	// Middle horizontal splitter, nested in RightSide_Panel3 of first horizontal splitter
+	$("#RightSide_Splitter2").splitter({
+		splitHorizontal: true,
+		outline: true,
+		//sizeTop: 200, minTop: 150,
+		accessKey: "J"
+	});
+	$("#RightSide_Splitter2").trigger("resize");
+
+	// Bottom horizontal splitter, nested in RightSide_Panel3 of second horizontal splitter
+	$("#RightSide_Splitter3").splitter({
+		splitHorizontal: true,
+		outline: true,
+		//resizeBottom: 200, minTop: 150,
+		accessKey: "M"
+	});
+	$("#RightSide_Splitter3").trigger("resize");
+	});
+</script>
+</head>
+<body>
+
+<div id="header">
+<h1>4-Pane Splitter Layout</h1>
+<p>Here is a 4-pane layout with the splitter occupying all the area below this header. The page scroll bars have been removed since all the content is inside the splitter, and the splitter is anchored to the bottom of the window.</p>
+</div>
+
+<center>
+	<div class="ControlPane">
+		<p>Controls-Panel Top ...</p>
+		<br /><br />
+	</div>
+</center>
+
+<div id="MainSplitPaneObject">
+
+	<!-- div id="LeftSide_HSplitter">
+		<div class="LeftTopPane">
+				<p>Left-Panel Top.</p>
+				<br /><br />
+		</div>
+
+		<div class="LeftBottomPane">
+			<p>Left-Panel Bottom</p>
+		</div>
+	</div -->
+
+	<div class="LeftBottomPane">
+		<p>Left-Panel Bottom</p>
+	</div>
+		  	
+    <div id="RightSide_Splitter1"> 
+ 
+		<div class="Top Pane">
+			<p>This is the top-right horizontal pane. It tries to stay at its current size if you resize the bottom horizontal splitbar.</p>
+			<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-V</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+			<p>To move the horizontal splitbar below this pane using the keyboard, use the "V" accelerator key (Alt-Shift-V in IE and Firefox).</p>
+		</div>
+	
+		<div id="RightSide_Splitter2">
+			<div class="Middle Pane 1">
+				<p>This is the middle1-right pane, which starts at a height that varies depending on the height of the browser window. Since the top pane has <code>sizeTop: 100</code> and the bottom pane has <code>sizeBottom: 120</code>, this pane gets whatever is left over. The overall size of the splitter has been set to <code>min-height: 300px</code> in the style sheet, so it will be at least 80 pixels high.</p>
+			</div>
+
+			<div id="RightSide_Splitter3">
+				<div class="Middle Pane 2">
+					<p>This is the middle2-right pane, which starts at a height that varies depending on the height of the browser window. Since the top pane has <code>sizeTop: 100</code> and the bottom pane has <code>sizeBottom: 120</code>, this pane gets whatever is left over. The overall size of the splitter has been set to <code>min-height: 300px</code> in the style sheet, so it will be at least 80 pixels high.</p>
+				</div>
+
+				<div class="Bottom Pane">
+					<p>This is the bottom-right pane of the splitter. It tries to stay at its current size if you resize the top horizontal splitbar.</p>
+					<p>To move the horizontal splitbar above this pane using the keyboard, use the "J" accelerator key (Alt-Shift-J in IE and Firefox).</p>
+				</div>
+			</div>
+		</div>
+  	</div> 
+  
+</div> <!-- #MainSplitPaneObject -->
+
+<div id="footer">
+<hr>
+This is the footer
+<br>
+</div>
+
+</body>
+</html>

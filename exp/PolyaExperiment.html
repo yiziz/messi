@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  	<title>www.Distributome.org: Polya Experiment</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<meta name="verify-v1" content="S6zclu9UcbbjR6mX8ELA6R4G0lCJKUAtaTLeQmxvg8A=">
+  	<meta name="description"
+ 		content="Probability and Statistics Distributions Resource - Distributome">
+  	<meta name="keywords"
+ 		content="Probability Statistics Distributions Resource Distributome Webapps">
+  	<meta name="author" content="http://www.Distributome.org">
+  	<link rel="stylesheet" type="text/css" href="../../images/Distributome_style.css">
+  	<link rel="shortcut icon" href="../../images/favicon.ico">
+  
+  	<style type="text/css">
+		body {
+  			margin: 0;
+		}
+    </style>
+
+<script type="text/javascript" src="devices.js"></script>
+<script type="text/javascript" src="distributions.js"></script>
+<script type="text/javascript" src="PolyaExperiment.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+
+<body class="ancillary" onload="initializeExperiment();">
+<div id="wrapper-menu-top">
+<div id="menu-top">
+<ul>
+<li><a href="http://www.Distributome.org" title="Distributome Home"><span>Home</span></a></li>
+<li><span> Tools</span><span> »</span></li>
+<li><a href="../../about.html" title="About"><span>About</span></a></li>
+<li><a href="../DistributomeNavigator.html"
+title="Interactive Distributome Navigator"><span>Navigator</span></a></li>
+<li><a href="../DistributomeEditor.html"
+title="Interactive Distributome Meta-Data Editor"><span>Editor</span></a></li>
+<li><a href="./index.html" title="Other Experiments"><span>Experiments</span></a></li>
+</ul>
+</div>
+<!--menu-top--></div>
+<!--wrapper-menu-top-->
+<div id="wrapper-header">
+<div id="header">
+<div id="wrapper-header2">
+<div id="wrapper-header3">
+<h1>
+<center>Polya Experiment</center>
+</h1>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align: justify;" id="content">
+
+<div class="applet">
+<fieldset class="toolbar">
+	<button type="button" id="stepButton" tabindex="1" title="Step" onclick="stepExperiment();">
+		<img src="step.png" alt="Step" title="Step" />
+	</button>
+	<button type="button" id="runButton" tabindex="2" title="Run" onclick="runExperiment()">
+		<img id="runImage" src="run.png" alt="Run" title="Run" />
+	</button>
+	<button type="button" id="stopButton" tabindex="3" title="Stop" onclick="stopExperiment();">
+		<img id="stopImage" src="stop.png" alt="Stop" title="Stop" />
+	</button>
+	<button type="button" id="resetButton" tabindex="4" title="Reset" onclick="resetExperiment();">
+		<img src="reset.png" alt="Reset" title="Reset" />
+	</button>
+	<select id="stopSelect" tabindex="5" title="Stop frequency" onchange="stopFreq = value;">
+		<option value="10">Stop: 10</option>
+		<option value="100">Stop: 100</option>
+		<option value="1000">Stop: 1000</option>
+		<option value="10000">Stop: 10000</option>
+		<option value="0">Stop: never</option>
+	</select>
+	<span class="tool">
+		<input type="checkbox" id="showCheck" tabindex="6"onchange="showDist(this.checked)" />
+		<label for="showCheck">Show Distribution</label>
+	</span>
+</fieldset>
+
+<fieldset class="toolbar">
+	<span class="tool">
+		<label id="aLabel" for="aInput"></label>
+		<input id="aInput" type="range" tabindex="7" class="parameter" onchange="resetExperiment();" />
+	</span>
+	<span class="tool">
+		<label id="bLabel" for="bInput"></label>
+		<input id="bInput" type="range" tabindex="8" class="parameter" onchange="resetExperiment();" />
+	</span>
+	<span class="tool">
+		<label id="cLabel" for="cInput"></label>
+		<input id="cInput" type="range" tabindex="9" class="parameter" onchange="resetExperiment();" />
+	</span>
+	<span class="tool">
+		<label id="nLabel" for="nInput"></label>
+		<input id="nInput" type="range" tabindex="10" class="parameter" onchange="resetExperiment();" />
+	</span>
+</fieldset>
+
+<table class="applet">
+	<tr>
+		<td class="device"><table class="ballPanel">
+			<tr>
+				<td class="device"><canvas id="ball0" class="ball"  width="30" height="30">Ball 1</canvas></td>
+				<td class="device"><canvas id="ball1" class="ball" width="30" height="30">Ball 2</canvas></td>
+				<td class="device"><canvas id="ball2" class="ball" width="30" height="30">Ball 3</canvas></td>
+				<td class="device"><canvas id="ball3" class="ball" width="30" height="30">Ball 4</canvas></td>
+				<td class="device"><canvas id="ball4" class="ball" width="30" height="30">Ball 5</canvas></td>
+				<td class="device"><canvas id="ball5" class="ball" width="30" height="30">Ball 6</canvas></td>
+				<td class="device"><canvas id="ball6" class="ball" width="30" height="30">Ball 7</canvas></td>
+				<td class="device"><canvas id="ball7" class="ball" width="30" height="30">Ball 8</canvas></td>
+				<td class="device"><canvas id="ball8" class="ball" width="30" height="30">Ball 9</canvas></td>
+				<td class="device"><canvas id="ball9" class="ball" width="30" height="30">Ball 10</canvas></td>
+			</tr>
+			<tr>
+				<td class="device"><canvas id="ball10" class="ball" width="30" height="30">Ball 11</canvas></td>
+				<td class="device"><canvas id="ball11" class="ball" width="30" height="30">Ball 12</canvas></td>
+				<td class="device"><canvas id="ball12" class="ball" width="30" height="30">Ball 13</canvas></td>
+				<td class="device"><canvas id="ball13" class="ball" width="30" height="30">Ball 14</canvas></td>
+				<td class="device"><canvas id="ball14" class="ball" width="30" height="30">Ball 15</canvas></td>
+				<td class="device"><canvas id="ball15" class="ball" width="30" height="30">Ball 16</canvas></td>
+				<td class="device"><canvas id="ball16" class="ball" width="30" height="30">Ball 17</canvas></td>
+				<td class="device"><canvas id="ball17" class="ball" width="30" height="30">Ball 18</canvas></td>
+				<td class="device"><canvas id="ball18" class="ball" width="30" height="30">Ball 19</canvas></td>
+				<td class="device"><canvas id="ball19" class="ball" width="30" height="30">Ball 20</canvas></td>
+			</tr>
+			<tr>
+				<td class="device"><canvas id="ball20" class="ball" width="30" height="30">Ball 21</canvas></td>
+				<td class="device"><canvas id="ball21" class="ball" width="30" height="30">Ball 22</canvas></td>
+				<td class="device"><canvas id="ball22" class="ball" width="30" height="30">Ball 23</canvas></td>
+				<td class="device"><canvas id="ball23" class="ball" width="30" height="30">Ball 24</canvas></td>
+				<td class="device"><canvas id="ball24" class="ball" width="30" height="30">Ball 25</canvas></td>
+				<td class="device"><canvas id="ball25" class="ball" width="30" height="30">Ball 26</canvas></td>
+				<td class="device"><canvas id="ball26" class="ball" width="30" height="30">Ball 27</canvas></td>
+				<td class="device"><canvas id="ball27" class="ball" width="30" height="30">Ball 28</canvas></td>
+				<td class="device"><canvas id="ball28" class="ball" width="30" height="30">Ball 29</canvas></td>
+				<td class="device"><canvas id="ball29" class="ball" width="30" height="30">Ball 30</canvas></td>
+			</tr>
+			<tr>
+				<td class="device"><canvas id="ball30" class="ball" width="30" height="30">Ball 31</canvas></td>
+				<td class="device"><canvas id="ball31" class="ball" width="30" height="30">Ball 32</canvas></td>
+				<td class="device"><canvas id="ball32" class="ball" width="30" height="30">Ball 33</canvas></td>
+				<td class="device"><canvas id="ball33" class="ball" width="30" height="30">Ball 34</canvas></td>
+				<td class="device"><canvas id="ball34" class="ball" width="30" height="30">Ball 35</canvas></td>
+				<td class="device"><canvas id="ball35" class="ball" width="30" height="30">Ball 36</canvas></td>
+				<td class="device"><canvas id="ball36" class="ball" width="30" height="30">Ball 37</canvas></td>
+				<td class="device"><canvas id="ball37" class="ball" width="30" height="30">Ball 38</canvas></td>
+				<td class="device"><canvas id="ball38" class="ball" width="30" height="30">Ball 39</canvas></td>
+				<td class="device"><canvas id="ball39" class="ball" width="30" height="30">Ball 40</canvas></td>
+			</tr>
+			<tr>
+				<td class="device"><canvas id="ball40" class="ball" width="30" height="30">Ball 41</canvas></td>
+				<td class="device"><canvas id="ball41" class="ball" width="30" height="30">Ball 42</canvas></td>
+				<td class="device"><canvas id="ball42" class="ball" width="30" height="30">Ball 43</canvas></td>
+				<td class="device"><canvas id="ball43" class="ball" width="30" height="30">Ball 44</canvas></td>
+				<td class="device"><canvas id="ball44" class="ball" width="30" height="30">Ball 45</canvas></td>
+				<td class="device"><canvas id="ball45" class="ball" width="30" height="30">Ball 46</canvas></td>
+				<td class="device"><canvas id="ball46" class="ball" width="30" height="30">Ball 47</canvas></td>
+				<td class="device"><canvas id="ball47" class="ball" width="30" height="30">Ball 48</canvas></td>
+				<td class="device"><canvas id="ball48" class="ball" width="30" height="30">Ball 49</canvas></td>
+				<td class="device"><canvas id="ball49" class="ball" width="30" height="30">Ball 50</canvas></td>
+			</tr>
+		</table></td>
+		<td class="device"><canvas id="distCanvas" width="400" height="170">Distribution graph</canvas></td>
+	</tr>
+	<tr>
+		<td class="device"><textarea id="recordTable" readonly="true" wrap="off" class="table" rows="8"></textarea></td>
+		<td class="device"><textarea id="distTable" readonly="true" wrap="off" class="table" rows="8"></textarea></td>
+	</tr>
+</table>
+</div>
+
+<h4 class="ancillary">Description</h4>
+
+<p>This applet models P&oacute;lya's urn experiment. An urn initially contains \(a\) red and \(b\) green balls.  On each trial, a ball is selected at random from the urn, and then replaced along with \(c\) new balls of the same color. In this simulation, the red balls are numbered consecutively \((1, 2, \ldots)\) and the green balls are numbered consecutively in the same manner. The sample of balls in \(n\) trials is shown in the left graph box. Random variable \(Y\) gives the number of red balls selected after \(n\) trials, and \(M\) gives the proportion of red balls selected in the \(n\) trials. These are recorded on each update in the data table.</p>
+
+<p>The probability density function and moments of \(Y\) are shown in blue in the distribution graph and are recorded in the distribution table. On each update, the empirical density function and moments of \(Y\) are shown in red in the distribution graph and are recorded in the distribution table. The parameters \(a\), \(b\), \(c\), and \(n\) can be varied with the input controls.</p>
+
+<div id="wrapper-footer">
+<div id="footer">
+	Visitor number <img src="http://counter.digits.com/?counter=%7B567347b6-ad03-67d4-1993-0fc7aa8563de%7D&amp;template=simple" align="middle" border="0" height="20" hspace="4" vspace="2" width="60"> 
+	<script type="text/javascript"> var d=new Date(); 
+		document.write(" | 2008-"+d.getFullYear()+" | ");
+	</script>
+	<a href="http://www.Distributome.org">www.Distributome.org</a>
+</div>
+</div>
+
+<!-- Start of StatCounter Code -->
+	<script type="text/javascript">
+		var sc_project=5714596; 
+		var sc_invisible=1; 
+		var sc_partition=71; 
+		var sc_click_stat=1; 
+		var sc_security="038e9ac4"; 
+	</script>
+	<script type="text/javascript"
+ 		src="http://www.statcounter.com/counter/counter.js">
+	</script>
+ 	<!-- End of StatCounter Code -->
+ 	<!-- GoogleAnalytics -->
+	<script src="http://www.google-analytics.com/urchin.js"
+ 		type="text/javascript">
+	</script>
+	<script type="text/javascript"> _uacct = "UA-676559-1"; urchinTracker();
+  	</script>
+  	<!-- End of GoogleAnalytics Code -->
+</body>
+</html>
+

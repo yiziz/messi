@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+<head>
+<title>U-Quadratic Distribution Simulator</title>
+<link rel="stylesheet" href="ScreenStyles.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="PrintStyles.css" type="text/css" media="print" />
+
+<script type="text/javascript" src="devices.js"></script>
+<script type="text/javascript" src="distributions.js"></script>
+<script type="text/javascript" src="UQuadraticSimulation.js"></script>
+<!--
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+?-->
+</head>
+
+<body class="ancillary" onload="initializeExperiment();">
+
+<div class="header">
+<h3 class="ancillary">U-Quadratic Distribution Simulator</h3>
+</div>
+
+<div class="applet">
+<fieldset class="toolbar">
+	<button type="button" id="stepButton" tabindex="1" title="Step" onclick="stepExperiment();">
+		<img src="step.png" alt="Step" title="Step" />
+	</button>
+	<button type="button" id="runButton" tabindex="2" title="Run" onclick="runExperiment()">
+		<img id="runImage" src="run.png" alt="Run" title="Run" />
+	</button>
+	<button type="button" id="stopButton" tabindex="3" title="Stop" onclick="stopExperiment();">
+		<img id="stopImage" src="stop.png" alt="Stop" title="Stop" />
+	</button>
+	<button type="button" id="resetButton" tabindex="4" title="Reset" onclick="resetExperiment();">
+		<img src="reset.png" alt="Reset" title="Reset" />
+	</button>
+	<select id="stopSelect" tabindex="5" title="Stop frequency" onchange="stopFreq = value;">
+		<option value="10">Stop: 10</option>
+		<option value="100">Stop: 100</option>
+		<option value="1000">Stop: 1000</option>
+		<option value="10000">Stop: 10000</option>
+		<option value="0">Stop: never</option>
+	</select>
+	<span class="tool">
+		<input type="checkbox" tabindex="6" id="showCheck" onchange="showDist(this.checked)" />
+		<label for="showCheck">Show Distribution</label>
+	</span>
+</fieldset>
+
+<fieldset class="toolbar">
+	<span class="tool">
+		<label id="aLabel" for="aInput"></label>
+		<input id="aInput" type="range" class="parameter" tabindex="7" onchange="resetExperiment();" />
+	</span>
+	<span class="tool">
+		<label id="wLabel" for="wInput"></label>
+		<input id="wInput" type="range" class="parameter" tabindex="7" onchange="resetExperiment();" />
+	</span>
+</fieldset>
+
+<table class="applet">
+	<tr>
+		<td class="device" colspan="2"><canvas id="distCanvas" title="Distribution graph" width="500" height="170">Distribution graph</canvas></td>
+	</tr>
+	<tr>
+		<td class="device"><textarea id="recordTable" readonly="true" wrap="off" class="table" title="X"></textarea></td>
+		<td class="device"><textarea id="distTable" readonly="true" wrap="off" class="table" title="Distribution table"></textarea></td>
+	</tr>
+</table>
+</div>
+
+<h4 class="ancillary">Description</h4>
+
+<p>This applet simulates a value of a random variable with the U-Quadratic distribution on the interval \( [a, a + h] \). The value is recorded on each update. The parameters \(a\) and \( h \) can be varied with the input controls.</p>
+
+</body>
+
+</html>
