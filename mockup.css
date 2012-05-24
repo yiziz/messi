@@ -1,11 +1,11 @@
 /*use custom font*/
 @font-face {
-    font-family: champagne_and_limousines;
-    src: url('Champagne & Limousines.ttf');
+    font-family: opificio
+    src: url('Opificio.ttf');
 }
 
 body {
-    font-family: champagne_and_limousines;
+    font-family: opificio;
     padding: 0;
     margin: 0;
     position: absolute;
@@ -14,6 +14,8 @@ body {
     overflow: hidden;
 }
 
+#wrap{ min-height:100%;}
+	  
 div.content{
     width: 100%;
     margin: 0px;
@@ -26,12 +28,13 @@ div.sidebar{
     position: absolute;
     top: 45px;
     right: 0px;
+	overflow: hidden;
 }
 
 #navigator{
     margin: 0 260px 0 0;
     border-right: 1px solid #bfbfbf;
-    padding: 10px;
+    padding: 10px 10px 40px 10px;
 }
 
 /*   NAVIGATOR CSS
@@ -138,7 +141,6 @@ div.sidebar{
 -------------------------*/
 .accordion {
     width: 100%;
-    
 }
  
 .accordion h3 {
@@ -169,7 +171,6 @@ div.sidebar{
 .accordion h3:hover {
     background-color: #ffffff;
     color: #5999CF;
-    border: 1px solid #EEEEEE;
     cursor: pointer;
 }
  
@@ -178,4 +179,75 @@ div.sidebar{
     font-size: 0.9em;
     max-height: 350px;
     overflow:auto;
+}
+
+/*   FOOTER CSS
+-------------------------*/
+.footer{
+	background: url(images/bg_footer.png);
+	margin-top: -45px;
+	height: 45px;
+	clear: both;
+}
+
+.footer ul li{ 
+	float: left;
+	padding: 10px 0px;
+}
+
+#toolbar{
+	height: 45px;
+	margin: 0;
+	padding: 0 0 0 10px;
+	list-style: none;
+	-webkit-appearance: none; 
+	
+}
+
+#search{
+	background: url(images/btn_search.png) no-repeat 2px #FFF;
+	margin-left: 0;
+	padding-left: 25px;
+	border: 0 none;
+	width: 210px;
+	font-family: opificio;
+	font-size: 0.8em;
+	color: #000;
+	height: 30px;
+	-webkit-appearance: none; 
+}
+
+
+.styled{
+	background: url(images/btn_whitesubnav.png) no-repeat right;
+}
+
+.styled select{
+	background: url(images/bg_footer.png);
+	font-family: opificio;
+	font-size: 1em;
+	color: #FFF;
+	padding: 5px;
+	border: none;
+	height: 35px;
+	-webkit-appearance: none; 
+}
+
+.styled option{
+	color: #000;
+}
+
+.button{
+	background: none;
+	font-family: opificio;
+	color: #FFF;
+	font-size: 1.1em;
+	padding: 0px 10px;
+	border: none;
+	border-right: 1px solid #FFF;
+	margin-top: 5px;
+}
+
+.button:hover{
+	color: #5999CF;
 }
