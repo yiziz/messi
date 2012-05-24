@@ -1,0 +1,181 @@
+/*use custom font*/
+@font-face {
+    font-family: champagne_and_limousines;
+    src: url('Champagne & Limousines.ttf');
+}
+
+body {
+    font-family: champagne_and_limousines;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height:100%;
+    overflow: hidden;
+}
+
+div.content{
+    width: 100%;
+    margin: 0px;
+}
+
+div.sidebar{
+    width: 250px;
+    padding: 0 5px 0 0;
+    margin: 0;
+    position: absolute;
+    top: 45px;
+    right: 0px;
+}
+
+#navigator{
+    margin: 0 260px 0 0;
+    border-right: 1px solid #bfbfbf;
+    padding: 10px;
+}
+
+/*   NAVIGATOR CSS
+-------------------------*/
+#popout{
+    float:right;
+    padding: 5px;
+    border: 0px;
+    background:transparent;
+}
+
+.expanded{
+    width: 100%;
+    height: 100%;
+}
+
+.hidden{
+    display:none;
+}
+/*   TOP MENU CSS 
+-------------------------*/
+.header {
+    background: #000;
+    height: 45px;
+    padding: 0;
+    margin: 0;
+    top: 0px;
+}
+
+.mainmenu {
+    list-style: none;
+    float: left;
+    padding: 9px 0px;
+    margin: 0;
+    height:28px;
+    top: 0px;
+}
+
+.mainmenu .home{
+    font-size: 1.5em;
+    padding: 0px 60px 0px 27px;
+    margin: 0;
+    border: none;
+}
+
+.mainmenu li {
+    list-style: none;
+    font-size: 1.125em;
+    float: left;
+    padding: 0;
+    margin: 5px 16px 0 0;
+    position: relative;
+}
+
+.mainmenu li a{
+    padding: 0;
+    color: #fff;
+    display: block;
+    text-decoration: none;
+    float: left;
+}
+
+.mainmenu li span {
+    width: 9px;
+    height: 20px;
+    margin: 0 0 0 9px;
+    float: left;
+    background: url(images/btn_subnav.png) no-repeat center top;
+}
+
+.mainmenu li span.subhover {
+    background-position: center; 
+    cursor: pointer;
+} /*--Hover effect for trigger--*/  
+    
+.mainmenu li ul.subnav {  
+    list-style: none;  
+    position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/  
+    top: 31px;  
+    margin: 0; 
+    padding: 0;  
+    display: none;  
+    float: left;  
+    width: 199px;  
+} 
+
+.mainmenu li ul.subnav li{  
+    margin: 0;
+    padding: 8px 24px;
+    clear: both;  
+    width: 150px;  
+    height:22px;
+    background: url(images/bg_subnav.png) no-repeat center;  
+    border-bottom: 1px solid #878787;
+}  
+
+.mainmenu li ul.subnav li a {  
+    float: left; 
+    text-align: center;
+}  
+
+
+/*   ACCORDION CSS
+-------------------------*/
+.accordion {
+    width: 100%;
+    
+}
+ 
+.accordion h3 {
+    background: url(images/btn_blacksubnav.png) no-repeat right center #FFFFFF;
+    border-bottom: 1px solid #878787;
+    border-top: 1px solid #878787;
+    color: #000000;
+    display: block;
+    //font-size: 1.5em;
+    //font-weight: bold;
+    margin: -1px 0 0 !important;
+    padding: 0.5em 1em;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+}
+ 
+.accordion p {
+    font-size: 0.8em;
+    padding: 10px;
+}
+ 
+.accordion h3.active {
+    background: url(images/btn_blacksubnav_min.png) no-repeat right center #ffffff;
+}
+ 
+.accordion h3:hover {
+    background-color: #ffffff;
+    color: #5999CF;
+    border: 1px solid #EEEEEE;
+    cursor: pointer;
+}
+ 
+.accordion div {
+    padding: .5em .25em;
+    font-size: 0.9em;
+    max-height: 350px;
+    overflow:auto;
+}

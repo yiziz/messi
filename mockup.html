@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  	<title>Distributome.org</title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  	
+	<link type="text/css" href="mockup.css" rel="stylesheet" />
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="jMenu.js"></script>
+	
+  	<script type = "text/javascript">
+  		//    Dropdown Menu   //
+  		$(document).ready(function(){
+  			$("ul.subnav").parent().append("<span></span>");
+  			$(".mainmenu li").hover(function(){
+  				$(this).find("ul.subnav").slideDown('fast').show();
+  				
+  				$(this).hover(function(){
+  				}, function(){
+  					$(this).find("ul.subnav").slideUp('slow');
+  				});
+  				
+  				}).hover(function() {
+  					$(this).addClass("subhover");
+  				}, function(){
+  					$(this).removeClass("subhover");
+  			});
+  			
+  		//    Sidebar    //  			
+  			$('.accordion:eq(0)> div').hide();
+	        $('.accordion:eq(0)> h3').click(function() {
+	        		var old=$('.active');
+	        		old.toggleClass('active');
+	        		old.next().slideToggle('fast');
+	        	    $(this).next().slideToggle('fast');
+	        	    $(this).toggleClass('active');
+	        });
+	        
+	        $("#popout").click(function() {
+	        	$('.sidebar').toggleClass('hidden');
+	        	$('.header').toggleClass('hidden');
+	        	$('#navigator').toggleClass('expanded');
+	        	if($('.sidebar').css('display')==='none'){
+	        		$("#popout").html('<img src="images/btn_popin.png" style="margin-right:15px"/>');
+	        	}
+	        	else{
+	        		$("#popout").html('<img src="images/btn_popout.png"/>');
+	        	}
+	        	
+	        });
+  		});
+  		
+
+  		
+  		
+  	</script>
+</head>
+<body>
+	<div class="header">
+		<ul class = "mainmenu">
+			<li class = "home"><a href="index.html">Distributome</a></li>
+			<li><a href="#"> DB Search </a>
+				<ul class="subnav">
+					<li></li>
+					<li></li>
+				</ul>
+			</li>
+			<li><a href="#">About</a>
+				<ul class="subnav">
+					<li><a href="#"> Distributome Project</a></li>
+					<li><a href="#"> Document Wiki</a></li>
+					<li><a href="#"> Documentation</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Tech Docs</a>
+				<ul class="subnav">
+					<li></li>
+					<li></li>
+				</ul>
+			</li>
+			<li><a href="#">Navigator</a>
+				<ul class="subnav">
+					<li></li>
+					<li></li>
+				</ul>
+			</li>
+			<li><a href="#">Legacy Resources</a>
+				<ul class="subnav">
+					<li></li>
+					<li></li>
+				</ul>
+			</li>
+			<li><a href="#">Blog</a>
+			</li>
+		</ul>
+	</div>
+	<div class = "content">
+		<div id="navigator">
+		<button id = "popout"><img src="images/btn_popout.png" /></button>
+		<h1> THIS LAND IS YOUR LAND THIS LAND IS MY LAND FROM CALIFORNIA TO THE NEW YORK ISLANDS  </h1>
+		</div>
+		<div id="navsidebar" class="sidebar">
+			<div class = "accordion">
+				<h3>Editor</h3>
+				<div>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
+				</div>
+				<h3>Editor</h3>
+				<div>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
+				</div>
+				<h3>Editor</h3>
+				<div>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
+				</div>
+				<h3>Distribution Properties</h3>
+				<div>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl erat, consequat non ultrices ut, pharetra vel lectus. Donec non felis diam, at tempus felis. Nulla et euismod felis. Sed ut suscipit eros.
+				</div>
+				<h3>Inter-Distribution Relations</h3>
+				<div />
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
