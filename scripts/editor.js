@@ -506,17 +506,66 @@ function editorSave() {
 		return;
 	}
     var doc = win.document;
-	var emailForm = '<div><form action="/email.php" method="POST" >\
+	var emailForm = '<div><form id="emailForm" action="/email.php" method="POST" >\
+			<h3>Submit XML to Distributome Project</h3>\
 			Name: <input id="name" type="text" name="name" /><br />\
+			<div id="nameError" style=\"display:none;color:red\">Please put your name.</div>\
 			Email: <input id="email" type="text" name="email" /><br />\
+			<div id="emailError1" style=\"display:none;color:red\">Please put your email.</div>\
+			<div id="emailError2" style=\"display:none;color:red\">Please put a valid email.</div>\
 			<input id="copy" type="checkbox" name="copy" value="true" />Send me a copy<br />\
 			<input id="type" type="hidden" name="type" value="'+editor.data("type")+'" />\
 			<input id="node" type="hidden" name="node" value="'+xId+'" />\
-			<textarea id="xml" name="xml" rows="50" cols="100" readonly="readonly" >'+ distributomeXML+ '</textarea><br />\
 			<input id="submit" type="submit" value="Send Email" /><br />\
+			<textarea id="xml" name="xml" rows="50" cols="100" readonly="readonly" >'+ distributomeXML+ '</textarea><br />\
 		</form></div>';
     //doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\"></head><body><div><textarea rows=\"50\" cols=\"100\" readonly=\"readonly\" >"+distributomeXML+"</div></body></html>");
-    doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\"></head><body>"+emailForm+"</body></html>");
+    // email form validator
+	var formjs = '\
+		<script type=\"text/javascript\" src=\"./scripts/jquery.js\"></script>\
+		<script type=\"text/javascript\" >\
+			$(document).ready(function(){\
+				function validateEmail(email) { \
+					var at = email.indexOf("@");\
+					var p = email.lastIndexOf(".");\
+					var len = email.length;\
+					if (at < 1 || p < 3 || p < at + 1 || len < p + 2) {\
+						return false;\
+					}\
+					else {\
+						return true;\
+					}\
+				} \
+				$("#emailForm").submit(function(e){\
+					var name = $("input#name").val();\
+					var email = $("input#email").val();\
+					var error = false;\
+					if (name ==  "") {\
+						$("div#nameError").css("display","block");\
+						error = true;\
+					} else {\
+						$("div#nameError").css("display","none");\
+					}\
+					if (email == "") {\
+						$("div#emailError1").css("display","block");\
+						$("div#emailError2").css("display","none");\
+						error = true;\
+					} else if (!validateEmail(email)){\
+						$("div#emailError1").css("display","none");\
+						$("div#emailError2").css("display","block");\
+						error = true;\
+					} else {\
+						$("div#emailError1").css("display","none");\
+						$("div#emailError2").css("display","none");\
+					}\
+					if (error) {\
+						e.preventDefault();\
+					}\
+				});\
+			});\
+		</script>\
+	';
+	doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\">"+formjs+"</head><body>"+emailForm+"</body></html>");
     doc.close();
 	//alert("To proceed further, Save this XML displayed and email it for review and publishing to info@sistributome.org");
 }
