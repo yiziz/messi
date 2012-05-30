@@ -24,17 +24,19 @@ foreach($xml->attributes() as $a => $b) {
 	$sXml .= $a . '="' . $b .'"';
 }
 $sXml .= "&gt;" . "<br />";
-$fName = false;
+$f2 = false;
+$f3 = false;
 function indx ($xml, $indent) {
-	global $fName;
+	global $f2, $f3;
 	$temp = "";
 	foreach ($xml->children() as $x) {
 		$spaces = str_repeat("&nbsp;", 4*$indent);
-		if (strtolower($x->getName()) == "distribution") {
+		if ($indent == 2 && !$f2) {
 			$temp .= str_repeat("&nbsp;", 4) . "&lt;" . $x->getName();
-		} else if(strtolower($x->getName()) == "name" && !$fName){
+			$f2 = true;
+		} else if($indent == 3 && !$f3){
 			$temp .= str_repeat("&nbsp;", 4) . "&lt;" . $x->getName();
-			$fName = true;
+			$f3 = true;
 		} else {
 			$temp .= $spaces . "&lt;" . $x->getName() ;
 		}
@@ -68,7 +70,7 @@ $email = htmlentities($email);
 $subject = "[socr] Distributome XML - $type $node";
 $message = "
 			$type - $node <br />
-			Edited by $name <br />
+			Submitted by $name <br />
 			Email: $email <br />
 			<br />
 			$xml
@@ -92,7 +94,7 @@ echo("
 ");
 
 if(mail($to, $subject, $message, $headers)) {
-	echo("<div id=\"emailed\" >Email Sent to $to</div><br />");
+	echo("<div id=\"emailed\" >Submittion Sent to $to</div><br />");
 	if($copy == "true") {
 		echo("<div id=\"emailedCopy\" >A copy has been sent to $email</div>");
 	}
