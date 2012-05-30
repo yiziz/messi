@@ -506,9 +506,19 @@ function editorSave() {
 		return;
 	}
     var doc = win.document;
-    doc.write("<html><head><title>Save XML by copying<\br></title></head><body><div><textarea rows=\"50\" cols=\"100\">"+distributomeXML+"</textarea></div></body></html>");
+	var emailForm = '<div><form action="/email.php" method="POST" >\
+			Name: <input id="name" type="text" name="name" /><br />\
+			Email: <input id="email" type="text" name="email" /><br />\
+			<input id="copy" type="checkbox" name="copy" value="true" />Send me a copy<br />\
+			<input id="type" type="hidden" name="type" value="'+editor.data("type")+'" />\
+			<input id="node" type="hidden" name="node" value="'+xId+'" />\
+			<textarea id="xml" name="xml" rows="50" cols="100" readonly="readonly" >'+ distributomeXML+ '</textarea><br />\
+			<input id="submit" type="submit" value="Send Email" /><br />\
+		</form></div>';
+    //doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\"></head><body><div><textarea rows=\"50\" cols=\"100\" readonly=\"readonly\" >"+distributomeXML+"</div></body></html>");
+    doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\"></head><body>"+emailForm+"</body></html>");
     doc.close();
-	alert("To proceed further, Save this XML displayed and email it for review and publishing to info@sistributome.org");
+	//alert("To proceed further, Save this XML displayed and email it for review and publishing to info@sistributome.org");
 }
 
 // get new attribute for editor
