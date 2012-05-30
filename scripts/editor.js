@@ -312,6 +312,7 @@ function fetchArray(xmlDoc){
 
 // Newly added stuff to editor
 
+// global variables
 var editor;
 var editorCopy;
 var editorContent;
@@ -322,23 +323,27 @@ var addAttrDiv;
 // Set existing object on distributomeEditor
 function setEditorNode (index, type) {
 	var xmlObject;
-	// if true
+	// if editor is displayed
 	if (editor.css("display") != "none") {
+		// get xml
 		xmlObject = XMLObject(index, type);
 		if (typeof xmlObject != 'undefined' && xmlObject != null) {
+			// set editor existing object
 			editor.data("existing", xmlObject);
+			// set editor type
 			editor.data("type", type);
 			if (type == "node") {
+				// get name of object
 				editor.data("existingName", xmlObject.getElementsByTagName("name")[0].childNodes[0].nodeValue);
 			}
-			//editorContent.text(XMLToString(xmlObject));
-			//alert(XMLToString(xmlObject));
+			// put xml to editor
 			xmlToEditor(xmlObject);
 		}
 	}
 }
 
 // gotten from joncom.be
+// converts xml to string
 function XMLToString(oXML) {
   if (window.ActiveXObject) {
     return oXML.xml;
@@ -347,6 +352,7 @@ function XMLToString(oXML) {
   }
 }
 
+// executes when new distribution is created in editor
 function newDistribution(){
 	editor.data("changeState")("Editing new Distribution");
 	editor.data("action", "newDistribution");
@@ -357,6 +363,7 @@ function newDistribution(){
 	appendNewAttr("pdf");
 }
 
+// executes when new relation is created in editor
 function newRelation(){
 	editor.data("changeState")("Editing new Relation");
 	editor.data("action", "newRelation");
@@ -370,8 +377,9 @@ function newRelation(){
 
 // place xml object into editor
 function xmlToEditor(xmlObject) {
+	// execute if editor is not currently editing something
 	if (!editor.data("editing")) {
-		
+		// parse through xml to extract data
 		var xC = xmlObject.childNodes;
 		var xType = xmlObject.tagName;
 		var xId = xmlObject.attributes.getNamedItem("id");
@@ -396,13 +404,16 @@ function xmlToEditor(xmlObject) {
 		var tempX = document.createElement("id");
 		tempX.innerHTML = xId;
 		editorContent.append(editorAttrDiv(tempX));
+		// convert xml nodes to html and append to editor
 		for (var i=0; i<xC.length; i++) {
 			if (xC[i].tagName != null) {
 				var attrDiv = editorAttrDiv(xC[i]);
 				editorContent.append(attrDiv);
 			}
-			//editorContent.append($('<div >' + XMLToString(xC[i]) + '</div>'));
+
 		}
+		
+		// set editor attributes
 		editor.data("editing", true);
 		editor.data("action", "existing");
 		editor.data("existing", xmlObject);
@@ -412,12 +423,14 @@ function xmlToEditor(xmlObject) {
 	}
 }
 
+// saves what is in editor
 function editorSave() {
 
 	var XML = new XMLWriter(true);
 	XML.BeginNode("distributome");
 	XML.Attrib("version","2.0");
 	var xId = "";
+	// create xml document based on what object type is
 	if (editor.data("type") == "distribution") {
 		XML.BeginNode("distributions",1);
 		XML.BeginNode("distribution",2);
@@ -501,25 +514,26 @@ function editorSave() {
 	XML.EndNode();
 	
 	var distributomeXML = XML.ToString();
+	// create new window to store xml
 	var win = window.open("", "Save_XML", "");
     if (!win){
 		return;
 	}
     var doc = win.document;
+	// create form for email submittion
 	var emailForm = '<div><form id="emailForm" action="/email.php" method="POST" >\
 			<h3>Submit XML to Distributome Project</h3>\
-			Name: <input id="name" type="text" name="name" /><br />\
+			<label id="nameLable" >Name: </label><input id="name" type="text" name="name" /><br />\
 			<div id="nameError" style=\"display:none;color:red\">Please put your name.</div>\
-			Email: <input id="email" type="text" name="email" /><br />\
+			<label id="emailLabel" >Email: </label><input id="email" type="text" name="email" /><br />\
 			<div id="emailError1" style=\"display:none;color:red\">Please put your email.</div>\
 			<div id="emailError2" style=\"display:none;color:red\">Please put a valid email.</div>\
-			<input id="copy" type="checkbox" name="copy" value="true" />Send me a copy<br />\
+			<input id="copy" type="checkbox" name="copy" value="true" /><label id="copyLabel">Send me a copy</label><br />\
 			<input id="type" type="hidden" name="type" value="'+editor.data("type")+'" />\
 			<input id="node" type="hidden" name="node" value="'+xId+'" />\
 			<input id="submit" type="submit" value="Send Email" /><br />\
 			<textarea id="xml" name="xml" rows="50" cols="100" readonly="readonly" >'+ distributomeXML+ '</textarea><br />\
 		</form></div>';
-    //doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\"></head><body><div><textarea rows=\"50\" cols=\"100\" readonly=\"readonly\" >"+distributomeXML+"</div></body></html>");
     // email form validator
 	var formjs = '\
 		<script type=\"text/javascript\" src=\"./scripts/jquery.js\"></script>\
@@ -565,12 +579,12 @@ function editorSave() {
 			});\
 		</script>\
 	';
+	// write html to new window
 	doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\">"+formjs+"</head><body>"+emailForm+"</body></html>");
     doc.close();
-	//alert("To proceed further, Save this XML displayed and email it for review and publishing to info@sistributome.org");
 }
 
-// get new attribute for editor
+// get div for editor when adding new attribute
 function editorNewAttrDiv(name) {
 	var xTemp = new XMLWriter();
 	xTemp.BeginNode(name);
@@ -582,13 +596,11 @@ function editorNewAttrDiv(name) {
 	return newDiv;
 }
 
-
 // get attribute name div
 function editorAttrName(name) {
 	var temp = $('<div class="attrName" ></div>');
 	temp.text(name);
 	return temp.clone().wrap('<div/>').parent().html()
-	//return '<div class="attrName" >' + name + '</div>';
 }
 
 // get attribute value div
@@ -598,22 +610,23 @@ function editorAttrValue(value) {
 	temp1.text(value);
 	temp2.attr("value", temp1.text());
 	return temp1.clone().wrap('<div/>').parent().html() + temp2.clone().wrap('<div/>').parent().html();
-	//return '<div class="attrValue" >' + value + '</div>' + '<input class="attrInput" style="display:none" type="text" value="' + value + '" />';
-	//return '<div class="attrValue" >' + value + '</div>' + '<textarea class="attrInput" style="display:none" >' + value + '</textarea>';
+
 }
 
-// get attribute div
+// get attribute html div from xml element
 function editorAttrDiv(node) {
 	var nodeName = node.tagName.toLowerCase();
 	var nodeValue = $(node).text(); 
 	var attrDiv;
 	
+	// create new html element based on xml node
 	attrDiv = $('<div class="attrDiv" >' + editorAttrName(nodeName) + editorAttrValue(nodeValue) + editorAttrButtons() + '</div>');
-	//document.write(attrDiv.html());
+	// set attrDiv attributes for condition tests
 	attrDiv.data("name", nodeName);
 	attrDiv.data("value", nodeValue);
 	attrDiv.data("new", false);
 	attrDiv.data("editing", false);
+	// set attributes of attrDiv to hold related html elements
 	var attrValue = $(attrDiv.find(".attrValue")[0]);
 	var attrInput = $(attrDiv.find(".attrInput")[0]);
 	var attrDivBut1 = $(attrDiv.find(".attrBut1")[0]);
@@ -630,6 +643,7 @@ function editorAttrDiv(node) {
 	attrDiv.data("attrRemoveB", attrRemoveB);
 	attrDiv.data("attrDoneB", attrDoneB);
 	attrDiv.data("attrCancelB", attrCancelB);
+	// set changeState function
 	attrDiv.data("changeState", function(state) {
 		state = state.toLowerCase();
 		if (state == "edit") {
@@ -646,6 +660,7 @@ function editorAttrDiv(node) {
 			attrInput.css("display", "none");
 		}
 	});
+	// set click functions for attrDiv buttons
 	attrEditB.click(function(){
 		attrDiv.data("changeState")("edit");
 	});
@@ -665,6 +680,8 @@ function editorAttrDiv(node) {
 	attrValue.click(function(){
 		attrEditB.click();
 	});
+	
+	// set hover functions
 	attrDiv.hover(function() {
 		if (!$(this).data("editing")) {
 			$(this).data("attrDivBut1").css("display", "block");
@@ -687,14 +704,17 @@ function editorAttrButtons() {
 	return but1 + but2;
 }
 
+// get editor footer buttons
 function editorFooterButtons() {
 	return '<div id="nodeFooter" ><button id="fAddAttr">Add Attribute</button><button id="fReset" >Reset</button><button id="fClear" >Cancel</button><button id="fSave">Save</button></div>';
 }
 
+// get editor footer buttons (for when adding new attributes)
 function editorFooterAddAttrButtons() {
 	return '<div ><button id="fCancel">Cancel</button></div>';
 }
 
+// clear any changes made to object with editor
 function editorReset() {
 	editorContent.empty();
 	editor.data("editing", false);
@@ -707,7 +727,9 @@ function editorReset() {
 	}
 }
 
+// set the editor footer to contain correct elements
 function editingFooter() {
+	// set footer buttons
 	var nodeFooter = $(editorFooterButtons());
 	var nodeAddAttrB = $(nodeFooter.find("#fAddAttr")[0]);
 	var nodeClearB = $(nodeFooter.find("#fClear")[0]);
@@ -718,28 +740,35 @@ function editingFooter() {
 	editor.data("nodeResetB", nodeResetB);
 	editor.data("nodeSaveB", nodeSaveB);
 	
+	// set footer button click fucntions
 	nodeClearB.click(editorClear);
 	nodeResetB.click(editorReset);
 	nodeAddAttrB.click(editorAddAttrDiv);
 	nodeSaveB.click(editorSave);
 	
+	// append html elements to footer
 	clearFooter();
 	editorFooter.append(nodeFooter);
 	editor.data("nodeFooter", nodeFooter);
 }
 
+// clear footer
 function clearFooter() {
 	editorFooter.empty();
 }
 
+// show add attribute selection div
 function editorAddAttrDiv(){
+	// make selection div available if hidden
 	if (!addAttrDiv.data("visible")) {
 		$("#addAttrDiv").css("display", "block");
+		// show options based on type of object
 		if (editor.data("type") == "relation") {
 			$("#relAttr").css("display", "block");
 		} else if (editor.data("type") == "distribution") {
 			$("#disAttr").css("display", "block");
 		}
+		// set appropriate footer
 		clearFooter();
 		var f = $(editorFooterAddAttrButtons());
 		editorFooter.append(f);
@@ -750,9 +779,11 @@ function editorAddAttrDiv(){
 		
 		addAttrDiv.data("visible", true);
 	} else {
+		// close options if opened
 		$("#addAttrDiv").css("display", "none");
 		$("#relAttr").css("display", "none");
 		$("#disAttr").css("display", "none");
+		// set editor footer to normal
 		clearFooter();
 		editingFooter();
 		editor.data("nodeFooter").css("display", "block");
@@ -761,6 +792,7 @@ function editorAddAttrDiv(){
 	
 }
 
+// append a new attribute div to editor (blank attribute)
 function appendNewAttr(name) {
 	var tempX = document.createElement(name);
 	tempX.innerHTML = "Click here to edit new attribute";
@@ -769,18 +801,24 @@ function appendNewAttr(name) {
 	editorContent.append(tempN);
 }
 
+// reset editor for first/new use
 function editorClear() {
+
+	// reset html of editor
 	editor.html(editorCopy.html());
 	
+	// reset add new attribute div
 	addAttrDiv = $("#addAttrDiv");
 	addAttrDiv.data("visible", false);
 	
+	// rehookup new attribute click functions
 	$(".attrChoice").click(function(){
 		var text = $.trim($(this).text()).toLowerCase();
 		appendNewAttr(text);
 		editorAddAttrDiv();
 	});
 	
+	// reset global variables
 	editorContent = $(editor.find("#editorContent")[0]);
 	editorFooter = $(editor.find("#editorFooter")[0]);
 	editorTitle = $(editor.find("#editorTitle")[0]);
@@ -791,6 +829,7 @@ function editorClear() {
 		editorContent.empty();
 	});
 
+	// reset editor attributes
 	editingFooter();
 	
 	editor.data("action", null);
@@ -799,6 +838,7 @@ function editorClear() {
 	editor.data("type", null);
 	editor.data("id", null);
 	
+	// rehookup click functions of buttons
 	$("#createDis").click(function(){
 		newDistribution();
 	});
@@ -811,8 +851,12 @@ function editorClear() {
 
 // init editor
 $(document).ready(function(){
+	// set global editor variable
 	editor = $("#editor");
+	// set a copy of editor for storage
 	editorCopy = $(editor.clone(false));
+	
+	// set the editor up for first use
 	editorClear();
 	
 	
