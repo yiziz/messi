@@ -90,7 +90,7 @@ echo("
 
 // sent email and echo response text
 if(mail($to, $subject, $message, $headers)) {
-	echo("<div id=\"emailed\" >Submittion sent to $to</div><br />");
+	echo("<div id=\"emailed\" >Submission sent to $to</div><br />");
 	if($copy == "true") {
 		echo("<div id=\"emailedCopy\" >A copy has been sent to $email</div>");
 	}
