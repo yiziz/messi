@@ -1,7 +1,10 @@
 <?php
 
-
+// set email to address
 $to = "info@sistributome.org";
+
+// set variables from POST
+// htmlentities to escape dangerous tags
 $copy = "false";
 if(isset($_POST['copy'])) {
 	$copy = $_POST['copy'];
@@ -14,8 +17,11 @@ $name = htmlentities($name);
 $type = ucwords($_POST['type']);
 $node = $_POST['node'];
 $xml = $_POST['xml'];
+
+// create xml document from $xml
 $xml = new SimpleXMLElement($xml);
 
+// store xml into pretty formatted string
 $sXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 $sXml = htmlentities($sXml) . "<br />";
 $sXml .= "&lt;" . $xml->getName() ;
@@ -25,7 +31,6 @@ foreach($xml->attributes() as $a => $b) {
 }
 $sXml .= "&gt;" . "<br />";
 function indx ($xml, $indent) {
-	global $f2, $f3;
 	$temp = "";
 	foreach ($xml->children() as $x) {
 		$spaces = str_repeat("&nbsp;", 4*$indent);
@@ -47,11 +52,8 @@ function indx ($xml, $indent) {
 $sXml .= indx($xml, 1);
 $sXml .= "&lt;/" . $xml->getName() . "&gt;<br />";
 $xml = str_replace("<br /><br />", "<br />", $sXml);
-//echo $xml;
-//$xml = $xml->asXML();
-//$xml = htmlentities($xml);
 
-
+// format email
 $email = "";
 if(isset($_POST['email'])) {
 	$email = $_POST['email'];
@@ -65,10 +67,13 @@ $message = "
 			<br />
 			$xml
 			";
-			
+
+// set headers			
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1" . "\r\n";
 $headers .= "From: $name <$email>" . "\r\n";
+
+// add CC if user wanted a copy of the email
 if ($copy == "true") {
 	$headers .= "CC: $email";
 }
@@ -83,6 +88,7 @@ echo("
 	
 ");
 
+// sent email and echo response text
 if(mail($to, $subject, $message, $headers)) {
 	echo("<div id=\"emailed\" >Submittion sent to $to</div><br />");
 	if($copy == "true") {
