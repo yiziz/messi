@@ -531,7 +531,7 @@ function editorSave() {
 			<input id="copy" type="checkbox" name="copy" value="true" /><label id="copyLabel">Send me a copy</label><br />\
 			<input id="type" type="hidden" name="type" value="'+editor.data("type")+'" />\
 			<input id="node" type="hidden" name="node" value="'+xId+'" />\
-			<input id="submit" type="submit" value="Send Email" /><br />\
+			<input id="submit" type="submit" value="Submit via Email" /><br />\
 			<textarea id="xml" name="xml" rows="50" cols="100" readonly="readonly" >'+ distributomeXML+ '</textarea><br />\
 		</form></div>';
     // email form validator
