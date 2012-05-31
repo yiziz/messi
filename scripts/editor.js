@@ -580,7 +580,7 @@ function editorSave() {
 		</script>\
 	';
 	// write html to new window
-	doc.write("<html><head><title>Save XML by copying<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\">"+formjs+"</head><body>"+emailForm+"</body></html>");
+	doc.write("<html><head><title>XML Submission Page<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\">"+formjs+"</head><body>"+emailForm+"</body></html>");
     doc.close();
 }
 
