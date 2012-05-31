@@ -27,7 +27,7 @@ $sXml = htmlentities($sXml) . "<br />";
 $sXml .= "&lt;" . $xml->getName() ;
 foreach($xml->attributes() as $a => $b) {
 	$sXml .= " ";
-	$sXml .= $a . '="' . $b .'"';
+	$sXml .= $a . '=&quot;' . $b .'&quot;';
 }
 $sXml .= "&gt;" . "<br />";
 function indx ($xml, $indent) {
@@ -37,7 +37,7 @@ function indx ($xml, $indent) {
 		$temp .= $spaces . "&lt;" . $x->getName() ;
 		foreach($x->attributes() as $a => $b) {
 			$temp .= " ";
-			$temp .= $a . '="' . $b .'"';
+			$temp .= $a . '=&quot;' . $b .'&quot;';
 		}
 		$temp .= "&gt;" . "<br />";
 		if (trim($x) != "") {
