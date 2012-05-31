@@ -550,6 +550,13 @@ function editorSave() {
 						return true;\
 					}\
 				} \
+				$("label#copyLabel").click(function(){\
+					if($("#copy").attr("checked")){\
+						$("#copy").removeAttr("checked");\
+					} else {\
+						$("#copy").attr("checked", "checked");\
+					}\
+				});\
 				$("#emailForm").submit(function(e){\
 					var name = $("input#name").val();\
 					var email = $("input#email").val();\

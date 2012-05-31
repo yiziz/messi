@@ -41,7 +41,7 @@ function indx ($xml, $indent) {
 		}
 		$temp .= "&gt;" . "<br />";
 		if (trim($x) != "") {
-			$temp .= $spaces . str_repeat("&nbsp;", 4*$indent) . $x . "<br />";
+			$temp .= $spaces . str_repeat("&nbsp;", 8) . $x . "<br />";
 		}
 		$temp .= indx($x, $indent+1);
 		$temp .= $spaces . "&lt;/" . $x->getName() . "&gt;<br />";
