@@ -105,8 +105,7 @@ function BibtexParser() {
 	        old.remove();
 	    } else {
 	    	// say no references
-	    	//var tpl = $(".bibtex_template").clone().removeClass('bibtex_template');
-	    	//tpl.show();
+	    	
 	    	old.remove();
 	    }
   }
