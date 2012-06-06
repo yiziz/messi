@@ -94,7 +94,7 @@ function resetVariables(){
 /*************** Reset search text **************/
 function resetText(){
 	document.getElementById('distributome.text').value = '';
-	document.getElementById('distributome.referencePanel').innerHTML = '<b><u>Distribution Referencies</u></b>';
+	//document.getElementById('distributome.referencePanel').innerHTML = '<b><u>Distribution Referencies</u></b>';
 	document.getElementById('distributome.propertiesPannel').innerHTML = '<b><u>Distribution Properties</u></b>';	
 	document.getElementById('distributome.relationPannel').innerHTML = '<b><u>Distribution Relations</u></b>';
 }
@@ -341,7 +341,7 @@ function getReferences(index){
 	if(index){
 		html.push(XMLParser(getObjectReferenceNumber('reference'), 9, index, false, DistributomeXML_Objects)[0]);
 	}
-	document.getElementById('distributome.referencePanel').innerHTML = html.join('');
+	//document.getElementById('distributome.referencePanel').innerHTML = html.join('');
 }
 
 /*************** Fetch relation information of an edge **************/
