@@ -520,8 +520,9 @@ function editorSave() {
 		return;
 	}
     var doc = win.document;
-	// create form for email submittion
-	var emailForm = '<div><form id="emailForm" action="/email.php" method="POST" >\
+	// create form for email submission
+	doc.write("<html><head><title>XML Submission Page<\br></title><link href=\"mockup.css\" rel=\"stylesheet\" type=\"text/css\">");
+	var emailForm = '<div id = "submission"><form id="emailForm" action="/email.php" method="POST" >\
 			<h3>Submit XML to Distributome Project</h3>\
 			<label id="nameLable" >Name: </label><input id="name" type="text" name="name" /><br />\
 			<div id="nameError" style=\"display:none;color:red\">Please put your name.</div>\
@@ -587,7 +588,7 @@ function editorSave() {
 		</script>\
 	';
 	// write html to new window
-	doc.write("<html><head><title>XML Submission Page<\br></title><link href=\"email.css\" rel=\"stylesheet\" type=\"text/css\">"+formjs+"</head><body>"+emailForm+"</body></html>");
+	doc.write(formjs+"</head><body>"+emailForm+"</body></html>");
     doc.close();
 }
 

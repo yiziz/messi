@@ -381,3 +381,34 @@ button{
 .button:hover{
 	color: #5999CF;
 }
+
+/*    Email Page CSS     
+-------------------------*/
+#submission{
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+    width: 70%;
+}
+#submit{
+	background: none;
+	color: black;
+	padding: 5px;
+	border: 1px solid #b2b2b2;
+    margin: 0px 10px 5px 10px;;
+}
+
+label{
+    margin: 0px 10px;
+    font-size: 0.9em;
+}
+
+#copy{
+    margin: 0px 10px 5px 10px;
+    font-size: 0.9em;
+}
+
+#nameError, #emailError1, #emailError2{
+    margin: 0px 10px 5px 10px;
+    font-size: 0.9em;
+}
