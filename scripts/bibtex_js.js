@@ -375,9 +375,21 @@ function BibtexDisplay() {
 
 }
 
+//var bib_data;
+
 function bibtex_js_draw() {
   $(".bibtex_template").hide();
-  (new BibtexDisplay()).displayBibtex($("#bibtex_input").val(), $("#bibtex_display"));
+  //Load references from BIB file instead of XML or directly from mockup.html
+  $.get('Distributome_NEW.bib', function(data) {
+	  //bib_data = data;
+	  
+	
+  //$('#bibtex_input').val(bib_data);
+  //alert('Load was performed.' + bib_data);
+  
+  (new BibtexDisplay()).displayBibtex(data, $("#bibtex_display"));
+  });
+
 }
 
 // check whether or not jquery is present
@@ -392,7 +404,7 @@ if (typeof jQuery == 'undefined') {
     if ($(".bibtex_template").size() == 0) {
       $("body").append("<div class=\"bibtex_template\"><div class=\"if author\" style=\"font-weight: bold;\">\n  <span class=\"if year\">\n    <span class=\"year\"></span>, \n  </span>\n  <span class=\"author\"></span>\n  <span class=\"if url\" style=\"margin-left: 20px\">\n    <a class=\"url\" style=\"color:black; font-size:10px\">(view online)</a>\n  </span>\n</div>\n<div style=\"margin-left: 10px; margin-bottom:5px;\">\n  <span class=\"title\"></span>\n</div></div>");
     }
-
+   
     bibtex_js_draw();
   });
 }
