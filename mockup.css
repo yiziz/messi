@@ -138,7 +138,52 @@ div.sidebar{
     text-align: center;
 }  
 
-/*   NAVIGATOR CSS 
+/*   ACCORDION CSS
+-------------------------*/
+.accordion {
+    width: 100%;
+    background-color: white;
+}
+ 
+.accordion h3 {
+    background: url(images/btn_blacksubnav.png) no-repeat right center #FFFFFF;
+    border-bottom: 1px solid #878787;
+    border-top: 1px solid #878787;
+    color: #000000;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    margin: -1px 0 0 !important;
+    padding: 0.5em 1em;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+}
+ 
+.accordion p {
+    font-size: 0.8em;
+    padding: 10px;
+}
+ 
+.accordion h3.active {
+    background: url(images/btn_blacksubnav_min.png) no-repeat right center #ffffff;
+}
+ 
+.accordion h3:hover {
+    background-color: #ffffff;
+    color: #5999CF;
+    cursor: pointer;
+}
+ 
+.accordion div {
+    padding: 0px 5px;
+    font-size: 0.9em;
+    max-height: 300px;
+    overflow:auto;
+}
+
+/*   EDITOR CSS 
 -------------------------*/
 
 div.attrBut1 {
@@ -160,20 +205,20 @@ div.attrChoice {
 div.attrDiv {
 	width:100%;
 	display:inline-table;
-	margin-bottom:5px;
+	margin-bottom:0px;
+	padding: 2px;
 }
 
 
 div.attrName {
-	display:block;
+    font-size: 1.1em;
+	float: left;
 	text-align:left;
 	font-weight:bold;
-	clear:both;
 }
 div.attrValue {
-	display:block;
+    font-size: 1.1em;
 	text-align:right;
-	clear:both;
 }
 
 
@@ -223,6 +268,8 @@ div#editorFooter {
 }
 div#editorTitle {
 	height:10%;
+	font-weight: bold;
+	margin: 5px 0px;
 }
 div#nodeFooter {
 	display:none;
@@ -243,49 +290,22 @@ input.attrInput {
 }
 
 
-/*   ACCORDION CSS
--------------------------*/
-.accordion {
-    width: 100%;
-    background-color: white;
+button{
+	background: none;
+	font-family: opificio, sans-serif;
+	color: black;
+	font-size: 0.9 em;
+	padding: 5px;
+	border: 1px solid #b2b2b2;
+	margin: 0px 2px;
 }
- 
-.accordion h3 {
-    background: url(images/btn_blacksubnav.png) no-repeat right center #FFFFFF;
-    border-bottom: 1px solid #878787;
-    border-top: 1px solid #878787;
-    color: #000000;
-    display: block;
-    font-size: 1em;
-    font-weight: bold;
-    margin: -1px 0 0 !important;
-    padding: 0.5em 1em;
-    -moz-transition: all 0.3s ease-in-out 0s;
-    -webkit-transition: all 0.3s ease-in-out 0s;
-    -o-transition: all 0.3s ease-in-out 0s;
-    transition: all 0.3s ease-in-out 0s;
+
+#createDis, #createRel{
+    margin-top: 5px;
 }
- 
-.accordion p {
-    font-size: 0.8em;
-    padding: 10px;
-}
- 
-.accordion h3.active {
-    background: url(images/btn_blacksubnav_min.png) no-repeat right center #ffffff;
-}
- 
-.accordion h3:hover {
-    background-color: #ffffff;
-    color: #5999CF;
-    cursor: pointer;
-}
- 
-.accordion div {
-    padding: .5em .25em;
-    font-size: 0.9em;
-    max-height: 300px;
-    overflow:auto;
+
+#fAddAttr, #fReset, #fClear, #fSave{
+    margin-bottom: 5px;
 }
 
 /*   FOOTER CSS
