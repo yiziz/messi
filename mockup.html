@@ -10,41 +10,23 @@
 	
 	
 	<script type="text/javascript" src="./scripts/jquery.js"></script>
-	
   	<script type="text/javascript" src="scripts/protovis-r3.2.js"></script>
   
-		<script type="text/javascript" src="scripts/bibtex_js.js"</script>
+
 	<script type="text/javascript" src="scripts/xml2json.js"></script>
   	<script type="text/javascript" src="scripts/common.js"></script>
 	<script type="text/javascript" src="scripts/editor.js"></script>
 	<script type="text/javascript" src="scripts/splitter.js"></script>
 	<script type="text/javascript" src="scripts/XMLWriter.js"></script>
 	<script type="text/javascript" src="scripts/distributome.js"></script>
-	
-	<div class="bibtex_template"></div>
 
-	<textarea id="bibtex_template_input" style="display:none">
-	<div class="if author" style="font-weight: bold;">
-	  <span class="if year">
-	    <span class="year"></span>, 
-	  </span>
-	  <span class="author"></span>
-	  <span class="if url" style="margin-left: 20px">
-	    <a class="url" style="color:black; font-size:10px">(view online)</a>
-	  </span>
-	</div>
-	<div style="margin-left: 10px; margin-bottom:5px;">
-	  <span class="title"></span>
-	</div>
-	</textarea>
+
+	
 	<!--[if !IE7]>
 		<style type="text/css">
 			#wrap{ display:table; height: 100%}
 		</style>
 	<![endif]-->
-	<textarea id="bibtext_input" style="display:none">
-	</textarea>
-	
   	<script type = "text/javascript">
   		
   		$(document).ready(function(){
@@ -215,8 +197,6 @@
         }
     
     </script>
-    
-    
             <!--  /center -->
 </head>
 <body onmousedown="isKeyPressed(event)">
@@ -379,7 +359,7 @@
                                         .cursor("pointer")
                                         //.fillStyle("#696969")
                                         .strokeStyle(function(d,l) getLinkColor(d,l))
-                                        .event("click", function (d, l) getRelationProperties(d.nodeName, l.index));
+                                        .event("click", function (d, l) { getRelationProperties(d.nodeName, l.index); setEditorNode(l.index, "link"); });
                             
                             linky.add(pv.Dot)
                                 .data(function(l) { if(l.target == l.source) return [{x:0,y:0}];
@@ -406,7 +386,7 @@
                                 .lineWidth(1)
                                 //.title(function(d) d.nodeName)
                                 .cursor("pointer")
-                                .event("click", function (d) getNodeProperties(this.index, d.nodeName, d))
+                                .event("click", function (d) { getNodeProperties(this.index, d.nodeName, d); setEditorNode(this.index, "node"); })
                                 .event("mousedown", pv.Behavior.drag())
                                 .event("drag", force)
                                 .anchor("center").add(pv.Label)
@@ -539,8 +519,7 @@
 					<div id="distributome.relationPannel">
 					</div>
 					<h3>Distribution References</h3>
-					<!--  <div id="distributome.referencePanel"> </div>-->
-					<div id="bibtext_display"></div>
+					<div id="distributome.referencePanel"> </div>
 				</div>
 			</div>
 		</div>
