@@ -322,7 +322,7 @@
 	<family>exponential </family>
 	<family>scale</family>
 	<history>The exponential distribution was named by Karl Pearson in 1895.</history>
-	<cite>Siegrist 2007</cite>
+	<cite>siegrist2007exponential</cite>
 </distribution>
 
 <distribution id="exponential-logarithmic">

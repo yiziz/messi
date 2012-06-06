@@ -14,9 +14,14 @@
 //  value -> value_quotes | value_braces | key;
 //  value_quotes -> '"' .*? '"'; // not quite
 //  value_braces -> '{' .*? '"'; // not quite
+var BibParser;
+var bibOutput;
 function BibtexParser() {
   this.pos = 0;
   this.input = "";
+  
+  //Adding variable to hold referenceName
+  this.refName = null;
   
   this.entries = {};
   this.strings = {
@@ -39,6 +44,71 @@ function BibtexParser() {
 
   this.setInput = function(t) {
     this.input = t;
+  }
+  
+  //Adding function to set reference Name
+  this.setRef = function(t) {
+	  this.refName = t;
+	 // alert("refName = " + this.refName);
+	  
+	  var entries = this.entries;
+	  var refName = this.refName;
+	  var old =bibOutput.find("*");  
+	  
+	  if(refName!=null){
+	    	var entry = entries[refName.toUpperCase()];
+	    	var tpl = $(".bibtex_template").clone().removeClass('bibtex_template');
+	        
+	        // find all keys in the entry
+	        var keys = [];
+	        for (var key in entry) {
+	          keys.push(key.toUpperCase());
+	        }
+	        
+	        // find all ifs and check them
+	        var removed = false;
+	        do {
+	          // find next if
+	          var conds = tpl.find(".if");
+	          if (conds.size() == 0) {
+	            break;
+	          }
+	          
+	          // check if
+	          var cond = conds.first();
+	          cond.removeClass("if");
+	          var ifTrue = true;
+	          var classList = cond.attr('class').split(' ');
+	          $.each( classList, function(index, cls){
+	            if(keys.indexOf(cls.toUpperCase()) < 0) {
+	              ifTrue = false;
+	            }
+	            cond.removeClass(cls);
+	          });
+	          
+	          // remove false ifs
+	          if (!ifTrue) {
+	            cond.remove();
+	          }
+	        } while (true);
+	        
+	        // fill in remaining fields 
+	        for (var index in keys) {
+	          var key = keys[index];
+	          var value = entry[key] || "";
+	          tpl.find("span:not(a)." + key.toLowerCase()).html(this.fixValue(value));
+	          tpl.find("a." + key.toLowerCase()).attr('href', this.fixValue(value));
+	        }
+	        
+	        bibOutput.append(tpl);
+	        tpl.show();
+	        old.remove();
+	    } else {
+	    	// say no references
+	    	//var tpl = $(".bibtex_template").clone().removeClass('bibtex_template');
+	    	//tpl.show();
+	    	old.remove();
+	    }
   }
   
   this.getEntries = function() {
@@ -231,6 +301,23 @@ function BibtexParser() {
       this.match("}");
     }
   }
+  
+  this.fixValue = function (value) {
+	    value = value.replace(/\\glqq\s?/g, "&bdquo;");
+	    value = value.replace(/\\grqq\s?/g, '&rdquo;');
+	    value = value.replace(/\\ /g, '&nbsp;');
+	    value = value.replace(/\\url/g, '');
+	    value = value.replace(/---/g, '&mdash;');
+	    value = value.replace(/{\\"a}/g, '&auml;');
+	    value = value.replace(/\{\\"o\}/g, '&ouml;');
+	    value = value.replace(/{\\"u}/g, '&uuml;');
+	    value = value.replace(/{\\"A}/g, '&Auml;');
+	    value = value.replace(/{\\"O}/g, '&Ouml;');
+	    value = value.replace(/{\\"U}/g, '&Uuml;');
+	    value = value.replace(/\\ss/g, '&szlig;');
+	    value = value.replace(/\{(.*?)\}/g, '$1');
+	    return value;
+	  }
 }
 
 function BibtexDisplay() {
@@ -299,27 +386,79 @@ function BibtexDisplay() {
     old.remove();
   }
 
-
+  
+  
+  
   this.displayBibtex = function(input, output) {
     // parse bibtex input
-    var b = new BibtexParser();
+    BibParser = new BibtexParser();
+    bibOutput = output;
+    
+    var b = BibParser;
+    
     b.setInput(input);
     b.bibtex();
     
-    // monitor template for changes and add template to dom
-    $("#bibtex_template_input").keyup(function() {
-      $(".bibtex_template").html($("#bibtex_template_input").val());
-      //refresh = true;
-    });
-    $(".bibtex_template").html($("#bibtex_template_input").val());
     
     // save old entries to remove them later
     var old = output.find("*");    
 
     // iterate over bibTeX entries
     var entries = b.getEntries();
-    for (var entryKey in entries) {
+    /*if(true){//b.refName!=null){
+    	//var entry = entries[refName];
+    	var entry = entries['siegrist2007exponential'.toUpperCase()];
+    	var tpl = $(".bibtex_template").clone().removeClass('bibtex_template');
+        
+        // find all keys in the entry
+        var keys = [];
+        for (var key in entry) {
+          keys.push(key.toUpperCase());
+        }
+        
+        // find all ifs and check them
+        var removed = false;
+        do {
+          // find next if
+          var conds = tpl.find(".if");
+          if (conds.size() == 0) {
+            break;
+          }
+          
+          // check if
+          var cond = conds.first();
+          cond.removeClass("if");
+          var ifTrue = true;
+          var classList = cond.attr('class').split(' ');
+          $.each( classList, function(index, cls){
+            if(keys.indexOf(cls.toUpperCase()) < 0) {
+              ifTrue = false;
+            }
+            cond.removeClass(cls);
+          });
+          
+          // remove false ifs
+          if (!ifTrue) {
+            cond.remove();
+          }
+        } while (true);
+        
+        // fill in remaining fields 
+        for (var index in keys) {
+          var key = keys[index];
+          var value = entry[key] || "";
+          tpl.find("span:not(a)." + key.toLowerCase()).html(this.fixValue(value));
+          tpl.find("a." + key.toLowerCase()).attr('href', this.fixValue(value));
+        }
+        
+        output.append(tpl);
+        tpl.show();
+    } else {
+    	// say no references
+    }*/
+    /*for (var entryKey in entries) {
       var entry = entries[entryKey];
+      alert("entry key =" + entryKey)
       
       // find template
       var tpl = $(".bibtex_template").clone().removeClass('bibtex_template');
@@ -367,7 +506,7 @@ function BibtexDisplay() {
       
       output.append(tpl);
       tpl.show();
-    }
+    }*/
     
     // remove old entries
     old.remove();
