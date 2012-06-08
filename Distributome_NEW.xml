@@ -322,7 +322,7 @@
 	<family>exponential </family>
 	<family>scale</family>
 	<history>The exponential distribution was named by Karl Pearson in 1895.</history>
-	<cite>Siegrist 2007</cite>
+	<cite>siegrist2007exponential</cite>
 </distribution>
 
 <distribution id="exponential-logarithmic">
@@ -417,7 +417,7 @@
 	<q3>\(Q(\frac{3}{4})\) where \(Q\) is the quantile function</q3>
 	<family>scale </family>
 	<family>exponential</family>
-	<cite>Siegrist 2007</cite>
+	<cite>siegrist2007exponential</cite>
 </distribution>
 
 <distribution id="geometric">
@@ -815,7 +815,7 @@
 	<family>scale </family>
 	<family>exponential </family>
 	<family>stable</family>
-	<cite>Dinov Christou Sanchez 2008</cite>
+	<cite>dinov2008central</cite>
 	<history>The normal distribution was first derived by Carl Friedrich Gauss in 1809 (hence the alternative name Gaussian distribution). The normalizing constant and the first version of the Central Limit Theorem were contributions by Pierre Simon Laplace. The term <q>normalizing constant</q> was popularized by Karl Pearson around the turn of the 20th century.</history>
 </distribution>
 
@@ -1978,7 +1978,7 @@
 		<to>standard normal distribution</to>
 		<statement>If \(X_n\) has the binomial distribution with parameters \(n \in \{1, 2, \ldots\}\) and fixed \(p \in (0, 1)\) then then the distribution of \(Z_n = \frac{X_n - n p}{\sqrt{n p (1 - p)}}\) converges to the standard normal distribution as \(n \to \infty\).</statement>
 		<type>central limit theorem</type>
-	<cite>Dinov Christou Sanchez 2008</cite>
+	<cite>dinov2008central</cite>
 	</relation>
 
 	<relation id="binomial/Bernoulli">
@@ -2049,7 +2049,7 @@
 		<to>standard normal distribution</to>
 		<statement>If \(X_n\) has the chi-square distribution with \(n \in \{1, 2, \ldots\}\) degrees of freedom, then the distribution of \(Z = \frac{X_n - n}{\sqrt{2 n}}\) converges to the standard normal distribution as \(n \to \infty\).</statement>
 		<type>central limit theorem</type>
-	<cite>Dinov Christou Sanchez 2008</cite>
+	<cite>dinov2008central</cite>
 	</relation>
 
 	<relation id="chi-square/F">
