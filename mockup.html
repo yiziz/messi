@@ -34,15 +34,70 @@
   		
   		    
   		    // NAVIGATOR //
+  		    
+  			// Adjusts the size of the navigator according
+  			 // to browser size on page load
+  			        
+  			 //future: adjust navigator as browser is resized
   		    var contentW = $('.content').width() - $('.sidebar').width() - 20;
-  		    var contentH = $('.content').height() - $('.footer').height() + 5;
-  		    $('#LeftPanel').css('width', contentW);
-  		    $('#LeftPanel').css('height', contentH);
-            // SIDEBAR //
+      		var contentH = $('.content').height() - $('.footer').height() + 5;
+      		$('#LeftPanel').css('width', contentW);
+      		$('#LeftPanel').css('height', contentH);
+                // Adjust Sidebar Height according to
+                // browser height
             $('.sidebar').css('max-height', contentH);
-            // FOOTER //
-            $('.footer').css('width', $(window).width());
+               
+               
+            var $body = $('body');   
             
+  			function doSomething(){
+
+	            if( $(window).width() <= 800 ){
+	                $('.styled select').css('font-size', '0.8em');
+	                $('.mainmenu li').css('font-size', '0.8em');
+	                $('.mainmenu li').css('margin', '0 10px 0 0');
+	                
+	                $('.mainmenu #home').css('font-size', '1em');
+	                $('.mainmenu #home').css('padding', '0px 40px 0px 20px');
+	                $('.header').css('height', '35px');
+	                $('.accordion h3').css('font-size', '0.8em');
+	                
+	                $('.mainmenu li ul.subnav').css('top', '25px');
+	                $('.mainmenu li ul.subnav').css('width', '100px');
+	                $('.mainmenu li ul.subnav li').css('width', '100px');
+	                $('.mainmenu li ul.subnav li').css('height', '15px');
+	                
+	                $('.footer').css('height', '35px');
+	                $('.footer ul li').css('padding', '5px 0');
+	                alert('resized');
+	            }
+	            else{
+	                $('.styled select').css('font-size', '0.9em');
+	                $('.mainmenu li').css('font-size', '1em');
+	                //$('.mainmenu li').css('margin', '5px 16px 0 0');
+	                $('.mainmenu #home').css('font-size', '1.5em');
+	                $('.mainmenu #home').css('padding', '0px 60px 0px 27px');
+	                $('.header').css('height', '45px');
+	                $('.accordion h3').css('font-size', '1.0em');
+	                
+	                $('.footer').css('height', '45px');
+	                $('.footer ul li').css('padding', '10px 0');
+	                /*
+	                $('.mainmenu li ul.subnav').css('top', '31px');
+	                $('.mainmenu li ul.subnav').css('width', '199px');
+	                $('.mainmenu li ul.subnav li').css('width', '150px');
+	                $('.mainmenu li ul.subnav li').css('height', '22px');
+	                */
+	            }
+	        };
+	        
+	        var resizeTimer;
+	        $(window).resize(function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout( doSomething, 100 );
+	        });
+            
+            doSomething();
   		    //    Dropdown Menu   //
   			$("ul.subnav").parent().append("<span></span>");
   			$(".mainmenu li").hover(function(){
@@ -58,6 +113,8 @@
   				}, function(){
   					$(this).removeClass("subhover");
   			});
+  			
+
   			
   		//    Sidebar    //  			
   			$('.accordion:eq(0)> div').hide();
@@ -82,6 +139,7 @@
 	        	}
 	        	
 	        });*/
+	        
 	        
   		});
   		
@@ -134,6 +192,12 @@
   	
   	<!-- NAVIGATOR FUNCTIONS -->
   	<script type="text/javascript+protovis">
+  	
+  	    /**
+  	      Bottom Toolbar Functions
+  	      Enables Functionality of the menus and the restart/reset/pause buttons
+  	    **/
+  	    
         function resetNavigator(){
             resetView();
             resetNodesEdges();
@@ -279,7 +343,7 @@
 	<div id="wrap">
 		<div class="header">
 			<ul class = "mainmenu">
-				<li class = "home"><a href="index.html">Distributome</a></li>
+				<li id = "home"><a href="index.html">Distributome</a></li>
 				<!-- <li><a href="#"> DB Search </a>
 					<ul class="subnav">
 						<li></li>
@@ -328,12 +392,11 @@
 		</div>
 		<div class = "content">
 			<div id="LeftPanel" style="width:500px; height:500px" >
-				<!-- <button id = "popout"><img src="images/btn_popout.png" /></button> -->
 				
                 <script type="text/javascript+protovis">
                 
-                            /**	To Do: Make the height and width of the Graph panel 
-                                auto-adjust to the "LeftPanel" panel size that the graph is embedded in!  
+                            /**	
+                                Protovis Code that Renders the Navigator
                             ***/
                         try{
                             var leftPanelWidth = document.getElementById('LeftPanel').style.width;

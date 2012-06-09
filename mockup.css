@@ -22,7 +22,7 @@ div.content{
 }
 
 div.sidebar{
-    width: 250px;
+    width: 25%;
     padding: 0 5px 0 0;
     margin: 0;
     position: absolute;
@@ -75,7 +75,7 @@ div.sidebar{
     top: 0px;
 }
 
-.mainmenu .home{
+.mainmenu #home{
     font-size: 1.5em;
     padding: 0px 60px 0px 27px;
     margin: 0;
@@ -314,10 +314,10 @@ button{
 	background: url(images/bg_footer.png);
 	margin-top: -45px;
 	height: 45px;
+	width: 100%;
 	clear: both;
 	position: absolute;
 	bottom: 0;
-	z-index: 100;
 }
 
 .footer ul li{ 
@@ -339,11 +339,10 @@ button{
 	margin-left: 0;
 	padding-left: 25px;
 	border: 0 none;
-	width: 210px;
 	font-family: opificio, sans-serif;
 	font-size: 0.8em;
 	color: #000;
-	height: 30px;
+	height: 25px;
 	-webkit-appearance: none; 
 }
 
@@ -355,7 +354,7 @@ button{
 .styled select{
 	background: url(images/bg_footer.png);
 	font-family: opificio, sans-serif;
-	font-size: 1em;
+	font-size: 0.9em;
 	color: #FFF;
 	padding: 5px;
 	border: none;
@@ -371,11 +370,11 @@ button{
 	background: none;
 	font-family: opificio, sans-serif;
 	color: #FFF;
-	font-size: 1.1em;
+	font-size: 0.9em;
 	padding: 0px 10px;
 	border: none;
 	border-right: 1px solid #FFF;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
 .button:hover{
