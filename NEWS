@@ -1,102 +1,19 @@
 NEWS
 this file notes major changes to the project
-for more specific content see changelog
 
-Angelina Huang (6/9/12)
+[1.2.1] ( 2012-6-7 )
+Site navigation in top menu updated
+Menu font size and height/width now scale so all menu items can be seen when browser window is 800px by 600px
 
-Implemented Responsive Web Design for 800x600 and larger
-
- mockup.css  | 15 ++++++-----
- mockup.html | 83 +++++++++++++++++++++++++++++++++++++++++++++++++++++--------
- 2 files changed, 80 insertions(+), 18 deletions(-)
-
-
-Wesley Cheng (6/7/12)
-
-Updated site navigation on top banner
-
- mockup.html | 37 ++++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 13 deletions(-)
-
+* Release 1.2 ( 2012-6-6 )
+Distribution References panel now generates references from Bibtex citations rather than XML data.
  
-Daniel Goldberg (6/6/12)
+Email form styled to fit with design of main page
 
-Connected Bibtex to Navigator
+* Release 1.1 ( 2012-5-30 )
+Generated XML is now displayed in a popup email form that can be sent to the moderator ( at info@distributome.org )
 
- scripts/bibtex_js.js | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+* Release 1.0.0 ( 2012-5-24 )
+Full editor functionality - adding and editing both distribution and relation attributes - implemented
 
-
-Daniel Goldberg (6/6/12)
-
-Implemented Bibtex to mockup.html
-
- Distributome.xml        |   2 +-
- mockup.css              | 147 +++++++++++++++++++++++++++++---------------
- mockup.html             | 144 +------------------------------------------
- scripts/bibtex_js.js    | 159 +++++++++++++++++++++++++++++++++++++++++++++---
- scripts/distributome.js |  17 ++++--
- scripts/editor.js       |   7 ++-
- 6 files changed, 269 insertions(+), 207 deletions(-)
- 
-
-Angelina Huang (6/6/12)
-
-Updated Design
-
- email.css         |  4 ----
- mockup.css        | 33 ++++++++++++++++++++++++++++++++-
- mockup.html       |  2 +-
- scripts/editor.js |  7 ++++---
- 4 files changed, 37 insertions(+), 9 deletions(-)
- 
- 
-Derek Zhou (5/30/12)
-
-Added Email functionality
-
- email.css         |   4 ++
- email.php         | 111 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- scripts/editor.js |  14 ++++++-
- 3 files changed, 127 insertions(+), 2 deletions(-)
-
-
-Derek Zhou (5/24/12)
-
-Connected navigator and editor in mockup
-
- mockup.html             |   4 +-
- scripts/distributome.js | 884 ++++++++++++++++++++++++------------------------
- 2 files changed, 444 insertions(+), 444 deletions(-)
-
-
-Angelina Huang (5/24/12)
-
-Connected Navigator and Editor to new design
-
- mockup.css              | 132 +++++++-
- mockup.html             | 474 +++++++++++++++++++++-----
- scripts/distributome.js | 879 ++++++++++++++++++++++++------------------------
- 3 files changed, 961 insertions(+), 524 deletions(-) 
- 
- 
-Angelina Huang (5/24/12)
-
-Created new design of website
-
- mockup.css              | 132 +++++++-
- mockup.html             | 474 +++++++++++++++++++++-----
- scripts/distributome.js | 879 ++++++++++++++++++++++++------------------------
- 3 files changed, 961 insertions(+), 524 deletions(-)
-
- 
-Derek Zhou (5/24/12)
-
-Added new editor in edi.html & added new editor functions in common.js, editor.js, distributome.js & updated jquery.js to 1.7.2
-
- edi.html                |  213 ++-
- scripts/common.js       | 1314 ++++++++-------
- scripts/distributome.js |  873 +++++-----
- scripts/editor.js       | 1069 ++++++++----
- scripts/jquery.js       | 4245 +----------------------------------------------
- 5 files changed, 2088 insertions(+), 5626 deletions(-)
+Layout redesigned with Editor and Distributome/Relation properties incorporated into the side panel
