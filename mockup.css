@@ -1,11 +1,5 @@
-/*use custom font*/
-@font-face {
-    font-family: opificio
-    src: url('Opificio.ttf');
-}
-
 body {
-    font-family: opificio, sans-serif;
+    font-family: Arial, sans-serif;
     padding: 0;
     margin: 0;
     position: absolute;
@@ -292,7 +286,7 @@ input.attrInput {
 
 button{
 	background: none;
-	font-family: opificio, sans-serif;
+	font-family: Arial, sans-serif;
 	color: black;
 	font-size: 0.9 em;
 	padding: 5px;
@@ -339,7 +333,7 @@ button{
 	margin-left: 0;
 	padding-left: 25px;
 	border: 0 none;
-	font-family: opificio, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 0.8em;
 	color: #000;
 	height: 25px;
@@ -353,7 +347,7 @@ button{
 
 .styled select{
 	background: url(images/bg_footer.png);
-	font-family: opificio, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: 0.9em;
 	color: #FFF;
 	padding: 5px;
@@ -368,7 +362,7 @@ button{
 
 .button{
 	background: none;
-	font-family: opificio, sans-serif;
+	font-family: Arial, sans-serif;
 	color: #FFF;
 	font-size: 0.9em;
 	padding: 0px 10px;

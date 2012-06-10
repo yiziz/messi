@@ -50,7 +50,7 @@
                
             var $body = $('body');   
             
-  			function doSomething(){
+  			function resize(){
 
 	            if( $(window).width() <= 800 ){
 	                $('.styled select').css('font-size', '0.8em');
@@ -90,14 +90,15 @@
 	                */
 	            }
 	        };
-	        
+	        // resize Timer prevents browser from calling resize() repeatedly 
 	        var resizeTimer;
 	        $(window).resize(function() {
                 clearTimeout(resizeTimer);
-                resizeTimer = setTimeout( doSomething, 100 );
+                resizeTimer = setTimeout( resize, 100 );
 	        });
             
-            doSomething();
+            resize();
+            
   		    //    Dropdown Menu   //
   			$("ul.subnav").parent().append("<span></span>");
   			$(".mainmenu li").hover(function(){
@@ -105,7 +106,7 @@
   				
   				$(this).hover(function(){
   				}, function(){
-  					$(this).find("ul.subnav").slideUp('slow');
+  					$(this).find("ul.subnav").slideUp('fast');
   				});
   				
   				}).hover(function() {
@@ -116,7 +117,9 @@
   			
 
   			
-  		//    Sidebar    //  			
+  		//    Sidebar    //  	
+  		// implements accordion functionality: all panels start hidden
+  		// currently, only one panel is allowed to be open at a time.
   			$('.accordion:eq(0)> div').hide();
 	        $('.accordion:eq(0)> h3').click(function() {
 	        		var old=$('.active');
@@ -125,20 +128,6 @@
 	        	    $(this).next().slideToggle('fast');
 	        	    $(this).toggleClass('active');
 	        });
-	        
-	        // Maximize Navigator //
-	        /*$("#popout").click(function() {
-	        	$('.sidebar').toggleClass('hidden');
-	        	$('.header').toggleClass('hidden');
-	        	$('#navigator').toggleClass('expanded');
-	        	if($('.sidebar').css('display')==='none'){
-	        		$("#popout").html('<img src="images/btn_popin.png" style="margin-right:15px"/>');
-	        	}
-	        	else{
-	        		$("#popout").html('<img src="images/btn_popout.png"/>');
-	        	}
-	        	
-	        });*/
 	        
 	        
   		});
@@ -161,7 +150,7 @@
   		
   	</script>
   	
-  	<!-- LATEX / TYPESETTING -->
+  	<!-- LATEX / TYPESETTING CODE-->
   	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   	
   		<script> 
@@ -262,10 +251,11 @@
         }
     
     </script>
-            <!--  /center -->
 </head>
 <body onmousedown="isKeyPressed(event)">
 
+    <!-- Footer HTML -->
+    <!-- Toolbar code taken from client's original html file -->
 	<div class="footer">
 		<ul id="toolbar">
 			<li>
@@ -342,14 +332,12 @@
 	</div>
 	<div id="wrap">
 		<div class="header">
+		    <!-- TOP MENU CODE -->
 			<ul class = "mainmenu">
+			    <!-- to add a new menu item: insert a new <li><a href="link to content">MenuItemName</a></li>
+			        <ul class="subnav">  </ul> indicates that the <li> objects within are 
+			        part of the submenu -->
 				<li id = "home"><a href="index.html">Distributome</a></li>
-				<!-- <li><a href="#"> DB Search </a>
-					<ul class="subnav">
-						<li></li>
-						<li></li>
-					</ul>
-				</li> -->
 				<li><a href="#">About</a>
 					<ul class="subnav">
 						<li><a href="http://www.distributome.org/about.html"> Project</a></li>
@@ -360,17 +348,7 @@
 				<li><a href="http://www.distributome.org/meetings/">Events</a>
 				</li>
 				<li><a href="http://www.distributome.org/docs.html">Tech Docs</a>
-					<!-- <ul class="subnav">
-						<li></li>
-						<li></li>
-					</ul> -->
 				</li>
-				<!-- <li><a href="#">Navigator</a>
-					<ul class="subnav">
-						<li></li>
-						<li></li>
-					</ul>
-				</li> -->
 				<li><a href="#">Legacy Resources</a>
 					<ul class="subnav">
 						<li><a href="http://www.distributome.org/jars/distributome.xml"> legacy XML</a></li>
@@ -392,7 +370,6 @@
 		</div>
 		<div class = "content">
 			<div id="LeftPanel" style="width:500px; height:500px" >
-				
                 <script type="text/javascript+protovis">
                 
                             /**	
@@ -480,104 +457,106 @@
                         //connectedNodesFetch();
                 
                     </script>
-            
             </div>
 	
-			<div id="navsidebar" class="sidebar">
+	    <!-- SIDEBAR CODE -->
+		<div id="navsidebar" class="sidebar">
+		<!-- ACCORDION -->
+		<!-- to add a new panel, simply add a new <h3> NEW PANEL TITLE </h3> 
+		    followed by <div> PANEL CONTENT </div> -->
 				<div class = "accordion">
 					<h3>Editor</h3>
                         <div id="editor" >
-		<div id="editorTitle" > 
-		</div>
-		<div id="contentHolder" >
-			<div id="editorContent" >
-				<button id="createDis" >Create a new distribution</button>
-				<button id="createRel" >Create a new Relation</button>
-				<div id="editorNote" >
-					<p>
-						Click on an existing distribution or relation in the navigator to edit it.
-					</p>
-				</div>
-			</div>
-			<div id="addAttrDiv" >
-				<div id="addAttrTitle" >
-					Choose an attribute
-				</div>
-				<div id="disAttr" >
-					<div class="attrChoice" >
-						Name
-					</div>
-					<div class="attrChoice" >
-						Type
-					</div>
-					<div class="attrChoice" >
-						Model
-					</div>
-					<div class="attrChoice" >
-						Support
-					</div>
-					<div class="attrChoice" >
-						Pdf
-					</div>
-					<div class="attrChoice" >
-						Mode
-					</div>
-					<div class="attrChoice" >
-						Cdf
-					</div>
-					<div class="attrChoice" >
-						Qf
-					</div>
-					<div class="attrChoice" >
-						Mean
-					</div>
-					<div class="attrChoice" >
-						Variance
-					</div>
-					<div class="attrChoice" >
-						Skew
-					</div>
-					<div class="attrChoice" >
-						Kurt
-					</div>
-					<div class="attrChoice" >
-						Median
-					</div>
-					<div class="attrChoice" >
-						Q1
-					</div>
-					<div class="attrChoice" >
-						Q3
-					</div>
-					<div class="attrChoice" >
-						History
-					</div>
-					<div class="attrChoice" >
-						Id
-					</div>
-				</div>
-				<div id="relAttr" >
-					<div class="attrChoice" >
-						To
-					</div>
-					<div class="attrChoice" >
-						From
-					</div>
-					<div class="attrChoice" >
-						Statement
-					</div>
-					<div class="attrChoice" >
-						Type
-					</div>
-					<div class="attrChoice" >
-						Id
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="editorFooter">
-		</div>
-	</div>
+		                    <div id="editorTitle" ></div>
+		                    <div id="contentHolder" >
+			                    <div id="editorContent" >
+				                    <button id="createDis" >Create a new distribution</button>
+				                    <button id="createRel" >Create a new Relation</button>
+				                    <div id="editorNote" >
+                                        <p>
+                                            Click on an existing distribution or relation in the navigator to edit it.
+                                        </p>
+				                    </div>
+			                    </div>
+			                    <div id="addAttrDiv" >
+                                    <div id="addAttrTitle" >
+                                        Choose an attribute
+                                    </div>
+                                    <div id="disAttr" >
+                                        <div class="attrChoice" >
+                                            Name
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Type
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Model
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Support
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Pdf
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Mode
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Cdf
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Qf
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Mean
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Variance
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Skew
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Kurt
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Median
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Q1
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Q3
+                                        </div>
+                                        <div class="attrChoice" >
+                                            History
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Id
+                                        </div>
+                                    </div>
+                                    <div id="relAttr" >
+                                        <div class="attrChoice" >
+                                            To
+                                        </div>
+                                        <div class="attrChoice" >
+                                            From
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Statement
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Type
+                                        </div>
+                                        <div class="attrChoice" >
+                                            Id
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="editorFooter">
+                            </div>
+	                    </div>
 					<h3>Distribution Properties</h3>
                         <div id="distributome.propertiesPannel"> <!-- Get the Inter-Distribution Relation Properties from Distributome.xml -->
 			            </div>
@@ -600,7 +579,6 @@
 			</div>
 		</div>
 	</div>
-
 
 </body>
 </html>
